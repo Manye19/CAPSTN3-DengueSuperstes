@@ -6,14 +6,14 @@ using UnityEngine.Serialization;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public float movementSpeed; // should be currentMovementSpeed or something
-
+    private float currentSpeed;
     private GameObject target;
     private float distance;
 
     private void OnEnable()
     {
         target = SingletonManager.Get<GameManager>().player;
+        currentSpeed = GetComponent<EnemyStat>().movementSpeed;
     }
 
     // Update is called once per frame
@@ -23,6 +23,12 @@ public class EnemyMovement : MonoBehaviour
         Vector2 direction = target.transform.position - transform.position;
         
         // Get and set UPDATED speed (int) from EnemyStat class or Spawner class
-        transform.position =Vector2.MoveTowards(this.transform.position, target.transform.position, movementSpeed * Time.deltaTime); // temporary for now
+        transform.position =Vector2.MoveTowards(this.transform.position, target.transform.position, currentSpeed * Time.deltaTime); // temporary for now
+    }
+
+    public void UpdateMovementSpeed(float speed)
+    {
+        // Updates speed depending on Enemy?
+        currentSpeed = speed;
     }
 }

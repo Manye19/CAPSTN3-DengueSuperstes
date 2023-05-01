@@ -6,12 +6,13 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private float currentSpeed;
-    private bool facingRight = true;
+    private bool isFacingRight = true;
     private Vector2 movement;
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         // Set Player Movement Speed
         currentSpeed = SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>().movementSpeed;
     }
@@ -26,23 +27,24 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.MovePosition(rb.position + movement * (currentSpeed * Time.fixedDeltaTime));
 
-        if (movement.x > 0 && !facingRight)
+        if (movement.x > 0 && !isFacingRight)
         {
             Flip();
         }
-        if (movement.x < 0 && facingRight)
+        if (movement.x < 0 && isFacingRight)
         {
             Flip();
         }
     }
     
+    #region Functions
     private void Flip()
     {
         Vector3 currentScale = gameObject.transform.localScale;
         currentScale.x *= -1;
         gameObject.transform.localScale = currentScale;
 
-        facingRight = !facingRight;
+        isFacingRight = !isFacingRight;
     }
     
     public void UpdateMovementSpeed(float speed)
@@ -50,4 +52,5 @@ public class PlayerMovement : MonoBehaviour
         // Updates speed when Player hits an upgrade
         currentSpeed = SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>().movementSpeed;
     }
+    #endregion
 }

@@ -8,13 +8,13 @@ public class PlayerStat : Stat
     public override void Start()
     {
         base.Start();
-        Debug.Log("Player's HP is " + health);
-        Debug.Log("Player's Max HP is " + health);
+        // Debug.Log("Player's HP is " + health);
+        // Debug.Log("Player's Max HP is " + health);
     }
 
     public override void TakeDamage(int amount)
     {
-        unitHealth.Damage(amount);
+        base.TakeDamage(amount);
         Debug.Log("Player's health is: " + unitHealth.health);
     }
 

@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
 {
     private ObjectPooler objectPooler;
     private GameObject player;
+    private Rigidbody2D playerRb;
     
     public Vector2 spawnArea;
     public float spawnTimer;
@@ -17,6 +18,7 @@ public class EnemySpawner : MonoBehaviour
     {
         // Get player reference
         player = SingletonManager.Get<GameManager>().player;
+        playerRb = player.GetComponent<Rigidbody2D>();
         
         // Get objectPooler reference
         objectPooler = SingletonManager.Get<ObjectPooler>();
@@ -39,7 +41,7 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy()
     {
         Vector3 position = GenerateRandomPosition();
-        
+
         // Update Player position
         position += player.transform.position;
         GameObject obj = objectPooler.SpawnFromPool("Enemy", position);

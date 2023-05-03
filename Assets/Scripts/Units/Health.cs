@@ -52,6 +52,7 @@ public class Health
     public void Death()
     {
         // Do something; an event maybe
+        Debug.Log("Death() is called.");
     }
     
     public void Heal(int amount)

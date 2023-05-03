@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private float currentSpeed;
     private bool isFacingRight = true;
+    
     private Vector2 movement;
     private Rigidbody2D rb;
 
@@ -21,11 +22,39 @@ public class PlayerMovement : MonoBehaviour
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+
+        /*if (rb.velocity.x != 0)
+        {
+            if (rb.velocity.x > 0)
+            {
+                Debug.Log("Player is moving right");
+            }
+            else
+            {
+                Debug.Log("Player is moving left");
+            }
+        }
+        if (rb.velocity.y != 0)
+        {
+            if (rb.velocity.y > 0)
+            {
+                Debug.Log("Player is moving up");
+            }
+            else
+            {
+                Debug.Log("Player is moving down");
+            }
+        }*/
     }
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * (currentSpeed * Time.fixedDeltaTime));
+        // Changed Player Movement to Force
+        //rb.MovePosition(rb.position + movement * (currentSpeed * Time.fixedDeltaTime));
+       
+        // Player Movement is now through force; experimenting...
+        Vector2 movement = new Vector2(this.movement.x, this.movement.y).normalized;
+        rb.AddForce(movement * currentSpeed);
 
         if (movement.x > 0 && !isFacingRight)
         {

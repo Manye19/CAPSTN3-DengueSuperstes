@@ -6,8 +6,9 @@ using UnityEngine.Serialization;
 
 public class ObjectPooler : MonoBehaviour
 {
-    public Dictionary<string, Queue<GameObject>> poolDictionary = new();
+    private Dictionary<string, Queue<GameObject>> poolDictionary = new();
     
+    [Header("===== Editor: Assignable =====")]
     [Header("Pool Scriptable Objects")]
     public ProjectileScriptableObject playerWhipSO;
     public EnemyScriptableObject baseEnemySO;

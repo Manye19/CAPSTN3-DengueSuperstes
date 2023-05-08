@@ -5,19 +5,23 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    private int currentDamage;
+    [Header("===== Runtime: DO NOT Assign =====")]
+    [SerializeField] private float currentDamage;
+    //[SerializeField] private float attackTickSpeed;
+    //private Coroutine attackCoroutine;
     
     private void Start()
     {
         currentDamage = GetComponent<EnemyStat>().damage;
+        //attackTickSpeed = GetComponent<EnemyStat>().atkSpeed;
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnCollisionStay2D(Collision2D other)
     {
-        if (col.gameObject.GetComponent<PlayerStat>())
+        if (other.gameObject.GetComponent<PlayerStat>())
         {
-            col.gameObject.GetComponent<PlayerStat>().TakeDamage(currentDamage);
-            Debug.Log("Player took " + currentDamage + " damage.");
+            // Attack DoT (?)
+            other.gameObject.GetComponent<PlayerStat>().TakeDamage(currentDamage);
         }
     }
 }

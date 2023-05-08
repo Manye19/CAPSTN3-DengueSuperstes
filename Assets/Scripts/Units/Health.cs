@@ -5,11 +5,11 @@ using UnityEngine;
 public class Health
 {
     // Fields
-    private int currentHealth;
-    private int currentMaxHealth;
+    private float currentHealth;
+    private float currentMaxHealth;
     
     // Properties
-    public int health 
+    public float health 
     {
         get
         {
@@ -20,7 +20,7 @@ public class Health
             currentHealth = value;
         }
     }
-    public int MaxHealth
+    public float MaxHealth
     {
         get
         {
@@ -40,7 +40,7 @@ public class Health
     }
     
     // Methods
-    public void Damage(int amount)
+    public void Damage(float amount)
     {
         if (currentHealth > 0)
         {

@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float currentSpeed;
-    private bool isFacingRight = true;
-    
-    private Vector2 movement;
-    private Rigidbody2D rb;
+    [Header("===== Runtime: DO NOT Assign =====")]
+    [SerializeField] private float currentSpeed;
+    [SerializeField] private bool isFacingRight = true;
+    [SerializeField] private Vector2 movement;
+    [SerializeField] private Rigidbody2D rb;
 
     private void Start()
     {

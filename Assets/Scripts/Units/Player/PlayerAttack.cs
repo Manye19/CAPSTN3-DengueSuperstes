@@ -6,9 +6,12 @@ using UnityEngine.Serialization;
 
 public class PlayerAttack : MonoBehaviour
 {
-    private bool attacking = true;
-    private ObjectPooler objectPooler;
-    private float currentAttackSpeed;
+    [Header("===== Runtime: DO NOT Assign =====")]
+    [SerializeField] private bool attacking = true;
+    [SerializeField] private ObjectPooler objectPooler;
+    [SerializeField] private float currentAttackSpeed;
+    
+    [Header("===== Editor: Assignable =====")]
     public Transform[] attackPositions;
     
     // Start is called before the first frame update
@@ -31,7 +34,7 @@ public class PlayerAttack : MonoBehaviour
         while (attacking)
         {
             yield return new WaitForSeconds(currentAttackSpeed);
-            objectPooler.SpawnFromPool("Whip", attackPositions[0].position);
+            objectPooler.SpawnFromPool(objectPooler.playerWhipSO.pool.tag, attackPositions[0].position);
         }
         yield return null;
     }

@@ -6,13 +6,14 @@ using UnityEngine.Serialization;
 
 public class Stat : MonoBehaviour
 {
-    public Health unitHealth = new Health(100, 100);
+    protected Health unitHealth = new Health(100, 100);
 
+    [Header("===== Editor: Assignable =====")]
     [Header("Stats")] 
     public int health;
     public int maxHealth;
     public float atkSpeed;
-    public int damage;
+    public float damage;
     public int defense;
     public float movementSpeed;
 
@@ -22,7 +23,7 @@ public class Stat : MonoBehaviour
         unitHealth.MaxHealth = maxHealth;
     }
 
-    public virtual void TakeDamage(int amount)
+    public virtual void TakeDamage(float amount)
     {
         unitHealth.Damage(amount);
         if (unitHealth.health <= 0)

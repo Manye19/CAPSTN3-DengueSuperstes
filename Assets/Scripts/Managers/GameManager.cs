@@ -7,12 +7,11 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("===== Runtime: DO NOT Assign =====")]
+    [Header(DS_Constants.DO_NOT_ASSIGN)]
     private float startTime;
     private bool timerActive = false;
 
-    [Header("===== Editor: Assignable =====")]
-    public TextMeshProUGUI timerText;
+    [Header(DS_Constants.ASSIGNABLE)]
     public GameObject player;
     public List<Transform> objectiveTransformsList;
     public List<Transform> itemTransformsList;
@@ -44,7 +43,7 @@ public class GameManager : MonoBehaviour
         float t = Time.time - startTime;
         string minutes = ((int)t / 60).ToString();
         string seconds = (t % 60).ToString("f2");
-        timerText.text = minutes + ":" + seconds;
+        SingletonManager.Get<UIManager>().timerText.text = minutes + ":" + seconds;
     }
 
     public Transform GetRandTransformFromList(List<Transform> list)

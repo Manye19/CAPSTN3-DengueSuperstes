@@ -8,15 +8,22 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("===== Runtime: DO NOT Assign =====")]
+    [Header(DS_Constants.DO_NOT_ASSIGN)]
     [SerializeField] private ObjectPooler objectPooler;
     [SerializeField] private GameObject player;
     [SerializeField] private Rigidbody2D playerRb;
 
-    [Header("===== Editor: Assignable =====")]
+    [Header(DS_Constants.ASSIGNABLE)]
     public float spawnTimer;
-    public List<BoxCollider2D> spawnColliders;
-    public List<BoxCollider2D> edgeSpawnColliders;
+    public BoxCollider2D[] spawnColliders;
+    public BoxCollider2D[] leftColliders;
+    public BoxCollider2D[] rightColliders;
+    public BoxCollider2D[] upColliders;
+    public BoxCollider2D[] bottomColliders;
+    public BoxCollider2D[] upperLeftColliders;
+    public BoxCollider2D[] upperRightColliders;
+    public BoxCollider2D[] bottomLeftColliders;
+    public BoxCollider2D[] bottomRightColliders;
 
     private void Start()
     {
@@ -47,7 +54,7 @@ public class EnemySpawner : MonoBehaviour
         Vector3 position = GenerateRandomPosition();
 
         // Update Player position
-        position += player.transform.position;
+        //position += player.transform.position;
         GameObject obj = objectPooler.SpawnFromPool(objectPooler.baseEnemySO.pool.tag, position);
         
         // Update movement speed sample script
@@ -56,7 +63,7 @@ public class EnemySpawner : MonoBehaviour
 
     private Vector3 GenerateRandomPosition()
     {
-        int randNum = Random.Range(0, spawnColliders.Count);
+        int randNum = Random.Range(0, spawnColliders.Length);
         var randPoint = new Vector3(
             Random.Range(spawnColliders[randNum].bounds.min.x, spawnColliders[randNum].bounds.max.x),
             Random.Range(spawnColliders[randNum].bounds.min.y, spawnColliders[randNum].bounds.max.y),

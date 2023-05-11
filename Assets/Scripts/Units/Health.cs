@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Health
 {
+    public OnDeathEvent onDeathEvent = new();
+    
     // Fields
     private float currentHealth;
     private float currentMaxHealth;
@@ -11,25 +13,13 @@ public class Health
     // Properties
     public float health 
     {
-        get
-        {
-            return currentHealth;
-        }
-        set
-        {
-            currentHealth = value;
-        }
+        get => currentHealth;
+        set => currentHealth = value;
     }
-    public float MaxHealth
+    public float maxHealth
     {
-        get
-        {
-            return currentMaxHealth;
-        }
-        set
-        {
-            currentMaxHealth = value;
-        }
+        get => currentMaxHealth;
+        set => currentMaxHealth = value;
     }
     
     // Constructor
@@ -42,28 +32,35 @@ public class Health
     // Methods
     public void Damage(float amount)
     {
-        if (currentHealth > 0)
+        currentHealth -= amount;
+        if (currentHealth <= 0)
         {
-            currentHealth -= amount;
+            Death();
         }
-        else Death();
     }
 
-    public void Death()
+    private void Death()
     {
         // Do something; an event maybe
-        Debug.Log("Death() is called.");
+        onDeathEvent.Invoke();
+        // Debug.Log("Death() is called.");
     }
     
     public void Heal(int amount)
     {
-        if (currentHealth < currentMaxHealth)
+        if (health < maxHealth)
         {
-            currentHealth += amount;
+            health += amount;
         }
-        if (currentHealth > currentMaxHealth)
+        if (health > maxHealth)
         {
-            currentHealth = currentMaxHealth;
+            health = maxHealth;
         }
+    }
+
+    public void IncreaseHealth(int level)
+    {
+        maxHealth += (health * 0.01f) * ((100 - level) * 0.1f);
+        //Debug.Log("Player's HP is now: " + health + "/" + maxHealth);
     }
 }

@@ -150,6 +150,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52ccbaac11943443bf24e5468f08f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 2
+  currentXP: 0
+  requiredXP: 0
   health: 100
   maxHealth: 100
   atkSpeed: 0.5
@@ -168,3 +171,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 139a78d3bf45e5248ad1a40da3945c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentDamage: 0

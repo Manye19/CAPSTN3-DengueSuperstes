@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    [Header("===== Runtime: DO NOT Assign =====")]
+    [Header(DS_Constants.DO_NOT_ASSIGN)]
     [SerializeField] private float currentDamage;
     //[SerializeField] private float attackTickSpeed;
     //private Coroutine attackCoroutine;
@@ -16,7 +17,7 @@ public class EnemyAttack : MonoBehaviour
         //attackTickSpeed = GetComponent<EnemyStat>().atkSpeed;
     }
 
-    private void OnCollisionStay2D(Collision2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.GetComponent<PlayerStat>())
         {

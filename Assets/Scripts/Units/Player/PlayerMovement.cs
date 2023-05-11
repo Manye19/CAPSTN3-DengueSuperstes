@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("===== Runtime: DO NOT Assign =====")]
+    [Header(DS_Constants.DO_NOT_ASSIGN)]
     [SerializeField] private float currentSpeed;
     [SerializeField] private bool isFacingRight = true;
     [SerializeField] private Vector2 movement;

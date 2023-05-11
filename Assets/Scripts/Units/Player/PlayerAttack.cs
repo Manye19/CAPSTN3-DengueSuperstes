@@ -6,12 +6,12 @@ using UnityEngine.Serialization;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [Header("===== Runtime: DO NOT Assign =====")]
+    [Header(DS_Constants.DO_NOT_ASSIGN)]
     [SerializeField] private bool attacking = true;
     [SerializeField] private ObjectPooler objectPooler;
     [SerializeField] private float currentAttackSpeed;
-    
-    [Header("===== Editor: Assignable =====")]
+
+    [Header(DS_Constants.ASSIGNABLE)]
     public Transform[] attackPositions;
     
     // Start is called before the first frame update

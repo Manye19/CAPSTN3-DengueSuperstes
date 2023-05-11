@@ -23,7 +23,7 @@ public class Projectile : MonoBehaviour
         if (col.gameObject.GetComponent<EnemyStat>())
         {
             col.gameObject.GetComponent<EnemyStat>().TakeDamage(SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>().damage);
-            //Debug.Log("Enemy took " + SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>().damage + " damage.");
+            // Debug.Log("Enemy took " + SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>().damage + " damage.");
         }
     }
 }

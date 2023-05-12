@@ -5,3 +5,4 @@ using UnityEngine.Events;
 
 public class OnDeathEvent : UnityEvent { };
 public class OnUpdateUIXP : UnityEvent<int, float, float> { };
+public class OnExpDrop : UnityEvent<Vector3> { };

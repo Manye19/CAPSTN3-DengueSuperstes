@@ -53,7 +53,7 @@ public class Stat : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public virtual void Heal(int amount)
+    public virtual void Heal(float amount)
     {
         unitHealth.Heal(amount);
     }
@@ -84,7 +84,6 @@ public class Stat : MonoBehaviour
         {
             LevelUp();
         }
-        
         Debug.Log("Player gained " + (xpGained * multiplier) + " EXP.");
         // lerpTimer = 0f;
     }

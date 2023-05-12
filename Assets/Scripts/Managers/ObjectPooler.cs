@@ -12,6 +12,7 @@ public class ObjectPooler : MonoBehaviour
     [Header("Pool Scriptable Objects")]
     public ProjectileScriptableObject playerWhipSO;
     public EnemyScriptableObject baseEnemySO;
+    public PickupScriptableObject expSO;
 
     private void Awake()
     {

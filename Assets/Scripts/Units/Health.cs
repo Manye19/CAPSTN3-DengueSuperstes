@@ -46,7 +46,7 @@ public class Health
         // Debug.Log("Death() is called.");
     }
     
-    public void Heal(int amount)
+    public void Heal(float amount)
     {
         if (health < maxHealth)
         {

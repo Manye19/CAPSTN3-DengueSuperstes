@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class EnemySpawner : MonoBehaviour
+public class SpawnManager : MonoBehaviour
 {
     [Header(DS_Constants.DO_NOT_ASSIGN)]
     [SerializeField] private ObjectPooler objectPooler;

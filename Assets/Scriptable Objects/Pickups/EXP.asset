@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669d492d54a52394285abe9fa02226c0, type: 3}
+  m_Name: EXP
+  m_EditorClassIdentifier: 
+  pool:
+    tag: EXP
+    prefab: {fileID: 2376707431490458789, guid: 63226aac92ba1454aa4b00c740ec86a0, type: 3}
+    size: 30

@@ -7,11 +7,8 @@ public class EnemyStat : Stat
 {
     protected override void Death()
     {
+        // Drop EXP pickup on death.
+        SingletonManager.Get<PickupManager>().onExpDrop.Invoke(transform.position);
         base.Death();
-        PlayerStat playerStat = SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>();
-        //playerStat.GainExperienceFlatRate(20);
-        playerStat.GainExperienceScalable(20, playerStat.level, level);
-        UIManager uiManager = SingletonManager.Get<UIManager>();
-        uiManager.onUpdateUIXP.Invoke(playerStat.level, playerStat.currentXP, playerStat.requiredXP);
     }
 }

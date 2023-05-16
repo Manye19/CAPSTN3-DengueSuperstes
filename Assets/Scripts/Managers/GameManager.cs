@@ -16,7 +16,8 @@ public class GameManager : MonoBehaviour
     public List<Transform> objectiveTransformsList;
     public List<Transform> itemTransformsList;
     public List<Transform> obstacleTransformsList;
-    
+
+    public OnLevelUpEvent onLevelUpEvent = new();
     
     private void Awake()
     {
@@ -30,12 +31,12 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        
+        onLevelUpEvent.AddListener(PauseGameTime);
     }
 
     private void OnDisable()
     {
-        
+        onLevelUpEvent.RemoveListener(PauseGameTime);
     }
 
     private void Update()
@@ -50,5 +51,10 @@ public class GameManager : MonoBehaviour
     {
         int randNum = Random.Range(0, list.Count);
         return list[randNum];
+    }
+
+    public void PauseGameTime(bool p_bool)
+    {
+        Time.timeScale = Time.timeScale >= 1 ? 0 : 1;
     }
 }

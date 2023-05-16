@@ -18,4 +18,11 @@ public class PlayerStat : Stat
         UIManager uiManager = SingletonManager.Get<UIManager>();
         uiManager.onUpdateUIXP.Invoke(level, currentXP, requiredXP);
     }
+
+    protected override void LevelUp()
+    {
+        base.LevelUp();
+        GameManager gameManager = SingletonManager.Get<GameManager>();
+        gameManager.onLevelUpEvent.Invoke(true);
+    }
 }

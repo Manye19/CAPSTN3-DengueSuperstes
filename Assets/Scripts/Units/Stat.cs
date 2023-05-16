@@ -93,6 +93,8 @@ public class Stat : MonoBehaviour
         level++;
         // frontXPBar.fillAmount = 0f;
         // backXpBar.fillAmount = 0f;
+        
+        
         currentXP = Mathf.RoundToInt((currentXP - requiredXP));
         unitHealth.IncreaseHealth(level);
         requiredXP = CalculateRequiredXP();

@@ -155,7 +155,7 @@ public class SpawnManager : MonoBehaviour
     private void RandBoxCountdown(BoxCollider2D[] boxCollider2Ds)
     {
         buttonDownCounter -= Time.deltaTime;
-        if (buttonDownCounter <= buttonHoldDownTime)
+        if (buttonDownCounter <= 0)
         {
             isHoldingDownKey = true;
             bC2D = GetRandBoxCollider(boxCollider2Ds);

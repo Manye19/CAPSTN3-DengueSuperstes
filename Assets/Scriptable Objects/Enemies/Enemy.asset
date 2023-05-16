@@ -15,4 +15,4 @@ MonoBehaviour:
   pool:
     tag: Enemy
     prefab: {fileID: 333175280960000035, guid: c6652388af9e7324f8a98767acccf893, type: 3}
-    size: 30
+    size: 300

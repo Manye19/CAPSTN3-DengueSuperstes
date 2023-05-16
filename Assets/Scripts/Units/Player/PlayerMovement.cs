@@ -22,29 +22,6 @@ public class PlayerMovement : MonoBehaviour
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-
-        /*if (rb.velocity.x != 0)
-        {
-            if (rb.velocity.x > 0)
-            {
-                Debug.Log("Player is moving right");
-            }
-            else
-            {
-                Debug.Log("Player is moving left");
-            }
-        }
-        if (rb.velocity.y != 0)
-        {
-            if (rb.velocity.y > 0)
-            {
-                Debug.Log("Player is moving up");
-            }
-            else
-            {
-                Debug.Log("Player is moving down");
-            }
-        }*/
     }
 
     private void FixedUpdate()

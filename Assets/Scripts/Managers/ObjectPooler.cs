@@ -11,6 +11,7 @@ public class ObjectPooler : MonoBehaviour
     [Header("===== Editor: Assignable =====")]
     [Header("Pool Scriptable Objects")]
     public ProjectileScriptableObject playerWhipSO;
+    public ProjectileScriptableObject playerSantaWaterSO;
     public EnemyScriptableObject baseEnemySO;
     public PickupScriptableObject expSO;
 

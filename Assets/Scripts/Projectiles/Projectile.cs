@@ -6,18 +6,21 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private void OnEnable()
+    [Header(DS_Constants.ASSIGNABLE)]
+    [SerializeField] protected float selfDestructTimer;
+    
+    protected virtual void OnEnable()
     {
         StartCoroutine((SelfDestructTimer()));
     }
 
     private IEnumerator SelfDestructTimer()
     {
-        yield return new WaitForSecondsRealtime(0.25f);
+        yield return new WaitForSeconds(selfDestructTimer);
         gameObject.SetActive(false);
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    protected virtual void OnTriggerEnter2D(Collider2D col)
     {
         //Debug.Log(col);
         if (col.gameObject.GetComponent<EnemyStat>())

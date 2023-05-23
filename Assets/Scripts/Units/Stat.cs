@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 public class Stat : MonoBehaviour
 {
-    protected Health unitHealth = new Health(100, 100);
+    public Health unitHealth = new Health(100, 100);
 
     [Header(DS_Constants.DO_NOT_ASSIGN)]
     private float additionMultiplier = 300;

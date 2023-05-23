@@ -16,10 +16,17 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private bool isHoldingDownKey;
     [SerializeField] private float buttonDownCounter;
     [SerializeField] private BoxCollider2D bC2D;
+    
+    // Spawning Around Player Variables
+    private int numberOfObjects = 20;
+    private float spawnRadius = 20f;
+    private float startAngle = 0f;
+    private float endAngle = 360f;
 
     [Header(DS_Constants.ASSIGNABLE)]
-    public float spawnTimer;
-    [FormerlySerializedAs("buttonDownTime")] public float buttonHoldDownTime;
+    public float spawnTimerMin;
+    public float spawnTimerMax;
+    public float buttonHoldDownTime;
     public BoxCollider2D[] spawnColliders;
     public BoxCollider2D[] leftColliders;
     public BoxCollider2D[] rightColliders;
@@ -32,8 +39,6 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        buttonDownCounter = buttonHoldDownTime;
-
         // Get player reference
         player = SingletonManager.Get<GameManager>().player;
         playerRb = player.GetComponent<Rigidbody2D>();
@@ -49,51 +54,61 @@ public class SpawnManager : MonoBehaviour
     private void Update()
     {
         // Spawning_Wave_Type3
+        // Spawn more circular
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            foreach (var item in spawnColliders)
+            float angleStep = (endAngle - startAngle) / numberOfObjects;
+            for (int i = 0; i < numberOfObjects; i++)
             {
-                objectPooler.SpawnFromPool(objectPooler.baseEnemySO.pool.tag, item.bounds.max);
+                float angle = Mathf.Deg2Rad * (startAngle + (i * angleStep));
+                Vector2 spawnPosition = new Vector2(
+                    player.transform.position.x + Mathf.Cos(angle) * spawnRadius,
+                    player.transform.position.y + Mathf.Sin(angle) * spawnRadius
+                );
+                objectPooler.SpawnFromPool(objectPooler.baseEnemySO.pool.tag, spawnPosition);
             }
         }
-        
-        if (playerRb.velocity.x >= 1) // D
+
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
-            RandBoxCountdown(rightColliders);
-        }
-        else if (playerRb.velocity.x <= -1) // A
-        {
-            RandBoxCountdown(rightColliders);
-        }
-        else if (playerRb.velocity.y >= 1) // W
-        {
-            RandBoxCountdown(upColliders);
-        }
-        else if (playerRb.velocity.y <= -1) // S
-        {
-            RandBoxCountdown(bottomColliders);
-        }
-        else if (playerRb.velocity is { x: >= 1, y: >= 1 }) // D-W
-        {
-            RandBoxCountdown(upperRightColliders);
-        }
-        else if (playerRb.velocity is { x: <= -1, y: >= 1 }) // A-W
-        {
-            RandBoxCountdown(upperLeftColliders);
-        }
-        else if (playerRb.velocity is { x: >= 1, y: <= -1 }) // D-S
-        {
-            RandBoxCountdown(bottomRightColliders);
-        }
-        else if (playerRb.velocity is { x: <= -1, y: <= -1 }) // A-S
-        {
-            RandBoxCountdown(bottomLeftColliders);
-        }
-        else
-        {
-            bC2D = null;
-            isHoldingDownKey = false;
-            buttonDownCounter = buttonHoldDownTime;
+            if (playerRb.velocity.x >= 1) // D
+            {
+                RandBoxCountdown(rightColliders);
+            }
+            else if (playerRb.velocity.x <= -1) // A
+            {
+                RandBoxCountdown(rightColliders);
+            }
+            else if (playerRb.velocity.y >= 1) // W
+            {
+                RandBoxCountdown(upColliders);
+            }
+            else if (playerRb.velocity.y <= -1) // S
+            {
+                RandBoxCountdown(bottomColliders);
+            }
+            else if (playerRb.velocity is { x: >= 1, y: >= 1 }) // D-W
+            {
+                RandBoxCountdown(upperRightColliders);
+            }
+            else if (playerRb.velocity is { x: <= -1, y: >= 1 }) // A-W
+            {
+                RandBoxCountdown(upperLeftColliders);
+            }
+            else if (playerRb.velocity is { x: >= 1, y: <= -1 }) // D-S
+            {
+                RandBoxCountdown(bottomRightColliders);
+            }
+            else if (playerRb.velocity is { x: <= -1, y: <= -1 }) // A-S
+            {
+                RandBoxCountdown(bottomLeftColliders);
+            }
+            else
+            {
+                bC2D = null;
+                isHoldingDownKey = false;
+                buttonDownCounter = buttonHoldDownTime;
+            }
         }
     }
 
@@ -101,7 +116,8 @@ public class SpawnManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(spawnTimer);
+            float randNum = Random.Range(spawnTimerMin, spawnTimerMax);
+            yield return new WaitForSeconds(randNum);
             SpawnEnemy();
         }
     }

@@ -8,7 +8,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     public OnUpdateUIXP onUpdateUIXP = new();
-    
+
     [Header(DS_Constants.DO_NOT_ASSIGN)] 
     
     [Header(DS_Constants.ASSIGNABLE)]
@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI LevelText;
     public TextMeshProUGUI XPText;
     public GameObject levelUpPanel;
+    public GameObject gameOverPanel;
     
     private void Awake()
     {
@@ -33,6 +34,7 @@ public class UIManager : MonoBehaviour
     {
         onUpdateUIXP.AddListener(UpdateUIXP);
         gameManager.onLevelUpEvent.AddListener(OpenLevelUpUI);
+        gameManager.onPlayerDeath.AddListener(PlayerDeathUI);
     }
     
     private void OnDisable()
@@ -41,6 +43,11 @@ public class UIManager : MonoBehaviour
         gameManager.onLevelUpEvent.RemoveListener(OpenLevelUpUI);
     }
 
+    private void PlayerDeathUI()
+    {
+        gameOverPanel.SetActive(true);
+    }
+    
     private void UpdateUIXP(int level, float currentXP, float requiredXP)
     {
         LevelText.text = "Lvl: " + level;

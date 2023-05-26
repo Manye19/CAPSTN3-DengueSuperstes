@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class PlayerStat : Stat
 {
+    protected override void Death()
+    {
+        base.Death();
+        GameManager gameManager = SingletonManager.Get<GameManager>();
+        gameManager.onPlayerDeath.Invoke();
+    }
+    
     public override void GainExperienceFlatRate(float xpGained)
     {
         base.GainExperienceFlatRate(xpGained);

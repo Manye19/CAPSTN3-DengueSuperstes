@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     [Header(DS_Constants.ASSIGNABLE)]
     public GameObject player;
+    public GameObject objectivePrefab;
     public List<Transform> objectiveTransformsList;
     public List<Transform> itemTransformsList;
     public List<Transform> obstacleTransformsList;
@@ -30,6 +31,12 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         startTime = Time.time;
+
+        foreach (Transform transform in objectiveTransformsList)
+        {
+            GameObject go = Instantiate(objectivePrefab, transform);
+            go.transform.SetParent(SingletonManager.Get<ObjectPooler>().transform);
+        }
     }
 
     private void OnEnable()

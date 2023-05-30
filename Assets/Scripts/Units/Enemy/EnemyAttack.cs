@@ -13,7 +13,7 @@ public class EnemyAttack : MonoBehaviour
     
     private void Start()
     {
-        currentDamage = GetComponent<EnemyStat>().damage;
+        currentDamage = GetComponentInParent<EnemyStat>().damage;
         //attackTickSpeed = GetComponent<EnemyStat>().atkSpeed;
     }
 
@@ -22,6 +22,7 @@ public class EnemyAttack : MonoBehaviour
         if (other.gameObject.GetComponent<PlayerStat>())
         {
             // Attack DoT (?)
+            // Debug.Log("Player hit.");
             other.gameObject.GetComponent<PlayerStat>().TakeDamage(currentDamage);
         }
     }

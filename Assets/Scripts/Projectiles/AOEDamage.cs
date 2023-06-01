@@ -7,6 +7,11 @@ using UnityEngine.Serialization;
 
 public class AOEDamage : Projectile
 {
+    [Header(DS_Constants.DO_NOT_ASSIGN)] 
+    private Coroutine dotCoroutine;
+
+    private Collider2D cc2D;
+    
     [Header(DS_Constants.ASSIGNABLE)] 
     [SerializeField] private bool isDestruct;
     [SerializeField] private float tickDamage;
@@ -18,21 +23,35 @@ public class AOEDamage : Projectile
         {
             base.OnEnable();
         }
+        cc2D = GetComponent<CircleCollider2D>();
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (other.GetComponent<EnemyStat>())
         {
+            Debug.Log("OnTriggerEnter");
             Health enemyHealth = other.GetComponent<EnemyStat>().unitHealth;
-            StartCoroutine(DamageOverTime(tickTime, enemyHealth));
+            dotCoroutine = StartCoroutine(DamageOverTime(tickTime, enemyHealth));
         }
     }
-    
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.GetComponent<EnemyStat>())
+        {
+            if (dotCoroutine != null)
+            {
+                Debug.Log("Stop DOT");
+                StopCoroutine(dotCoroutine);
+            }
+        }
+    }
+
     protected virtual IEnumerator DamageOverTime(float time, Health health)
     {
+        Debug.Log("DOT");
         health.Damage(tickDamage);
-        CircleCollider2D cc2D = GetComponent<CircleCollider2D>();
         cc2D.enabled = false;
         yield return new WaitForSeconds(time);
         cc2D.enabled = true;

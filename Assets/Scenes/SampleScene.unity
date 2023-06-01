@@ -736,7 +736,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &131842080
 Transform:
   m_ObjectHideFlags: 0
@@ -2350,15 +2350,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 822389896}
-  - component: {fileID: 822389897}
-  - component: {fileID: 822389898}
-  m_Layer: 6
+  - component: {fileID: 822389899}
+  - component: {fileID: 822389900}
+  m_Layer: 0
   m_Name: RingAoE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &822389896
 Transform:
   m_ObjectHideFlags: 0
@@ -2375,7 +2375,7 @@ Transform:
   m_Father: {fileID: 1014413563}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &822389897
+--- !u!58 &822389899
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2391,7 +2391,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2
---- !u!114 &822389898
+--- !u!114 &822389900
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3150,7 +3150,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1014413559}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6493c16c78b8bd4b86544870a6afe05, type: 3}
   m_Name: 

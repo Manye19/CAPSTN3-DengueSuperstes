@@ -34,6 +34,6 @@ public class PickupManager : MonoBehaviour
 
     private void SpawnPickup(Vector3 pos)
     {
-        GameObject obj = objectPooler.SpawnFromPool(objectPooler.expSO.pool.tag, pos);
+        GameObject obj = objectPooler.SpawnFromPool(objectPooler.expSO.pool.tag, pos, Quaternion.identity);
     }
 }

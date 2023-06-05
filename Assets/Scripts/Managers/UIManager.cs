@@ -7,17 +7,18 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public OnUpdateUIXP onUpdateUIXP = new();
-
     [Header(DS_Constants.DO_NOT_ASSIGN)] 
     
     [Header(DS_Constants.ASSIGNABLE)]
     public GameManager gameManager;
+    public GameObject levelUpPanel;
+    public GameObject gameOverPanel;
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI LevelText;
     public TextMeshProUGUI XPText;
-    public GameObject levelUpPanel;
-    public GameObject gameOverPanel;
+    public TextMeshProUGUI enemyCounterText;
+    
+    public OnUpdateUIXP onUpdateUIXP = new();
     
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class UIManager : MonoBehaviour
     {
         PlayerStat playerStat = SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>();
         UpdateUIXP(playerStat.level, playerStat.currentXP, playerStat.requiredXP);
+        UpdateEnemyCountUI(SingletonManager.Get<GameManager>().enemyCounter);
     }
 
     private void OnEnable()
@@ -41,6 +43,7 @@ public class UIManager : MonoBehaviour
     {
         onUpdateUIXP.RemoveListener(UpdateUIXP);
         gameManager.onLevelUpEvent.RemoveListener(OpenLevelUpUI);
+        gameManager.onPlayerDeath.RemoveListener(PlayerDeathUI);
     }
 
     private void PlayerDeathUI()
@@ -52,6 +55,11 @@ public class UIManager : MonoBehaviour
     {
         LevelText.text = "Lvl: " + level;
         XPText.text = "XP: " + currentXP + " / " + requiredXP;
+    }
+
+    public void UpdateEnemyCountUI(int enemyCount)
+    {
+        enemyCounterText.text = "Enemy Count: " + enemyCount;
     }
 
     private void OpenLevelUpUI(bool p_bool)

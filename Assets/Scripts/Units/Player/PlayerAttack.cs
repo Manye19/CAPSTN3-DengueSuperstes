@@ -34,7 +34,7 @@ public class PlayerAttack : MonoBehaviour
         while (attacking)
         {
             yield return new WaitForSeconds(currentAttackSpeed);
-            objectPooler.SpawnFromPool(objectPooler.playerWhipSO.pool.tag, attackPositions[0].position);
+            objectPooler.SpawnFromPool(objectPooler.playerWhipSO.pool.tag, attackPositions[0].position, Quaternion.identity);
         }
         yield return null;
     }

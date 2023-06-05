@@ -11,16 +11,19 @@ public class GameManager : MonoBehaviour
     [Header(DS_Constants.DO_NOT_ASSIGN)]
     private float startTime;
     private bool timerActive = false;
+    public int enemyCounter;
 
     [Header(DS_Constants.ASSIGNABLE)]
     public GameObject player;
+    public GameObject playerGarlic;
+    public GameObject playerSantaWaterSpawner;
     public GameObject objectivePrefab;
     public List<Transform> objectiveTransformsList;
-    public List<Transform> itemTransformsList;
-    public List<Transform> obstacleTransformsList;
 
     public OnLevelUpEvent onLevelUpEvent = new();
     public OnDeathEvent onPlayerDeath = new();
+    public OnEnemySpawn onEnemySpawn = new();
+    public OnDeathEvent onEnemyKill = new();
     
     private void Awake()
     {
@@ -43,12 +46,16 @@ public class GameManager : MonoBehaviour
     {
         onLevelUpEvent.AddListener(PauseGameTime);
         onPlayerDeath.AddListener(PauseOnPlayerDeath);
+        onEnemySpawn.AddListener(AddOnEnemySpawn);
+        onEnemyKill.AddListener(DecrementOnEnemyKill);
     }
 
     private void OnDisable()
     {
         onLevelUpEvent.RemoveListener(PauseGameTime);
         onPlayerDeath.RemoveListener(PauseOnPlayerDeath);
+        onEnemySpawn.RemoveListener(AddOnEnemySpawn);
+        onEnemyKill.AddListener(DecrementOnEnemyKill);
     }
 
     private void Update()
@@ -74,6 +81,18 @@ public class GameManager : MonoBehaviour
     public void PauseOnPlayerDeath()
     {
         Time.timeScale = 0;
+    }
+
+    public void AddOnEnemySpawn()
+    {
+        enemyCounter++;
+        SingletonManager.Get<UIManager>().UpdateEnemyCountUI(enemyCounter);
+    }
+
+    public void DecrementOnEnemyKill()
+    {
+        enemyCounter--;
+        SingletonManager.Get<UIManager>().UpdateEnemyCountUI(enemyCounter);
     }
 
     public void GameReset()

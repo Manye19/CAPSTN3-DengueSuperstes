@@ -5,6 +5,9 @@ using UnityEngine.Events;
 
 public class OnDeathEvent : UnityEvent { };
 public class OnUpdateUIXP : UnityEvent<int, float, float> { };
+
+public class OnEnemySpawn : UnityEvent { };
+
 public class OnExpDrop : UnityEvent<Vector3> { };
 public class OnLevelUpEvent : UnityEvent<bool> { };
 public class InteractEvent : UnityEvent { };

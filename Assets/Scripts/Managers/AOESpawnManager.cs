@@ -10,8 +10,8 @@ public class AOESpawnManager : MonoBehaviour
 
     [Header(DS_Constants.ASSIGNABLE)]
     [SerializeField] private Transform[] AOETransforms;
-    //[SerializeField] private 
-    
+    [SerializeField] private float AOETimer;
+
     private void Start()
     {
         objectPooler = SingletonManager.Get<ObjectPooler>();
@@ -24,7 +24,7 @@ public class AOESpawnManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(AOETimer);
             SpawnAOE();
         }
     }
@@ -34,7 +34,7 @@ public class AOESpawnManager : MonoBehaviour
         for (int i = 0; i < AOETransforms.Length; i++)
         {
             objectPooler.SpawnFromPool(objectPooler.playerSantaWaterSO.pool.tag, 
-                new Vector3(AOETransforms[i].position.x, AOETransforms[i].position.y, 0f));
+                new Vector3(AOETransforms[i].position.x, AOETransforms[i].position.y, 0f), Quaternion.identity);
         }
     }
 }

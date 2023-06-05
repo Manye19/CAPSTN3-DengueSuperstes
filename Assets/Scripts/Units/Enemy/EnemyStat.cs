@@ -9,6 +9,7 @@ public class EnemyStat : Stat
     {
         // Drop EXP pickup on death.
         SingletonManager.Get<PickupManager>().onExpDrop.Invoke(transform.position);
+        SingletonManager.Get<GameManager>().onEnemyKill.Invoke();
         base.Death();
     }
 }

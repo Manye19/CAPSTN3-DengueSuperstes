@@ -20,12 +20,24 @@ public class EnemyMovement : MonoBehaviour
         targetPos = player.transform.position;
         currentSpeed = GetComponent<EnemyStat>().movementSpeed;
         StartCoroutine(UpdatePlayerLocation());
+        
+        // lags at 100+ entities because physics messes up when they collide at each other
+        // StartCoroutine(Move()); 
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         // Get and set UPDATED speed (int) from EnemyStat class or Spawner class
         transform.position = Vector2.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime); // temporary for now
+    }
+
+    private IEnumerator Move()
+    {
+        while (true)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime); // temporary for now
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 
     private IEnumerator UpdatePlayerLocation()

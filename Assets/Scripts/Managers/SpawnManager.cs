@@ -65,49 +65,58 @@ public class SpawnManager : MonoBehaviour
                     player.transform.position.x + Mathf.Cos(angle) * spawnRadius,
                     player.transform.position.y + Mathf.Sin(angle) * spawnRadius
                 );
-                objectPooler.SpawnFromPool(objectPooler.baseEnemySO.pool.tag, spawnPosition);
+                objectPooler.SpawnFromPool(objectPooler.baseEnemySO.pool.tag, spawnPosition, Quaternion.identity);
+                
+                // EnemyCounter++
+                SingletonManager.Get<GameManager>().onEnemySpawn.Invoke();
             }
         }
-
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
-            if (playerRb.velocity.x >= 1) // D
+            if (playerRb.velocity.x >= 1)
             {
                 RandBoxCountdown(rightColliders);
             }
-            else if (playerRb.velocity.x <= -1) // A
+            else if (playerRb.velocity.x <= -1)
             {
                 RandBoxCountdown(rightColliders);
             }
-            else if (playerRb.velocity.y >= 1) // W
+            else if (playerRb.velocity.y >= 1)
             {
                 RandBoxCountdown(upColliders);
             }
-            else if (playerRb.velocity.y <= -1) // S
+            else if (playerRb.velocity.y <= -1)
             {
                 RandBoxCountdown(bottomColliders);
             }
-            else if (playerRb.velocity is { x: >= 1, y: >= 1 }) // D-W
+            else
             {
+                ResetVariables();
+            }
+            
+            if (playerRb.velocity is { x: >= 1, y: >= 1 })
+            {
+                //Debug.Log("W-D");
                 RandBoxCountdown(upperRightColliders);
             }
-            else if (playerRb.velocity is { x: <= -1, y: >= 1 }) // A-W
+            else if (playerRb.velocity is { x: <= -1, y: >= 1 })
             {
-                RandBoxCountdown(upperLeftColliders);
+                //Debug.Log("W-A");
+                RandBoxCountdown(upperRightColliders);
             }
-            else if (playerRb.velocity is { x: >= 1, y: <= -1 }) // D-S
+            else if (playerRb.velocity is { x: >= 1, y: <= -1 })
             {
+                //Debug.Log("S-D");
                 RandBoxCountdown(bottomRightColliders);
             }
-            else if (playerRb.velocity is { x: <= -1, y: <= -1 }) // A-S
+            else if (playerRb.velocity is { x: <= -1, y: <= -1 })
             {
-                RandBoxCountdown(bottomLeftColliders);
+                //Debug.Log("S-A");
+                RandBoxCountdown(bottomRightColliders);
             }
             else
             {
-                bC2D = null;
-                isHoldingDownKey = false;
-                buttonDownCounter = buttonHoldDownTime;
+                ResetVariables();
             }
         }
     }
@@ -119,6 +128,9 @@ public class SpawnManager : MonoBehaviour
             float randNum = Random.Range(spawnTimerMin, spawnTimerMax);
             yield return new WaitForSeconds(randNum);
             SpawnEnemy();
+            
+            // EnemyCounter++
+            SingletonManager.Get<GameManager>().onEnemySpawn.Invoke();
         }
     }
 
@@ -134,7 +146,7 @@ public class SpawnManager : MonoBehaviour
             spawnPos = GetRandBoxDirPos(bC2D);
         }
 
-        GameObject obj = objectPooler.SpawnFromPool(objectPooler.baseEnemySO.pool.tag, spawnPos);
+        GameObject obj = objectPooler.SpawnFromPool(objectPooler.baseEnemySO.pool.tag, spawnPos, Quaternion.identity);
         
         // Update movement speed sample script
         // obj.GetComponent<EnemyMovement>().UpdateMovementSpeed(obj.GetComponent<EnemyStat>().movementSpeed);
@@ -176,6 +188,13 @@ public class SpawnManager : MonoBehaviour
             isHoldingDownKey = true;
             bC2D = GetRandBoxCollider(boxCollider2Ds);
         }
+    }
+
+    private void ResetVariables()
+    {
+        bC2D = null;
+        isHoldingDownKey = false;
+        buttonDownCounter = buttonHoldDownTime;
     }
     #endregion
 }

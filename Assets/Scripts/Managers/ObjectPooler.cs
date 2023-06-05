@@ -12,6 +12,7 @@ public class ObjectPooler : MonoBehaviour
     [Header("Pool Scriptable Objects")]
     public ProjectileScriptableObject playerWhipSO;
     public ProjectileScriptableObject playerSantaWaterSO;
+    public ProjectileScriptableObject playerDaggerSO;
     public EnemyScriptableObject baseEnemySO;
     public PickupScriptableObject expSO;
 
@@ -34,7 +35,7 @@ public class ObjectPooler : MonoBehaviour
         poolDictionary.Add(poolSO.pool.tag, objectPool);
     }
     
-    public GameObject SpawnFromPool(string tag, Vector3 position)
+    public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
     {
         if (!poolDictionary.ContainsKey(tag))
         {
@@ -44,6 +45,7 @@ public class ObjectPooler : MonoBehaviour
         GameObject objectToSpawn = poolDictionary[tag].Dequeue();
         objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
+        objectToSpawn.transform.rotation = rotation;
         poolDictionary[tag].Enqueue(objectToSpawn);
         return objectToSpawn;
     }

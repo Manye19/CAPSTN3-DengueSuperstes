@@ -8,8 +8,7 @@ public class PlayerStat : Stat
     protected override void Death()
     {
         base.Death();
-        GameManager gameManager = SingletonManager.Get<GameManager>();
-        gameManager.onPlayerDeath.Invoke();
+        unitHealth.onDeathEvent.Invoke();
     }
     
     public override void GainExperienceFlatRate(float xpGained)

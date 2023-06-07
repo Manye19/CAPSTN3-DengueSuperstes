@@ -25,7 +25,7 @@ public class Interacter : MonoBehaviour
         if (canInteract)
         {
             canInteract = false;
-            iObject?.onInteractEvent.Invoke();
+            iObject?.onInteractEvent.Invoke(iObject.gameObject);
             //Debug.Log("Button pressed");
             //StartCoroutine(Cooldown());
             canInteract = true;

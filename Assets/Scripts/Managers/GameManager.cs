@@ -12,40 +12,46 @@ public class GameManager : MonoBehaviour
     private float startTime;
     private bool timerActive = false;
     public int enemyCounter;
-
+    public int objectiveCounter;
+    
     [Header(DS_Constants.ASSIGNABLE)]
     public GameObject player;
     public GameObject playerGarlic;
     public GameObject playerSantaWaterSpawner;
     public GameObject objectivePrefab;
     public List<Transform> objectiveTransformsList;
+    public List<GameObject> objectiveGos;
 
+    public OnPlayerWinEvent onPlayerWinEvent = new();
     public OnLevelUpEvent onLevelUpEvent = new();
-    public OnDeathEvent onPlayerDeath = new();
     public OnEnemySpawn onEnemySpawn = new();
     public OnDeathEvent onEnemyKill = new();
     
     private void Awake()
     {
         SingletonManager.Register(this);
+        
+        // Spawn Objectives
+        foreach (Transform transform in objectiveTransformsList)
+        {
+            GameObject go = Instantiate(objectivePrefab, transform);
+            go.transform.SetParent(SingletonManager.Get<ObjectPooler>().transform);
+            go.transform.GetChild(0).GetComponent<IO_Pool>().onInteractEvent.AddListener(OnPlayerWin);
+            objectiveGos.Add(go);
+            objectiveCounter++;
+        }
     }
 
     private void Start()
     {
         Time.timeScale = 1;
         startTime = Time.time;
-
-        foreach (Transform transform in objectiveTransformsList)
-        {
-            GameObject go = Instantiate(objectivePrefab, transform);
-            go.transform.SetParent(SingletonManager.Get<ObjectPooler>().transform);
-        }
     }
 
     private void OnEnable()
     {
         onLevelUpEvent.AddListener(PauseGameTime);
-        onPlayerDeath.AddListener(PauseOnPlayerDeath);
+        player.GetComponent<PlayerStat>().unitHealth.onDeathEvent.AddListener(OnPlayerLose);
         onEnemySpawn.AddListener(AddOnEnemySpawn);
         onEnemyKill.AddListener(DecrementOnEnemyKill);
     }
@@ -53,9 +59,14 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         onLevelUpEvent.RemoveListener(PauseGameTime);
-        onPlayerDeath.RemoveListener(PauseOnPlayerDeath);
+        player.GetComponent<PlayerStat>().unitHealth.onDeathEvent.RemoveListener(OnPlayerLose);
         onEnemySpawn.RemoveListener(AddOnEnemySpawn);
         onEnemyKill.AddListener(DecrementOnEnemyKill);
+        
+        foreach (GameObject go in objectiveGos)
+        {
+            go.transform.GetChild(0).GetComponent<IO_Pool>().onInteractEvent.RemoveListener(OnPlayerWin);
+        }
     }
 
     private void Update()
@@ -78,7 +89,20 @@ public class GameManager : MonoBehaviour
         //Time.timeScale = Time.timeScale >= 1 ? 0 : 1;
     }
 
-    public void PauseOnPlayerDeath()
+    private void OnPlayerWin(GameObject go)
+    {
+        //Debug.Log("Objective turned off.");
+        objectiveCounter--;
+        go.GetComponent<IO_Pool>().onInteractEvent.RemoveListener(OnPlayerWin);
+        if (objectiveCounter <= 0)
+        {
+            //Debug.Log("Player wins!");
+            onPlayerWinEvent.Invoke();
+            Time.timeScale = 0;
+        }
+    }
+
+    private void OnPlayerLose()
     {
         Time.timeScale = 0;
     }

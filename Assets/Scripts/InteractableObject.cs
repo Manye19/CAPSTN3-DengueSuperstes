@@ -23,7 +23,7 @@ public class InteractableObject : MonoBehaviour
         onInteractEvent.RemoveListener(OnInteract);
     }
 
-    protected virtual void OnInteract()
+    protected virtual void OnInteract(GameObject go)
     {
         
     }

@@ -30,7 +30,7 @@ public class AOEDamage : Projectile
     {
         if (other.GetComponent<EnemyStat>())
         {
-            Debug.Log("OnTriggerEnter");
+            //Debug.Log("OnTriggerEnter");
             Health enemyHealth = other.GetComponent<EnemyStat>().unitHealth;
             dotCoroutine = StartCoroutine(DamageOverTime(tickTime, enemyHealth));
         }
@@ -42,7 +42,7 @@ public class AOEDamage : Projectile
         {
             if (dotCoroutine != null)
             {
-                Debug.Log("Stop DOT");
+                //Debug.Log("Stop DOT");
                 StopCoroutine(dotCoroutine);
             }
         }
@@ -50,7 +50,7 @@ public class AOEDamage : Projectile
 
     protected virtual IEnumerator DamageOverTime(float time, Health health)
     {
-        Debug.Log("DOT");
+        //Debug.Log("DOT");
         health.Damage(tickDamage);
         cc2D.enabled = false;
         yield return new WaitForSeconds(time);

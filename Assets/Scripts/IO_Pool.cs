@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class IO_Pool : InteractableObject
 {
-    protected override void OnInteract()
+    protected override void OnInteract(GameObject go)
     {
         gameObject.SetActive(false);
-        // Event call
     }
 }

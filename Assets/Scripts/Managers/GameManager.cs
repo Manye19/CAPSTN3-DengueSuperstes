@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         onLevelUpEvent.RemoveListener(PauseGameTime);
-        player.GetComponent<PlayerStat>().unitHealth.onDeathEvent.RemoveListener(OnPlayerLose);
+        player?.GetComponent<PlayerStat>().unitHealth.onDeathEvent.RemoveListener(OnPlayerLose);
         onEnemySpawn.RemoveListener(AddOnEnemySpawn);
         onEnemyKill.AddListener(DecrementOnEnemyKill);
         

@@ -38,9 +38,8 @@ public class MainMenuManager : MonoBehaviour
     {
         // insert to go to the game itself
         Debug.Log("Going to Game!");
-
-        SceneManager.LoadScene("SampleScene"); // change inner parameter of this after changes
         
+        SceneManager.LoadScene(1); // change inner parameter of this after changes
     }
 
     public void OnSettingsButtonPressed()

@@ -28,10 +28,10 @@ public class AOEDamage : Projectile
 
     protected override void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<EnemyStat>())
+        if (other.TryGetComponent(out EnemyStat enemyStat))
         {
             //Debug.Log("OnTriggerEnter");
-            Health enemyHealth = other.GetComponent<EnemyStat>().unitHealth;
+            Health enemyHealth = enemyStat.unitHealth;
             dotCoroutine = StartCoroutine(DamageOverTime(tickTime, enemyHealth));
         }
     }

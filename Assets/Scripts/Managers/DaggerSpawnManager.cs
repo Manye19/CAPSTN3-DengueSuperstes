@@ -14,7 +14,7 @@ public class DaggerSpawnManager : MonoBehaviour
     [SerializeField] private Transform[] daggerTransforms;
     [SerializeField] private Transform spawnT;
 
-    private void Start()
+    private void OnEnable()
     {
         objectPooler = SingletonManager.Get<ObjectPooler>();
         objectPooler.CreatePool(objectPooler.playerDaggerSO);

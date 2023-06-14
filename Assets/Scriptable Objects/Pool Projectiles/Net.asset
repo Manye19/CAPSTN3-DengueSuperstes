@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b174559d3511f2a4bb58f1c73682f2be, type: 3}
-  m_Name: Whip
+  m_Script: {fileID: 11500000, guid: 1e4f61d17189b4d47b54c073d37eff5b, type: 3}
+  m_Name: Net
   m_EditorClassIdentifier: 
   pool:
-    tag: Whip
-    prefab: {fileID: 523112644151320649, guid: f5ab19a8ba5158c4cabac8cb708ada62, type: 3}
-    size: 4
+    tag: Net
+    prefab: {fileID: 523112644151320649, guid: e88d557fe4f34dc479b3bb8410193229, type: 3}
+    size: 8

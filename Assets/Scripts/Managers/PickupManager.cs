@@ -16,17 +16,17 @@ public class PickupManager : MonoBehaviour
         SingletonManager.Register(this);
     }
 
+    private void OnEnable()
+    {
+        onExpDrop.AddListener(SpawnPickup);
+    }
+    
     private void Start()
     {
         objectPooler = SingletonManager.Get<ObjectPooler>();
         objectPooler.CreatePool(objectPooler.expSO);
     }
-
-    private void OnEnable()
-    {
-        onExpDrop.AddListener(SpawnPickup);
-    }
-
+    
     private void OnDisable()
     {
         onExpDrop.RemoveListener(SpawnPickup);

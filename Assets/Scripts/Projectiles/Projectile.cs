@@ -6,10 +6,9 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [Header(DS_Constants.DO_NOT_ASSIGN)]
-    [SerializeField] protected float projectileDamage;
-
     [Header(DS_Constants.ASSIGNABLE)]
+    public float projectileSpeed;
+    [SerializeField] protected float projectileDamage;
     [SerializeField] protected float selfDestructTimer;
     
     protected virtual void OnEnable()
@@ -21,6 +20,7 @@ public class Projectile : MonoBehaviour
     private IEnumerator SelfDestructTimer()
     {
         yield return new WaitForSeconds(selfDestructTimer);
+        //Debug.Log("Self Destruct Projectile.");
         gameObject.SetActive(false);
     }
 
@@ -34,7 +34,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public virtual void UpdateProjectileDamage()
+    protected virtual void UpdateProjectileDamage()
     {
         projectileDamage = SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>().damage;
     }

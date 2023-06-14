@@ -35,7 +35,7 @@ public class AOEDamage : Projectile
     {
         if (other.TryGetComponent(out EnemyStat enemyStat))
         {
-            enemyStat.StopDot();
+            enemyStat.StopDoT();
         }
     }
 }

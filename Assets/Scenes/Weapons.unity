@@ -879,7 +879,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1888669173}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: PauseGameTime
+        m_MethodName: OnPauseGameTime
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4133,7 +4133,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1888669173}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: PauseGameTime
+        m_MethodName: OnPauseGameTime
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5527,7 +5527,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1888669173}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: PauseGameTime
+        m_MethodName: OnPauseGameTime
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

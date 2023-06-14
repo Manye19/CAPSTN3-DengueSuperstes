@@ -16,7 +16,6 @@ public class AOESpawnManager : MonoBehaviour
     {
         objectPooler = SingletonManager.Get<ObjectPooler>();
         objectPooler.CreatePool(objectPooler.playerSantaWaterSO);
-        
         StartCoroutine(SpawnCoroutine());
     }
 

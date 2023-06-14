@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b174559d3511f2a4bb58f1c73682f2be, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e4f61d17189b4d47b54c073d37eff5b, type: 3}
   m_Name: SantaWater
   m_EditorClassIdentifier: 
   pool:
-    tag: SantaWater
+    tag: Santa Water
     prefab: {fileID: 7996361823777485266, guid: 0251abeb20fc19744bb1e5c9b2a65077, type: 3}
-    size: 30
+    size: 3

@@ -9,9 +9,11 @@ public class UIManager : MonoBehaviour
 {
     [Header(DS_Constants.DO_NOT_ASSIGN)] 
     private PlayerStat playerStat;
+    public bool isMenuOpen;
     
     [Header(DS_Constants.ASSIGNABLE)]
     public GameManager gameManager;
+    public GameObject pausePanel;
     public GameObject levelUpPanel;
     public GameObject gameWinPanel;
     public GameObject gameOverPanel;
@@ -30,6 +32,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        isMenuOpen = false;
         playerStat = SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>();
         UpdateXPUI(playerStat.level, playerStat.currentXP, playerStat.requiredXP);
         UpdateEnemyCountUI(SingletonManager.Get<GameManager>().enemyCounter);
@@ -44,6 +47,7 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         onUpdateUIXP.AddListener(UpdateXPUI);
+        gameManager.onGamePauseEvent.AddListener(PauseUI);
         gameManager.onLevelUpEvent.AddListener(OpenLevelUpUI);
         gameManager.onPlayerWinEvent.AddListener(PlayerWinUI);
         gameManager.player.GetComponent<PlayerStat>().unitHealth.onDeathEvent.AddListener(PlayerLoseUI);
@@ -52,6 +56,7 @@ public class UIManager : MonoBehaviour
     private void OnDisable()
     {
         onUpdateUIXP.RemoveListener(UpdateXPUI);
+        gameManager.onGamePauseEvent.RemoveListener(PauseUI);
         gameManager.onLevelUpEvent.RemoveListener(OpenLevelUpUI);
         gameManager.onPlayerWinEvent.RemoveListener(PlayerWinUI);
         gameManager.player?.GetComponent<PlayerStat>().unitHealth.onDeathEvent.RemoveListener(PlayerLoseUI);
@@ -65,15 +70,23 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void PauseUI(bool p_bool)
+    {
+        pausePanel.SetActive(p_bool);
+        //isMenuOpen = p_bool;
+    }
+    
     private void PlayerWinUI()
     {
         gameWinPanel.SetActive(true);
+        isMenuOpen = true;
     }
     
     private void PlayerLoseUI()
     {
         gameOverPanel.SetActive(true);
-    }
+        isMenuOpen = false;
+    }    
 
     private void UpdateObjectivesUI(GameObject ioPoolGameObject)
     {
@@ -93,8 +106,9 @@ public class UIManager : MonoBehaviour
         enemyCounterText.text = "Enemy Count: " + enemyCount;
     }
 
-    private void OpenLevelUpUI(bool p_bool)
+    public void OpenLevelUpUI(bool p_bool)
     {
         levelUpPanel.SetActive(p_bool);
+        isMenuOpen = p_bool;
     }
 }

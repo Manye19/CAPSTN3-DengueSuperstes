@@ -18,7 +18,7 @@ public class PlayerStat : Stat
         uiManager.onUpdateUIXP.Invoke(level, currentXP, requiredXP);
     }
 
-    public override void GainExperienceScalable(float xpGained, int playerLevel, int enemyLevel)
+    protected override void GainExperienceScalable(float xpGained, int playerLevel, int enemyLevel)
     {
         base.GainExperienceScalable(xpGained, playerLevel, enemyLevel);
         UIManager uiManager = SingletonManager.Get<UIManager>();

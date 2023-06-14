@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+public class OnGamePauseEvent : UnityEvent<bool> { };
+
 public class OnPlayerWinEvent : UnityEvent { };
 public class OnDeathEvent : UnityEvent { };
 public class OnUpdateUIXP : UnityEvent<int, float, float> { };

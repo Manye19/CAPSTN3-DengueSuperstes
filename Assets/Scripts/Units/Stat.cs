@@ -44,13 +44,13 @@ public class Stat : MonoBehaviour
         unitHealth.onDeathEvent.RemoveListener(Death);
     }
     
-    public virtual void TakeDamage(float amount)
+    public void TakeDamage(float amount)
     {
         //Debug.Log("Damage!");
         unitHealth.Damage(amount);
     }
 
-    public virtual IEnumerator TakeDamageOverTime(float damage, float time)
+    private IEnumerator TakeDamageOverTime(float damage, float time)
     {
         // Loop this
         while (true)
@@ -60,13 +60,13 @@ public class Stat : MonoBehaviour
         }
     }
 
-    public virtual void StartDoT(float damage, float time)
+    public void StartDoT(float damage, float time)
     {
         dotCoroutine = StartCoroutine(TakeDamageOverTime(damage, time));
         //Debug.Log(dotCoroutine + " start!");
     }
 
-    public virtual void StopDot()
+    public void StopDoT()
     {
         if (dotCoroutine != null)
         {
@@ -80,7 +80,7 @@ public class Stat : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public virtual void Heal(float amount)
+    public void Heal(float amount)
     {
         unitHealth.Heal(amount);
     }
@@ -95,7 +95,7 @@ public class Stat : MonoBehaviour
         }
     }
 
-    public virtual void GainExperienceScalable(float xpGained, int playerLevel, int enemyLevel)
+    protected virtual void GainExperienceScalable(float xpGained, int playerLevel, int enemyLevel)
     {
         float multiplier = 1;
         if (playerLevel < enemyLevel)

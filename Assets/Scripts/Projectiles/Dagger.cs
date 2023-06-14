@@ -6,14 +6,11 @@ using UnityEngine;
 
 public class Dagger : Projectile
 {
-    public float speed;
-    public float damage;
-
     protected override void OnTriggerEnter2D(Collider2D col)
     {
         if (col.TryGetComponent(out EnemyStat enemyStat))
         {
-            enemyStat.TakeDamage(damage);
+            enemyStat.TakeDamage(projectileDamage);
             gameObject.SetActive(false);
         }
     }

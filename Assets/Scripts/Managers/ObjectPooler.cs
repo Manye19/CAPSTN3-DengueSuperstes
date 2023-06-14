@@ -10,9 +10,9 @@ public class ObjectPooler : MonoBehaviour
     
     [Header("===== Editor: Assignable =====")]
     [Header("Pool Scriptable Objects")]
-    public ProjectileScriptableObject playerWhipSO;
-    public ProjectileScriptableObject playerSantaWaterSO;
-    public ProjectileScriptableObject playerDaggerSO;
+    public SO_PoolProjectile playerWhipSO;
+    public SO_PoolProjectile playerSantaWaterSO;
+    public SO_PoolProjectile playerDaggerSO;
     public EnemyScriptableObject baseEnemySO;
     public PickupScriptableObject expSO;
 
@@ -22,7 +22,7 @@ public class ObjectPooler : MonoBehaviour
         SingletonManager.Register(this);
     }
 
-    public void CreatePool(PoolScriptableObject poolSO)
+    public void CreatePool(SO_Pool poolSO)
     {
         Queue<GameObject> objectPool = new Queue<GameObject>();
         for (int i = 0; i < poolSO.pool.size; i++)

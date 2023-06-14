@@ -1,17 +1,15 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class Dagger : Projectile
+public class Net : Projectile
 {
     public float speed;
     public float damage;
 
-    protected override void OnTriggerEnter2D(Collider2D col)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (col.TryGetComponent(out EnemyStat enemyStat))
+        if (collision.TryGetComponent(out EnemyStat enemyStat))
         {
             enemyStat.TakeDamage(damage);
             gameObject.SetActive(false);

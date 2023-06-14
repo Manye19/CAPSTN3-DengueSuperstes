@@ -38,7 +38,7 @@ public class DaggerSpawnManager : MonoBehaviour
             {
                 spawnT = daggerTransforms[2];
             }
-            else if (Input.GetAxis("Vertical") > 0)
+            else if (Input.GetAxis("Vertical") < 0)
             {
                 spawnT = daggerTransforms[3];
             }

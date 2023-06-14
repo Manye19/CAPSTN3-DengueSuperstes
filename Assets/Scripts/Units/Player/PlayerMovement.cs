@@ -33,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
         Vector2 movement = new Vector2(this.movement.x, this.movement.y).normalized;
         rb.AddForce(movement * currentSpeed);
 
+        //Debug.Log(rb.velocity.normalized);
+        
         if (movement.x > 0 && !isFacingRight)
         {
             Flip();

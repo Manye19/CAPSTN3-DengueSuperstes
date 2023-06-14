@@ -15,7 +15,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private Rigidbody2D playerRb;
     [SerializeField] private bool isHoldingDownKey;
     [SerializeField] private float buttonDownCounter;
-    [SerializeField] private BoxCollider2D bC2D;
+    [SerializeField] private BoxCollider2D boxCollider2D;
     
     // Spawning Around Player Variables
     private int numberOfObjects = 20;
@@ -26,6 +26,7 @@ public class SpawnManager : MonoBehaviour
     [Header(DS_Constants.ASSIGNABLE)]
     public float spawnTimerMin;
     public float spawnTimerMax;
+    
     public float buttonHoldDownTime;
     public BoxCollider2D[] spawnColliders;
     public BoxCollider2D[] leftColliders;
@@ -39,6 +40,8 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
+        ResetVariables();
+        
         // Get player reference
         player = SingletonManager.Get<GameManager>().player;
         playerRb = player.GetComponent<Rigidbody2D>();
@@ -66,61 +69,199 @@ public class SpawnManager : MonoBehaviour
                     player.transform.position.y + Mathf.Sin(angle) * spawnRadius
                 );
                 objectPooler.SpawnFromPool(objectPooler.baseEnemySO.pool.tag, spawnPosition, Quaternion.identity);
-                
+
                 // EnemyCounter++
                 SingletonManager.Get<GameManager>().onEnemySpawn.Invoke();
             }
         }
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+
+        if (Input.anyKey)
+        {
+            switch (playerRb.velocity.normalized)
+            {
+                case { x: > 0, y: > 0 }:
+                    RandBoxCountdown(upperRightColliders);
+                    break;
+                case { x: < 0, y: > 0 }:
+                    RandBoxCountdown(upperRightColliders);
+                    break;
+                case { x: < 0, y: < 0 }:
+                    RandBoxCountdown(bottomRightColliders);
+                    break;
+                case { x: > 0, y: < 0 }:
+                    RandBoxCountdown(bottomRightColliders);
+                    break;
+                case { x: > 0, y: 0 }:
+                    RandBoxCountdown(rightColliders);
+                    break;
+                case { x: 0, y: > 0 }:
+                    RandBoxCountdown(upColliders);
+                    break;
+                case { x: < 0, y: 0 }:
+                    RandBoxCountdown(rightColliders);
+                    break;
+                case { x: 0, y: < 0 }:
+                    RandBoxCountdown(bottomColliders);
+                    break;
+                /*case {x: 0, y: 0}:
+                    ResetVariables();
+                    break;
+                default:
+                    ResetVariables();
+                    break;*/
+            }
+        }
+        else if (Input.GetKeyUp(KeyCode.W)
+            || Input.GetKeyUp(KeyCode.A)
+            || Input.GetKeyUp(KeyCode.S)
+            || Input.GetKeyUp(KeyCode.D))
+        {
+            ResetVariables();
+        }
+
+        /*if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
+        {
+            RandBoxCountdown(upperRightColliders);
+        }
+        else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
+        {
+            RandBoxCountdown(upperRightColliders);
+        }
+        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
+        {
+            RandBoxCountdown(bottomRightColliders);
+        }
+        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
+        {
+            RandBoxCountdown(bottomRightColliders);
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            RandBoxCountdown(rightColliders);
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            RandBoxCountdown(rightColliders);
+        }
+        else if (Input.GetKey(KeyCode.W))
+        {
+            RandBoxCountdown(upColliders);
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            RandBoxCountdown(bottomColliders);
+        }
+        else if (Input.GetKeyUp(KeyCode.W)
+                 || Input.GetKeyUp(KeyCode.A)
+                 || Input.GetKeyUp(KeyCode.S)
+                 || Input.GetKeyUp(KeyCode.D))
+        {
+            ResetVariables();
+        }*/
+        //if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0) return;
+        /*if (Input.GetAxis("Horizontal") > 0 && Input.GetAxis("Vertical") > 0)
+        {
+            //Debug.Log("up-right");
+            RandBoxCountdown(upperRightColliders);
+        }
+        else if (Input.GetAxis("Horizontal") < 0 && Input.GetAxis("Vertical") > 0)
+        {
+            //Debug.Log("up-left");
+            RandBoxCountdown(upperRightColliders);
+        }
+        else if (Input.GetAxis("Horizontal") > 0 && Input.GetAxis("Vertical") < 0)
+        {
+            //Debug.Log("down-right");
+            RandBoxCountdown(bottomRightColliders);
+        }
+        else if (Input.GetAxis("Horizontal") < 0 && Input.GetAxis("Vertical") < 0)
+        {
+            //Debug.Log("down-left");
+            RandBoxCountdown(bottomRightColliders);
+        }
+        else if (Input.GetAxis("Horizontal") > 0)
+        {
+            //Debug.Log("right");
+            RandBoxCountdown(rightColliders);
+        }
+        else if (Input.GetAxis("Horizontal") < 0)
+        {
+            //Debug.Log("left");
+            RandBoxCountdown(rightColliders);
+        }
+        else if (Input.GetAxis("Vertical") > 0)
+        {
+            //Debug.Log("up");
+            RandBoxCountdown(upColliders);
+        }
+        else if (Input.GetAxis("Vertical") < 0)
+        {
+            //Debug.Log("down");
+            RandBoxCountdown(bottomColliders);
+        }
+        else if (Input.GetAxis("Horizontal") == 0 || Input.GetAxis("Vertical") == 0)
+        {
+            //Debug.Log("Reset");
+            ResetVariables();
+        }*/
+        /*if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             if (playerRb.velocity.x >= 1)
             {
+                CacheVelocity(playerRb.velocity.x, playerRb.velocity.y);
                 RandBoxCountdown(rightColliders);
             }
             else if (playerRb.velocity.x <= -1)
             {
+                CacheVelocity(playerRb.velocity.x, playerRb.velocity.y);
                 RandBoxCountdown(rightColliders);
             }
             else if (playerRb.velocity.y >= 1)
             {
+                CacheVelocity(playerRb.velocity.x, playerRb.velocity.y);
                 RandBoxCountdown(upColliders);
             }
             else if (playerRb.velocity.y <= -1)
             {
+                CacheVelocity(playerRb.velocity.x, playerRb.velocity.y);
                 RandBoxCountdown(bottomColliders);
             }
-            else
+            else if (playerRb.velocity is { x: 0, y: 0 })
             {
                 ResetVariables();
             }
-            
+
             if (playerRb.velocity is { x: >= 1, y: >= 1 })
             {
                 //Debug.Log("W-D");
+                CacheVelocity(playerRb.velocity.x, playerRb.velocity.y);
                 RandBoxCountdown(upperRightColliders);
             }
             else if (playerRb.velocity is { x: <= -1, y: >= 1 })
             {
                 //Debug.Log("W-A");
+                CacheVelocity(playerRb.velocity.x, playerRb.velocity.y);
                 RandBoxCountdown(upperRightColliders);
             }
             else if (playerRb.velocity is { x: >= 1, y: <= -1 })
             {
                 //Debug.Log("S-D");
+                CacheVelocity(playerRb.velocity.x, playerRb.velocity.y);
                 RandBoxCountdown(bottomRightColliders);
             }
             else if (playerRb.velocity is { x: <= -1, y: <= -1 })
             {
                 //Debug.Log("S-A");
+                CacheVelocity(playerRb.velocity.x, playerRb.velocity.y);
                 RandBoxCountdown(bottomRightColliders);
             }
-            else
+            else if (playerRb.velocity is { x: 0, y: 0 })
             {
                 ResetVariables();
-            }
-        }
+            }           
+        }*/
     }
-
+    
     private IEnumerator SpawnCoroutine()
     {
         while (true)
@@ -143,7 +284,7 @@ public class SpawnManager : MonoBehaviour
         }
         else
         {
-            spawnPos = GetRandBoxDirPos(bC2D);
+            spawnPos = GetRandBoxDirPos(boxCollider2D);
         }
 
         GameObject obj = objectPooler.SpawnFromPool(objectPooler.baseEnemySO.pool.tag, spawnPos, Quaternion.identity);
@@ -179,20 +320,23 @@ public class SpawnManager : MonoBehaviour
         var boxCollider2D = boxCollider2Ds[randNum];
         return boxCollider2D;
     }
-    
+
     private void RandBoxCountdown(BoxCollider2D[] boxCollider2Ds)
     {
-        buttonDownCounter -= Time.deltaTime;
-        if (buttonDownCounter <= 0)
+        if (buttonDownCounter > 0)
+        {
+            buttonDownCounter -= Time.deltaTime;
+        }
+        else
         {
             isHoldingDownKey = true;
-            bC2D = GetRandBoxCollider(boxCollider2Ds);
+            boxCollider2D = GetRandBoxCollider(boxCollider2Ds);            
         }
     }
 
     private void ResetVariables()
     {
-        bC2D = null;
+        boxCollider2D = null;
         isHoldingDownKey = false;
         buttonDownCounter = buttonHoldDownTime;
     }

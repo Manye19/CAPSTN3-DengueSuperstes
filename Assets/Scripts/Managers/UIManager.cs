@@ -54,11 +54,14 @@ public class UIManager : MonoBehaviour
         onUpdateUIXP.RemoveListener(UpdateXPUI);
         gameManager.onLevelUpEvent.RemoveListener(OpenLevelUpUI);
         gameManager.onPlayerWinEvent.RemoveListener(PlayerWinUI);
-        gameManager.player.GetComponent<PlayerStat>().unitHealth.onDeathEvent.RemoveListener(PlayerLoseUI);
+        gameManager.player?.GetComponent<PlayerStat>().unitHealth.onDeathEvent.RemoveListener(PlayerLoseUI);
         
         foreach (GameObject go in gameManager.objectiveGos)
         {
-            go.transform.GetChild(0).GetComponent<IO_Pool>().onInteractEvent.RemoveListener(UpdateObjectivesUI);
+            if (go != null)
+            {
+                go.transform.GetChild(0).GetComponent<IO_Pool>().onInteractEvent.RemoveListener(UpdateObjectivesUI);
+            }            
         }
     }
 

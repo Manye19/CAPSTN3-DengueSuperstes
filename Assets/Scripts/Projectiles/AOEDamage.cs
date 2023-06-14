@@ -7,11 +7,8 @@ using UnityEngine.Serialization;
 
 public class AOEDamage : Projectile
 {
-    [Header(DS_Constants.DO_NOT_ASSIGN)] 
-    private Coroutine dotCoroutine;
+    [Header(DS_Constants.DO_NOT_ASSIGN)]
 
-    private Collider2D cc2D;
-    
     [Header(DS_Constants.ASSIGNABLE)] 
     [SerializeField] private bool isDestruct;
     [SerializeField] private float tickDamage;
@@ -23,37 +20,22 @@ public class AOEDamage : Projectile
         {
             base.OnEnable();
         }
-        cc2D = GetComponent<CircleCollider2D>();
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<EnemyStat>())
+        if (other.TryGetComponent(out EnemyStat enemyStat))
         {
-            //Debug.Log("OnTriggerEnter");
-            Health enemyHealth = other.GetComponent<EnemyStat>().unitHealth;
-            dotCoroutine = StartCoroutine(DamageOverTime(tickTime, enemyHealth));
+            // Make it so that they are independent coroutines
+            enemyStat.StartDoT(tickDamage, tickTime);
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.GetComponent<EnemyStat>())
+        if (other.TryGetComponent(out EnemyStat enemyStat))
         {
-            if (dotCoroutine != null)
-            {
-                //Debug.Log("Stop DOT");
-                StopCoroutine(dotCoroutine);
-            }
+            enemyStat.StopDot();
         }
-    }
-
-    protected virtual IEnumerator DamageOverTime(float time, Health health)
-    {
-        //Debug.Log("DOT");
-        health.Damage(tickDamage);
-        cc2D.enabled = false;
-        yield return new WaitForSeconds(time);
-        cc2D.enabled = true;
     }
 }

@@ -65,7 +65,10 @@ public class GameManager : MonoBehaviour
         
         foreach (GameObject go in objectiveGos)
         {
-            go.transform.GetChild(0).GetComponent<IO_Pool>().onInteractEvent.RemoveListener(OnPlayerWin);
+            if (go != null)
+            {
+                go.transform.GetChild(0).GetComponent<IO_Pool>().onInteractEvent.RemoveListener(OnPlayerWin);
+            }
         }
     }
 

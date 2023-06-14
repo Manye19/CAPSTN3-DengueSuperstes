@@ -13,6 +13,7 @@ public class Stat : MonoBehaviour
     private float additionMultiplier = 300;
     private float powerMultipler = 2;
     private float divisionMultiplier = 7;
+    private Coroutine dotCoroutine;
     
     [Header(DS_Constants.ASSIGNABLE)] 
     [Header("Stats")]
@@ -45,7 +46,33 @@ public class Stat : MonoBehaviour
     
     public virtual void TakeDamage(float amount)
     {
+        //Debug.Log("Damage!");
         unitHealth.Damage(amount);
+    }
+
+    public virtual IEnumerator TakeDamageOverTime(float damage, float time)
+    {
+        // Loop this
+        while (true)
+        {
+            TakeDamage(damage);
+            yield return new WaitForSeconds(time);
+        }
+    }
+
+    public virtual void StartDoT(float damage, float time)
+    {
+        dotCoroutine = StartCoroutine(TakeDamageOverTime(damage, time));
+        //Debug.Log(dotCoroutine + " start!");
+    }
+
+    public virtual void StopDot()
+    {
+        if (dotCoroutine != null)
+        {
+            StopCoroutine(dotCoroutine);
+            //Debug.Log(dotCoroutine + " stopped.");
+        }
     }
 
     protected virtual void Death()

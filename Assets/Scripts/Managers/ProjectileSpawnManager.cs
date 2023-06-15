@@ -12,9 +12,8 @@ public class ProjectileSpawnManager : MonoBehaviour
     [SerializeField] protected SO_PoolProjectile soPoolProjectile;
     [SerializeField] private Transform spawnT;
 
-    
     [Header(DS_Constants.ASSIGNABLE)]
-    [SerializeField] private float projectileTimer;
+    [SerializeField] private float spawnRate;
     [SerializeField] private Transform[] projectileTransforms;
 
     protected virtual void Start()
@@ -72,7 +71,7 @@ public class ProjectileSpawnManager : MonoBehaviour
     {
         while (soPoolProjectile)
         {
-            yield return new WaitForSeconds(projectileTimer);
+            yield return new WaitForSeconds(spawnRate);
             SpawnProjectile(soPoolProjectile);
         }
     }

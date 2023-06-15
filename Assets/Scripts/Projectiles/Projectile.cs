@@ -13,7 +13,6 @@ public class Projectile : MonoBehaviour
     
     protected virtual void OnEnable()
     {
-        UpdateProjectileDamage();
         StartCoroutine((SelfDestructTimer()));
     }
 
@@ -30,7 +29,7 @@ public class Projectile : MonoBehaviour
         if (col.gameObject.TryGetComponent(out EnemyStat enemyStat))
         {
             enemyStat.TakeDamage(projectileDamage);
-            // Debug.Log("Enemy took " + SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>().damage + " damage.");
+            // Debug.Log("Enemy took " + projectileDamage + " damage.");
         }
     }
 

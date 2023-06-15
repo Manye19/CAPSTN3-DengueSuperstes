@@ -7,11 +7,8 @@ using UnityEngine.Serialization;
 
 public class AOEDamage : Projectile
 {
-    [Header(DS_Constants.DO_NOT_ASSIGN)]
-
     [Header(DS_Constants.ASSIGNABLE)] 
     [SerializeField] private bool isDestruct;
-    [SerializeField] private float tickDamage;
     [SerializeField] private float tickTime;
 
     protected override void OnEnable()
@@ -27,11 +24,11 @@ public class AOEDamage : Projectile
         if (other.TryGetComponent(out EnemyStat enemyStat))
         {
             // Make it so that they are independent coroutines
-            enemyStat.StartDoT(tickDamage, tickTime);
+            enemyStat.StartDoT(projectileDamage, tickTime);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    protected void OnTriggerExit2D(Collider2D other)
     {
         if (other.TryGetComponent(out EnemyStat enemyStat))
         {

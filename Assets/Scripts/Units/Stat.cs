@@ -62,7 +62,10 @@ public class Stat : MonoBehaviour
 
     public void StartDoT(float damage, float time)
     {
-        dotCoroutine = StartCoroutine(TakeDamageOverTime(damage, time));
+        if (gameObject.activeInHierarchy)
+        {
+            dotCoroutine = StartCoroutine(TakeDamageOverTime(damage, time));
+        }
         //Debug.Log(dotCoroutine + " start!");
     }
 

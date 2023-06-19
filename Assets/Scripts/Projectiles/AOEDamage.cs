@@ -10,7 +10,8 @@ public class AOEDamage : Projectile
     [Header(DS_Constants.ASSIGNABLE)] 
     [SerializeField] private bool isDestruct;
     [SerializeField] private float tickTime;
-
+    public float slowPercent;
+    
     protected override void OnEnable()
     {
         if (isDestruct)
@@ -25,6 +26,7 @@ public class AOEDamage : Projectile
         {
             // Make it so that they are independent coroutines
             enemyStat.StartDoT(projectileDamage, tickTime);
+            enemyStat.DecrementMoveSpeed(slowPercent);
         }
     }
 
@@ -33,6 +35,7 @@ public class AOEDamage : Projectile
         if (other.TryGetComponent(out EnemyStat enemyStat))
         {
             enemyStat.StopDoT();
+            enemyStat.ResetMoveSpeed();
         }
     }
 }

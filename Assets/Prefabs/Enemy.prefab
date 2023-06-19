@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52ccbaac11943443bf24e5468f08f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentMovementSpeed: 0
   level: 2
   currentXP: 0
   requiredXP: 0
@@ -158,8 +159,8 @@ MonoBehaviour:
   maxHealth: 100
   atkSpeed: 0.5
   damage: 0.25
-  defense: 0
-  movementSpeed: 5
+  defaultMovementSpeed: 5
+  insecticideDefPercent: 1
 --- !u!1 &354373422194411955
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentDamage: 0
+  attackTickSpeed: 0
 --- !u!58 &2147696448204477223
 CircleCollider2D:
   m_ObjectHideFlags: 0

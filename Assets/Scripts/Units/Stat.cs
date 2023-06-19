@@ -14,9 +14,9 @@ public class Stat : MonoBehaviour
     private float powerMultipler = 2;
     private float divisionMultiplier = 7;
     private Coroutine dotCoroutine;
+    public float currentMovementSpeed { get; private set; }
     
     [Header(DS_Constants.ASSIGNABLE)] 
-    [Header("Stats")]
     public int level;
     public float currentXP;
     public float requiredXP;
@@ -24,14 +24,14 @@ public class Stat : MonoBehaviour
     public int maxHealth;
     public float atkSpeed;
     public float damage;
-    public int defense;
-    public float movementSpeed;
+    public float defaultMovementSpeed;
 
     public virtual void Start()
     {
         unitHealth.health = health;
         unitHealth.maxHealth = maxHealth;
         requiredXP = CalculateRequiredXP();
+        currentMovementSpeed = defaultMovementSpeed;
     }
 
     private void OnEnable()
@@ -74,10 +74,21 @@ public class Stat : MonoBehaviour
         if (dotCoroutine != null)
         {
             StopCoroutine(dotCoroutine);
-            //Debug.Log(dotCoroutine + " stopped.");
         }
     }
 
+    public void DecrementMoveSpeed(float amount)
+    {
+        float temp = currentMovementSpeed * amount;
+        currentMovementSpeed -= temp;
+        GetComponent<EnemyMovement>().UpdateMovementSpeed();
+    }
+
+    public void ResetMoveSpeed()
+    {
+        currentMovementSpeed = defaultMovementSpeed;
+    }
+    
     protected virtual void Death()
     {
         gameObject.SetActive(false);

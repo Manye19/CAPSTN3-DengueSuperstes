@@ -18,7 +18,7 @@ public class EnemyMovement : MonoBehaviour
     {
         player = SingletonManager.Get<GameManager>().player;
         targetPos = player.transform.position;
-        currentSpeed = GetComponent<EnemyStat>().movementSpeed;
+        currentSpeed = GetComponent<EnemyStat>().defaultMovementSpeed;
         StartCoroutine(UpdatePlayerLocation());
         
         // lags at 100+ entities because physics messes up when they collide at each other
@@ -49,9 +49,9 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void UpdateMovementSpeed(float speed)
+    public void UpdateMovementSpeed()
     {
         // Updates speed depending on Enemy?
-        currentSpeed = speed;
+        currentSpeed = GetComponent<EnemyStat>().currentMovementSpeed;
     }
 }

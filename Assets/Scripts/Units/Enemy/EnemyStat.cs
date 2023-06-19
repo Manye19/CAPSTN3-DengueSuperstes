@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class EnemyStat : Stat
 {
+    [Header(DS_Constants.RESISTANCES)]
+    public float insecticideDefPercent;
+    
     protected override void Death()
     {
         // Drop EXP pickup on death.

@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         // Set Player Movement Speed
-        currentSpeed = SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>().movementSpeed;
+        currentSpeed = SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>().defaultMovementSpeed;
     }
 
     void Update()
@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
     public void UpdateMovementSpeed(float speed)
     {
         // Updates speed when Player hits an upgrade
-        currentSpeed = SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>().movementSpeed;
+        currentSpeed = SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>().defaultMovementSpeed;
     }
     #endregion
 }

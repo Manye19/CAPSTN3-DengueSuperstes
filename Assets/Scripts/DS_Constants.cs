@@ -6,4 +6,5 @@ public class DS_Constants
 {
     public const string DO_NOT_ASSIGN = "===== Runtime: DO NOT Assign =====";
     public const string ASSIGNABLE = "===== Editor: Assignable =====";
+    public const string RESISTANCES = "Resistances";
 }

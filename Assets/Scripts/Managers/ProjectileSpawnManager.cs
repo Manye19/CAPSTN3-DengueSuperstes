@@ -18,6 +18,7 @@ public class ProjectileSpawnManager : MonoBehaviour
 
     protected virtual void Start()
     {
+        spawnT = projectileTransforms[5];
         objectPooler = SingletonManager.Get<ObjectPooler>();
         objectPooler.CreatePool(soPoolProjectile);
         StartCoroutine(SpawnCoroutine());

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 333175280960000030}
   - component: {fileID: 2727107157471868943}
   m_Layer: 7
-  m_Name: Enemy
+  m_Name: V4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96813fae612d0cc4bb77739c2480bb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeTick: 2
+  updateTick: 0
 --- !u!114 &2727107157471868943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,16 +151,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52ccbaac11943443bf24e5468f08f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMovementSpeed: 0
-  level: 2
-  currentXP: 0
-  requiredXP: 0
-  health: 100
-  maxHealth: 100
-  atkSpeed: 0.5
-  damage: 0.25
-  defaultMovementSpeed: 5
-  insecticideDefPercent: 1
+  statSO: {fileID: 11400000, guid: ff1271bde6bbce44980a4836f76c98fa, type: 2}
+  enemyStatSO: {fileID: 0}
+  katolSlowPercent: 0
+  insecticideDefPercent: 0
+  saltGunDefPercent: 0
 --- !u!1 &354373422194411955
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,8 +201,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 139a78d3bf45e5248ad1a40da3945c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentDamage: 0
-  attackTickSpeed: 0
+  enemyStat: {fileID: 0}
+  playerDef: 0
+  currentDamage: 2
+  currentAtkSpeed: 0
 --- !u!58 &2147696448204477223
 CircleCollider2D:
   m_ObjectHideFlags: 0

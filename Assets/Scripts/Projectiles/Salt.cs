@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Dagger : Projectile
+public class Salt : Projectile
 {
     protected override void OnTriggerEnter2D(Collider2D col)
     {
         if (col.TryGetComponent(out EnemyStat enemyStat))
         {
-            enemyStat.TakeDamage(projectileDamage);
+            enemyStat.TakeDamage(projectileDamage, 0);
             gameObject.SetActive(false);
         }
     }

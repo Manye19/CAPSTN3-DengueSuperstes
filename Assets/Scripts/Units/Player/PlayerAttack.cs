@@ -18,7 +18,7 @@ public class PlayerAttack : MonoBehaviour
     void Start()
     {
         // Set Player Attack Speed - TEMPORARY?
-        currentAttackSpeed = SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>().atkSpeed;
+        currentAttackSpeed = SingletonManager.Get<GameManager>().player.GetComponent<PlayerStat>().statSO.atkSpeed;
         
         // Start Pool of Player Attack Projectile
         objectPooler = SingletonManager.Get<ObjectPooler>();
@@ -39,8 +39,8 @@ public class PlayerAttack : MonoBehaviour
         yield return null;
     }
 
-    public void UpdateAttackSpeed(int attackSpeed)
+    public void UpdateAttackSpeed(float atkSpeed)
     {
-        currentAttackSpeed = attackSpeed;
+        currentAttackSpeed = atkSpeed;
     }
 }

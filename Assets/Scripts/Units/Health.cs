@@ -30,8 +30,13 @@ public class Health
     }
     
     // Methods
-    public void Damage(float amount)
+    public void Damage(float amount, float multiplier)
     {
+        if (multiplier > 0)
+        {
+            float cache = amount * multiplier;
+            amount -= cache;
+        }
         currentHealth -= amount;
         if (currentHealth <= 0)
         {

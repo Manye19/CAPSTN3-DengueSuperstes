@@ -8,7 +8,7 @@ public class Net : Projectile
     {
         if (collision.TryGetComponent(out EnemyStat enemyStat))
         {
-            enemyStat.TakeDamage(projectileDamage);
+            enemyStat.TakeDamage(projectileDamage, 0);
             //gameObject.SetActive(false);
         }
     }

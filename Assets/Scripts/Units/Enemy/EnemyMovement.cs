@@ -12,14 +12,18 @@ public class EnemyMovement : MonoBehaviour
     private Vector2 targetPos;
 
     [Header(DS_Constants.ASSIGNABLE)] 
-    [SerializeField] private float timeTick;
+    [SerializeField] private float updateTick;
+
+    private void Start()
+    {
+        StartCoroutine(UpdatePlayerLocation());
+    }
 
     private void OnEnable()
     {
         player = SingletonManager.Get<GameManager>().player;
         targetPos = player.transform.position;
-        currentSpeed = GetComponent<EnemyStat>().defaultMovementSpeed;
-        StartCoroutine(UpdatePlayerLocation());
+        currentSpeed = GetComponent<EnemyStat>().statSO.moveSpeed;
         
         // lags at 100+ entities because physics messes up when they collide at each other
         // StartCoroutine(Move()); 
@@ -45,13 +49,13 @@ public class EnemyMovement : MonoBehaviour
         while (true)
         {
             targetPos = player.transform.position;
-            yield return new WaitForSeconds(timeTick);
+            yield return new WaitForSeconds(updateTick);
         }
     }
 
-    public void UpdateMovementSpeed()
+    public void UpdateMovementSpeed(float moveSpeed)
     {
         // Updates speed depending on Enemy?
-        currentSpeed = GetComponent<EnemyStat>().currentMovementSpeed;
+        currentSpeed = moveSpeed;
     }
 }

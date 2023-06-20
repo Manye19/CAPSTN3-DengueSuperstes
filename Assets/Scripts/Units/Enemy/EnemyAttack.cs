@@ -7,31 +7,37 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour
 {
     [Header(DS_Constants.DO_NOT_ASSIGN)]
+    [SerializeField] private EnemyStat enemyStat;
+    [SerializeField] private float playerDef;
     [SerializeField] private float currentDamage;
-    [SerializeField] private float attackTickSpeed;
-    private Coroutine attackCoroutine;
+    [SerializeField] private float currentAtkSpeed;
     
     private void Start()
     {
-        currentDamage = GetComponentInParent<EnemyStat>().damage;
-        //attackTickSpeed = GetComponent<EnemyStat>().atkSpeed;
+        enemyStat = GetComponentInParent<EnemyStat>();
+        playerDef = 0;
+        currentDamage = enemyStat.statSO.damage;
+        currentAtkSpeed = enemyStat.statSO.atkSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.TryGetComponent(out PlayerStat playerStat))
+        if (col.TryGetComponent(out PlayerStat playerStat))
         {
-            //playerStat.StartDoT();
+            playerStat.StartDoT(currentDamage, playerDef, currentAtkSpeed);            
         }
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (other.gameObject.GetComponent<PlayerStat>())
+        if (collision.TryGetComponent(out PlayerStat playerStat))
         {
-            // Attack DoT (?)
-            // Debug.Log("Player hit.");
-            other.gameObject.GetComponent<PlayerStat>().TakeDamage(currentDamage);
+            playerStat.StopDoT();
         }
+    }
+
+    public void UpdateAttackSpeed(float atkSpeed)
+    {
+        currentAtkSpeed = atkSpeed;
     }
 }

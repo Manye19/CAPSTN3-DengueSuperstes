@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6715621191760437301}
   - component: {fileID: 1297573269573448712}
-  - component: {fileID: 8944662454770707081}
+  - component: {fileID: -8755028420675781156}
   - component: {fileID: 5899610234209584271}
   - component: {fileID: 2669335907592333156}
   m_Layer: 0
@@ -87,7 +87,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8944662454770707081
+--- !u!114 &-8755028420675781156
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,12 +96,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4550390218031233259}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38e49be623bc6c14ca29314ff4c7f755, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e15b24e601f3f54db9caa687d945383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSpeed: 1
   projectileDamage: 50
   selfDestructTimer: 2
+  insecticideDefPercent: 0
   isDestruct: 1
   tickTime: 0.5
 --- !u!50 &5899610234209584271

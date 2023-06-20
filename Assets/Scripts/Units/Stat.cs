@@ -14,24 +14,24 @@ public class Stat : MonoBehaviour
     private float powerMultipler = 2;
     private float divisionMultiplier = 7;
     private Coroutine dotCoroutine;
-    public float currentMovementSpeed { get; private set; }
-    
-    [Header(DS_Constants.ASSIGNABLE)] 
-    public int level;
-    public float currentXP;
-    public float requiredXP;
-    public int health;
-    public int maxHealth;
-    public float atkSpeed;
-    public float damage;
-    public float defaultMovementSpeed;
+    public int level { get; private set; }
+    public float currentXP { get; private set; }
+    public float requiredXP { get; private set; }
+    public float atkSpeed { get; private set; }
+    public float damage { get; private set; }
+    public float moveSpeed { get; private set; }
+
+    [Header(DS_Constants.ASSIGNABLE)]
+    public SO_Stat statSO;
 
     public virtual void Start()
     {
-        unitHealth.health = health;
-        unitHealth.maxHealth = maxHealth;
         requiredXP = CalculateRequiredXP();
-        currentMovementSpeed = defaultMovementSpeed;
+        unitHealth.health = statSO.health;
+        unitHealth.maxHealth = statSO.maxHealth;
+        atkSpeed = statSO.atkSpeed;
+        damage = statSO.damage;
+        moveSpeed = statSO.moveSpeed;
     }
 
     private void OnEnable()
@@ -44,29 +44,29 @@ public class Stat : MonoBehaviour
         unitHealth.onDeathEvent.RemoveListener(Death);
     }
     
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, float multiplier)
     {
         //Debug.Log("Damage!");
-        unitHealth.Damage(amount);
+        unitHealth.Damage(amount, multiplier);
     }
 
-    private IEnumerator TakeDamageOverTime(float damage, float time)
+    private IEnumerator TakeDamageOverTime(float damage, float multiplier, float time)
     {
         // Loop this
         while (true)
         {
-            TakeDamage(damage);
+            TakeDamage(damage, multiplier);
             yield return new WaitForSeconds(time);
         }
     }
 
-    public void StartDoT(float damage, float time)
+    public void StartDoT(float damage, float multiplier, float time)
     {
         if (gameObject.activeInHierarchy)
         {
-            dotCoroutine = StartCoroutine(TakeDamageOverTime(damage, time));
+            dotCoroutine = StartCoroutine(TakeDamageOverTime(damage, multiplier, time));
+            //Debug.Log(dotCoroutine + " start!");
         }
-        //Debug.Log(dotCoroutine + " start!");
     }
 
     public void StopDoT()
@@ -79,14 +79,14 @@ public class Stat : MonoBehaviour
 
     public void DecrementMoveSpeed(float amount)
     {
-        float temp = currentMovementSpeed * amount;
-        currentMovementSpeed -= temp;
-        GetComponent<EnemyMovement>().UpdateMovementSpeed();
+        float temp = moveSpeed * amount;
+        moveSpeed -= temp;
+        GetComponent<EnemyMovement>().UpdateMovementSpeed(moveSpeed);
     }
 
     public void ResetMoveSpeed()
     {
-        currentMovementSpeed = defaultMovementSpeed;
+        moveSpeed = statSO.moveSpeed;
     }
     
     protected virtual void Death()

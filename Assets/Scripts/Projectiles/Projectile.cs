@@ -10,7 +10,12 @@ public class Projectile : MonoBehaviour
     public float projectileSpeed;
     [SerializeField] protected float projectileDamage;
     [SerializeField] protected float selfDestructTimer;
-    
+
+    protected virtual void Start()
+    {
+        
+    }
+
     protected virtual void OnEnable()
     {
         StartCoroutine((SelfDestructTimer()));
@@ -28,7 +33,7 @@ public class Projectile : MonoBehaviour
         //Debug.Log(col);
         if (col.gameObject.TryGetComponent(out EnemyStat enemyStat))
         {
-            enemyStat.TakeDamage(projectileDamage);
+            enemyStat.TakeDamage(projectileDamage, 0);
             // Debug.Log("Enemy took " + projectileDamage + " damage.");
         }
     }

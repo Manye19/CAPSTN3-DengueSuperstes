@@ -10,13 +10,15 @@ public class EnemyMovement : MonoBehaviour
     private float currentSpeed;
     private GameObject player;
     private Vector2 targetPos;
+    private Coroutine moveToPlayerCo;
 
     [Header(DS_Constants.ASSIGNABLE)] 
     [SerializeField] private float updateTick;
 
     private void Start()
     {
-        StartCoroutine(UpdatePlayerLocation());
+        // moveToPlayerCo; setting up for Mosquito Magnet
+        moveToPlayerCo = StartCoroutine(UpdatePlayerLocation());
     }
 
     private void OnEnable()
@@ -33,15 +35,6 @@ public class EnemyMovement : MonoBehaviour
     {
         // Get and set UPDATED speed (int) from EnemyStat class or Spawner class
         transform.position = Vector2.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime); // temporary for now
-    }
-
-    private IEnumerator Move()
-    {
-        while (true)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime); // temporary for now
-            yield return new WaitForSeconds(0.01f);
-        }
     }
 
     private IEnumerator UpdatePlayerLocation()

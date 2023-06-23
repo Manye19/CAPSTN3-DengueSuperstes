@@ -4172,7 +4172,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 822389895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3525c96b9b9ea84198a434ebea69c33, type: 3}
+  m_Script: {fileID: 11500000, guid: 38e49be623bc6c14ca29314ff4c7f755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSpeed: 0
@@ -4180,6 +4180,7 @@ MonoBehaviour:
   selfDestructTimer: 0
   isDestruct: 0
   tickTime: 0.5
+  slowPercent: 0.4
 --- !u!1 &828521890
 GameObject:
   m_ObjectHideFlags: 0
@@ -5168,7 +5169,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2d7e9dde876fd478f8e681be18ca41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statSO: {fileID: 11400000, guid: f5530f44996cad4428326edd6d09b9e0, type: 2}
+  currentMovementSpeed: 0
+  level: 1
+  currentXP: 0
+  requiredXP: 83
+  health: 100
+  maxHealth: 100
+  atkSpeed: 1.5
+  damage: 100
+  defaultMovementSpeed: 5
 --- !u!58 &1014413567
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5195,7 +5204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017642846}
   m_Layer: 6
-  m_Name: SwatterPos
+  m_Name: DefaultAtkPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

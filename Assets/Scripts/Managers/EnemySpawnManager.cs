@@ -71,7 +71,7 @@ public class EnemySpawnManager : MonoBehaviour
                 objectPooler.SpawnFromPool(objectPooler.baseEnemySO.pool.tag, spawnPosition, Quaternion.identity);
 
                 // EnemyCounter++
-                SingletonManager.Get<GameManager>().onEnemySpawn.Invoke();
+                SingletonManager.Get<GameManager>().onEnemySpawnEvent.Invoke();
             }
         }
 
@@ -129,7 +129,7 @@ public class EnemySpawnManager : MonoBehaviour
             SpawnEnemy();
             
             // EnemyCounter++
-            SingletonManager.Get<GameManager>().onEnemySpawn.Invoke();
+            SingletonManager.Get<GameManager>().onEnemySpawnEvent.Invoke();
         }
     }
 

@@ -8,6 +8,7 @@ public class EnemyMovement : MonoBehaviour
 {
     [Header(DS_Constants.DO_NOT_ASSIGN)]
     private float currentSpeed;
+    private EnemyStat enemyStat;
     private GameObject player;
     private Vector2 targetPos;
     private Coroutine moveToPlayerCo;
@@ -17,18 +18,16 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
-        // moveToPlayerCo; setting up for Mosquito Magnet
+        player = SingletonManager.Get<GameManager>().player;
+        targetPos = player.transform.position;
+        enemyStat = GetComponent<EnemyStat>();
+        currentSpeed = enemyStat.statSO.moveSpeed;
         moveToPlayerCo = StartCoroutine(UpdatePlayerLocation());
     }
 
-    private void OnEnable()
+    private void OnDisable()
     {
-        player = SingletonManager.Get<GameManager>().player;
-        targetPos = player.transform.position;
-        currentSpeed = GetComponent<EnemyStat>().statSO.moveSpeed;
-        
-        // lags at 100+ entities because physics messes up when they collide at each other
-        // StartCoroutine(Move()); 
+        SingletonManager.Get<GameManager>().onChangeTargetEvent.RemoveListener(ChangeTarget);
     }
 
     private void FixedUpdate()
@@ -37,12 +36,30 @@ public class EnemyMovement : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime); // temporary for now
     }
 
-    private IEnumerator UpdatePlayerLocation()
+    public IEnumerator UpdatePlayerLocation()
     {
         while (true)
         {
             targetPos = player.transform.position;
             yield return new WaitForSeconds(updateTick);
+        }
+    }
+
+    public void ListenToChangeTarget()
+    {
+        SingletonManager.Get<GameManager>().onChangeTargetEvent.AddListener(ChangeTarget);
+    }
+
+    public void ChangeTarget(Transform target)
+    {
+        StopCoroutine(moveToPlayerCo);
+        if (target != null)
+        {
+            targetPos = target.position;
+        }        
+        else
+        {
+            moveToPlayerCo = StartCoroutine(UpdatePlayerLocation());
         }
     }
 

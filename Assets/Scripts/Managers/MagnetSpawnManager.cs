@@ -1,39 +1,34 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AOESpawnManager : MonoBehaviour
+public class MagnetSpawnManager : MonoBehaviour
 {
     [Header(DS_Constants.DO_NOT_ASSIGN)]
     [SerializeField] private ObjectPooler objectPooler;
 
     [Header(DS_Constants.ASSIGNABLE)]
-    [SerializeField] private Transform[] AOETransforms;
     [SerializeField] private float spawnRate;
+    [SerializeField] private Transform[] MagnetTransforms;
 
     private void Start()
     {
         objectPooler = SingletonManager.Get<ObjectPooler>();
-        objectPooler.CreatePool(objectPooler.playerSantaWaterSO);
+        objectPooler.CreatePool(objectPooler.playerMosMagnetSO);
         StartCoroutine(SpawnCoroutine());
     }
-
     private IEnumerator SpawnCoroutine()
     {
         while (true)
         {
             yield return new WaitForSeconds(spawnRate);
-            SpawnAOE();
+            SpawnMagnet();
         }
     }
-
-    private void SpawnAOE()
+    private void SpawnMagnet()
     {
-        for (int i = 0; i < AOETransforms.Length; i++)
-        {
-            objectPooler.SpawnFromPool(objectPooler.playerSantaWaterSO.pool.tag, 
-                new Vector2(AOETransforms[i].position.x, AOETransforms[i].position.y), Quaternion.identity);
-        }
+        Transform randTransform = MagnetTransforms[Random.Range(0, MagnetTransforms.Length)];
+        objectPooler.SpawnFromPool(objectPooler.playerMosMagnetSO.pool.tag, 
+            new Vector2(randTransform.position.x, randTransform.position.y), Quaternion.identity);
     }
 }

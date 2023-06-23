@@ -15,6 +15,7 @@ public class ObjectPooler : MonoBehaviour
     public SO_PoolProjectile playerDaggerSO;
     public SO_PoolProjectile playerInsecticideSO;
     public SO_PoolProjectile playerNetSO;
+    public SO_PoolProjectile playerMosMagnetSO;
     public EnemyScriptableObject baseEnemySO;
     public PickupScriptableObject expSO;
 

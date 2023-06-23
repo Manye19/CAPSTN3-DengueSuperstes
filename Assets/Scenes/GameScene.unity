@@ -1073,12 +1073,12 @@ GameObject:
   - component: {fileID: 131842080}
   - component: {fileID: 131842081}
   m_Layer: 0
-  m_Name: SantaWaterSpawnManager
+  m_Name: MagnetSpawnManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &131842080
 Transform:
   m_ObjectHideFlags: 0
@@ -1103,15 +1103,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 131842079}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67b348b8ad3cd4d42be3794495ea4102, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b7b415cb736e1e4eb07897f373cfd64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectPooler: {fileID: 853207457}
-  AOETransforms:
+  objectPooler: {fileID: 0}
+  spawnRate: 8
+  MagnetTransforms:
   - {fileID: 294990011}
   - {fileID: 1584614804}
   - {fileID: 1629549957}
-  AOETimer: 5
 --- !u!1 &142356803
 GameObject:
   m_ObjectHideFlags: 0
@@ -3845,7 +3845,7 @@ GameObject:
   - component: {fileID: 751108567}
   - component: {fileID: 751108568}
   m_Layer: 6
-  m_Name: MagnetCollider
+  m_Name: PickupMagnetCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4351,6 +4351,7 @@ MonoBehaviour:
   playerDaggerSO: {fileID: 11400000, guid: 239588cb47ffb594da30fb331225c2b2, type: 2}
   playerInsecticideSO: {fileID: 11400000, guid: 7df533dd1539660449ff1db7a2869883, type: 2}
   playerNetSO: {fileID: 11400000, guid: 1ce5a022c8190364aa2b25b483d39314, type: 2}
+  playerMosMagnetSO: {fileID: 11400000, guid: 9ca51560910ceeb49ade8bf9a98505b5, type: 2}
   baseEnemySO: {fileID: 11400000, guid: 0801464fd80c0b1479b8530bd8b11f4a, type: 2}
   expSO: {fileID: 11400000, guid: 8c404176e5e691e469b8948bec14bc35, type: 2}
 --- !u!4 &853207458

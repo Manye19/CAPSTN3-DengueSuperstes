@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
         StartCoroutine((SelfDestructTimer()));
     }
 
-    private IEnumerator SelfDestructTimer()
+    protected virtual IEnumerator SelfDestructTimer()
     {
         yield return new WaitForSeconds(selfDestructTimer);
         //Debug.Log("Self Destruct Projectile.");

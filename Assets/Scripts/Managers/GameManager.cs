@@ -26,7 +26,8 @@ public class GameManager : MonoBehaviour
     public OnGamePauseEvent onGamePauseEvent = new();
     public OnPlayerWinEvent onPlayerWinEvent = new();
     public OnLevelUpEvent onLevelUpEvent = new();
-    public OnEnemySpawn onEnemySpawn = new();
+    public OnEnemySpawnEvent onEnemySpawnEvent = new();
+    public OnChangeTargetEvent onChangeTargetEvent = new();
     public OnDeathEvent onEnemyKill = new();
     
     private void Awake()
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour
     {
         onLevelUpEvent.AddListener(OnPlayerLevelUp);
         player.GetComponent<PlayerStat>().unitHealth.onDeathEvent.AddListener(OnPlayerLose);
-        onEnemySpawn.AddListener(AddOnEnemySpawn);
+        onEnemySpawnEvent.AddListener(AddOnEnemySpawn);
         onEnemyKill.AddListener(DecrementOnEnemyKill);
     }
 
@@ -62,7 +63,7 @@ public class GameManager : MonoBehaviour
     {
         onLevelUpEvent.RemoveListener(OnPlayerLevelUp);
         player?.GetComponent<PlayerStat>().unitHealth.onDeathEvent.RemoveListener(OnPlayerLose);
-        onEnemySpawn.RemoveListener(AddOnEnemySpawn);
+        onEnemySpawnEvent.RemoveListener(AddOnEnemySpawn);
         onEnemyKill.AddListener(DecrementOnEnemyKill);
         
         foreach (GameObject go in objectiveGos)

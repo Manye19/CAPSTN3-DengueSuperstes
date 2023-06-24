@@ -2,33 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagnetSpawnManager : MonoBehaviour
+public class ZapperSpawnManager : MonoBehaviour
 {
-    [Header(DS_Constants.DO_NOT_ASSIGN)]
+    [Header(DS_Constants.DO_NOT_ASSIGN)] 
     [SerializeField] private ObjectPooler objectPooler;
 
-    [Header(DS_Constants.ASSIGNABLE)]
+    [Header(DS_Constants.ASSIGNABLE)] 
     [SerializeField] private float spawnRate;
-    [SerializeField] private Transform[] MagnetTransforms;
+    [SerializeField] private Transform[] ZapperTransforms;
 
     private void Start()
     {
         objectPooler = SingletonManager.Get<ObjectPooler>();
-        objectPooler.CreatePool(objectPooler.playerMosMagnetSO);
+        objectPooler.CreatePool(objectPooler.playerZapperSO);
         StartCoroutine(SpawnCoroutine());
     }
+
     private IEnumerator SpawnCoroutine()
     {
         while (true)
         {
             yield return new WaitForSeconds(spawnRate);
-            SpawnMagnet();
+            SpawnZapper();
         }
     }
-    private void SpawnMagnet()
+
+    private void SpawnZapper()
     {
-        Transform randT = MagnetTransforms[Random.Range(0, MagnetTransforms.Length)];
-        objectPooler.SpawnFromPool(objectPooler.playerMosMagnetSO.pool.tag, 
+        Transform randT = ZapperTransforms[Random.Range(0, ZapperTransforms.Length)];
+        objectPooler.SpawnFromPool(objectPooler.playerZapperSO.pool.tag,
             new Vector3(randT.position.x, randT.position.y), Quaternion.identity);
     }
 }

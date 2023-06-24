@@ -36,7 +36,7 @@ public class EnemyMovement : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime); // temporary for now
     }
 
-    public IEnumerator UpdatePlayerLocation()
+    private IEnumerator UpdatePlayerLocation()
     {
         while (true)
         {
@@ -50,11 +50,11 @@ public class EnemyMovement : MonoBehaviour
         SingletonManager.Get<GameManager>().onChangeTargetEvent.AddListener(ChangeTarget);
     }
 
-    public void ChangeTarget(Transform target)
+    private void ChangeTarget(Transform target)
     {
-        StopCoroutine(moveToPlayerCo);
         if (target != null)
         {
+            StopCoroutine(moveToPlayerCo);
             targetPos = target.position;
         }        
         else

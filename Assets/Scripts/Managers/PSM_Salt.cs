@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class PSM_Dagger : ProjectileSpawnManager
+public class PSM_Salt : ProjectileSpawnManager
 {
     protected override void Start()
     {

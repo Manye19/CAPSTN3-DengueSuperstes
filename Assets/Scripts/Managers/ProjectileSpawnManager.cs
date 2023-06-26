@@ -8,9 +8,9 @@ using UnityEngine.Serialization;
 public class ProjectileSpawnManager : MonoBehaviour
 {
     [Header(DS_Constants.DO_NOT_ASSIGN)]
-    [SerializeField] protected ObjectPooler objectPooler;
-    [SerializeField] protected SO_PoolProjectile soPoolProjectile;
-    [SerializeField] private Transform spawnT;
+    protected ObjectPooler objectPooler;
+    protected SO_PoolProjectile soPoolProjectile;
+    private Transform spawnT;
 
     [Header(DS_Constants.ASSIGNABLE)]
     [SerializeField] private float spawnRate;

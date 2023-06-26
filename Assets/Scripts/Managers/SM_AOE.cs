@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AOESpawnManager : MonoBehaviour
+public class SM_AOE : MonoBehaviour
 {
     [Header(DS_Constants.DO_NOT_ASSIGN)]
     [SerializeField] private ObjectPooler objectPooler;

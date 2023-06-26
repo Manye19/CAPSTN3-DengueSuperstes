@@ -12,13 +12,13 @@ public class InteractableObject : MonoBehaviour
     protected Sprite hintSprite;
     protected TextMeshPro hintText;
 
-    protected void OnEnable()
+    private void Start()
     {
         canInteract = true;
         onInteractEvent.AddListener(OnInteract);
     }
 
-    protected void OnDisable()
+    private void OnDisable()
     {
         onInteractEvent.RemoveListener(OnInteract);
     }

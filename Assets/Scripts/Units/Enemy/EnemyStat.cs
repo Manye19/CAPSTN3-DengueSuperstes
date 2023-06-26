@@ -23,7 +23,7 @@ public class EnemyStat : Stat
     protected override void Death()
     {
         // Drop EXP pickup on death.
-        SingletonManager.Get<PickupManager>().onExpDrop.Invoke(transform.position);
+        SingletonManager.Get<EXPManager>().onExpDrop.Invoke(transform.position);
         SingletonManager.Get<GameManager>().onEnemyKill.Invoke();
         base.Death();
     }

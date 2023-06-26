@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class PickupManager : MonoBehaviour
+public class EXPManager : MonoBehaviour
 {
     [Header(DS_Constants.DO_NOT_ASSIGN)]
     private ObjectPooler objectPooler;
@@ -25,6 +25,7 @@ public class PickupManager : MonoBehaviour
     {
         objectPooler = SingletonManager.Get<ObjectPooler>();
         objectPooler.CreatePool(objectPooler.expSO);
+        //Destroy(this);
     }
     
     private void OnDisable()

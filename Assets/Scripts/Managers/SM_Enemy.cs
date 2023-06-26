@@ -6,16 +6,15 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class EnemySpawnManager : MonoBehaviour
+public class SM_Enemy : SpawnManager
 {
     [Header(DS_Constants.DO_NOT_ASSIGN)]
-    [SerializeField] private ObjectPooler objectPooler;
-    [SerializeField] private GameObject player;
-    [SerializeField] private Vector3 spawnPos;
-    [SerializeField] private Rigidbody2D playerRb;
-    [SerializeField] private bool isHoldingDownKey;
-    [SerializeField] private float buttonDownCounter;
-    [SerializeField] private BoxCollider2D boxCollider2D;
+    private GameObject player;
+    private Vector3 spawnPos;
+    private Rigidbody2D playerRb;
+    private bool isHoldingDownKey;
+    private float buttonDownCounter;
+    private BoxCollider2D boxCollider2D;
     
     // Spawning Around Player Variables
     private int numberOfObjects = 20;
@@ -38,7 +37,7 @@ public class EnemySpawnManager : MonoBehaviour
     public BoxCollider2D[] bottomLeftColliders;
     public BoxCollider2D[] bottomRightColliders;
 
-    private void Start()
+    protected override void Start()
     {
         ResetVariables();
         
@@ -48,7 +47,7 @@ public class EnemySpawnManager : MonoBehaviour
         
         // Get objectPooler reference
         objectPooler = SingletonManager.Get<ObjectPooler>();
-        objectPooler.CreatePool(objectPooler.baseEnemySO);
+        objectPooler.CreatePool(poolSO);
         
         // Start Coroutine of Enemy Spawning
         StartCoroutine(SpawnCoroutine());
@@ -103,12 +102,6 @@ public class EnemySpawnManager : MonoBehaviour
                 case { x: 0, y: < 0 }:
                     RandBoxCountdown(bottomColliders);
                     break;
-                /*case {x: 0, y: 0}:
-                    ResetVariables();
-                    break;
-                default:
-                    ResetVariables();
-                    break;*/
             }
         }
         else if (Input.GetKeyUp(KeyCode.W)
@@ -120,13 +113,13 @@ public class EnemySpawnManager : MonoBehaviour
         }
     }
     
-    private IEnumerator SpawnCoroutine()
+    protected override IEnumerator SpawnCoroutine()
     {
         while (true)
         {
             float randNum = Random.Range(spawnTimerMin, spawnTimerMax);
             yield return new WaitForSeconds(randNum);
-            SpawnEnemy();
+            Spawn();
             
             // EnemyCounter++
             SingletonManager.Get<GameManager>().onEnemySpawnEvent.Invoke();
@@ -134,7 +127,7 @@ public class EnemySpawnManager : MonoBehaviour
     }
 
     #region Functions
-    private void SpawnEnemy()
+    protected override void Spawn()
     {
         if (!isHoldingDownKey)
         {

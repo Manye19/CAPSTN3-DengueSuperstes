@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Health
 {
-    public OnDeathEvent onDeathEvent = new();
+    public readonly OnDamageEvent onDamageEvent = new();
+    public readonly OnDeathEvent onDeathEvent = new();
     
     // Fields
     private float currentHealth;
@@ -37,11 +38,12 @@ public class Health
             float cache = amount * multiplier;
             amount -= cache;
         }
-        currentHealth -= amount;
+        health -= amount;
         if (currentHealth <= 0)
         {
             Death();
         }
+        onDamageEvent.Invoke(health);
     }
 
     private void Death()

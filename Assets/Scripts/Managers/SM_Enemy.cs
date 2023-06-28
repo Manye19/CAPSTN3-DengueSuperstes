@@ -40,16 +40,10 @@ public class SM_Enemy : SpawnManager
     protected override void Start()
     {
         ResetVariables();
-        
-        // Get player reference
         player = SingletonManager.Get<GameManager>().player;
         playerRb = player.GetComponent<Rigidbody2D>();
-        
-        // Get objectPooler reference
         objectPooler = SingletonManager.Get<ObjectPooler>();
         objectPooler.CreatePool(poolSO);
-        
-        // Start Coroutine of Enemy Spawning
         StartCoroutine(SpawnCoroutine());
     }
 

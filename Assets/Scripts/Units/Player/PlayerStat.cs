@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class PlayerStat : Stat
 {
-    protected override void Death()
+    public override void Start()
     {
-        base.Death();
-        unitHealth.onDeathEvent.Invoke();
+        base.Start();
+        level = 1;
+        requiredXP = CalculateRequiredXP();
     }
     
     public override void GainExperienceFlatRate(float xpGained)

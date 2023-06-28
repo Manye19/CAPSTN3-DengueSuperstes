@@ -6,51 +6,13 @@ using UnityEngine;
 
 public class Interacter : MonoBehaviour
 {
-    private bool canInteract = true;
-    private InteractableObject iObject;
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (iObject)
-            {
-                OnInteractButtonPressed();
-            }
-        }
-    }
-    
-    public void OnInteractButtonPressed()
-    {
-        if (canInteract)
-        {
-            canInteract = false;
-            iObject?.onInteractEvent.Invoke(iObject.gameObject);
-            //Debug.Log("Button pressed");
-            //StartCoroutine(Cooldown());
-            canInteract = true;
-        }
-
-    }
-    private IEnumerator Cooldown()
-    {
-        yield return new WaitForSeconds(0.5f);
-        canInteract = true;
-    }
-
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.TryGetComponent(out InteractableObject interactableObject))
+        if (col.TryGetComponent(out IO_Pool iObjPool))
         {
-            iObject = interactableObject;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.GetComponent<InteractableObject>())
-        {
-            iObject = null;
+            //canInteract = true;
+            GetComponentInParent<PlayerStat>().GainExperienceFlatRate(iObjPool.xpAmount);
+            iObjPool.onInteractEvent.Invoke(iObjPool.gameObject);
         }
     }
 }

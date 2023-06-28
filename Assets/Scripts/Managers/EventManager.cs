@@ -6,6 +6,8 @@ using UnityEngine.Events;
 public class OnGamePauseEvent : UnityEvent<bool> { };
 
 public class OnPlayerWinEvent : UnityEvent { };
+
+public class OnDamageEvent : UnityEvent<float> { };
 public class OnDeathEvent : UnityEvent { };
 public class OnUpdateUIXP : UnityEvent<int, float, float> { };
 public class OnEnemySpawnEvent : UnityEvent { };

@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class IO_Pool : InteractableObject
 {
+    public float xpAmount;
+    
+    protected override void Start()
+    {
+        base.Start();
+        
+    }
+
     protected override void OnInteract(GameObject go)
     {
-        gameObject.SetActive(false);
+        go.SetActive(false);
     }
 }

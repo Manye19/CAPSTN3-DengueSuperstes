@@ -14,7 +14,7 @@ public class EnemyAttack : MonoBehaviour
     
     private void Start()
     {
-        enemyStat = GetComponentInParent<EnemyStat>();
+        enemyStat = GetComponent<EnemyStat>();
         playerDef = 0;
         currentDamage = enemyStat.statSO.damage;
         currentAtkSpeed = enemyStat.statSO.atkSpeed;

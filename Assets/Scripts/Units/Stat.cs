@@ -7,36 +7,38 @@ using UnityEngine.Serialization;
 
 public class Stat : MonoBehaviour
 {
-    public Health unitHealth = new Health(100, 100);
+    public readonly Health unitHealth = new Health(100, 100);
 
     [Header(DS_Constants.DO_NOT_ASSIGN)]
     private float additionMultiplier = 300;
     private float powerMultipler = 2;
     private float divisionMultiplier = 7;
     private Coroutine dotCoroutine;
-    public int level { get; private set; }
-    public float currentXP { get; private set; }
-    public float requiredXP { get; private set; }
-    public float atkSpeed { get; private set; }
-    public float damage { get; private set; }
-    public float moveSpeed { get; private set; }
+    private SimpleFlash simpleFlash;
+    
+    public int level;
+    public float currentXP;
+    public float requiredXP;
+    public float atkSpeed;
+    public float damage;
+    public float moveSpeed;
 
     [Header(DS_Constants.ASSIGNABLE)]
     public SO_Stat statSO;
 
     public virtual void Start()
     {
-        requiredXP = CalculateRequiredXP();
+        unitHealth.onDeathEvent.AddListener(Death);
+        simpleFlash = GetComponent<SimpleFlash>();
+    }
+
+    private void OnEnable()
+    {
         unitHealth.health = statSO.health;
         unitHealth.maxHealth = statSO.maxHealth;
         atkSpeed = statSO.atkSpeed;
         damage = statSO.damage;
         moveSpeed = statSO.moveSpeed;
-    }
-
-    private void OnEnable()
-    {
-        unitHealth.onDeathEvent.AddListener(Death);
     }
     
     private void OnDisable()
@@ -44,9 +46,10 @@ public class Stat : MonoBehaviour
         unitHealth.onDeathEvent.RemoveListener(Death);
     }
     
-    public void TakeDamage(float amount, float multiplier)
+    public virtual void TakeDamage(float amount, float multiplier)
     {
         //Debug.Log("Damage!");
+        simpleFlash.Flash();
         unitHealth.Damage(amount, multiplier);
     }
 
@@ -134,21 +137,18 @@ public class Stat : MonoBehaviour
         level++;
         // frontXPBar.fillAmount = 0f;
         // backXpBar.fillAmount = 0f;
-        
-        
+
         currentXP = Mathf.RoundToInt((currentXP - requiredXP));
         unitHealth.IncreaseHealth(level);
         requiredXP = CalculateRequiredXP();
     }
 
-    private int CalculateRequiredXP()
+    protected int CalculateRequiredXP()
     {
         int solveForRequiredXP = 0;
         for (int levelCycle = 1; levelCycle <= level; levelCycle++)
         {
-            solveForRequiredXP += (int)Mathf.Floor(levelCycle +
-                                                   additionMultiplier * Mathf.Pow(powerMultipler,
-                                                       levelCycle / divisionMultiplier));
+            solveForRequiredXP += (int)Mathf.Floor(levelCycle + additionMultiplier * Mathf.Pow(powerMultipler,levelCycle / divisionMultiplier));
         }
         return solveForRequiredXP / 4;
     }

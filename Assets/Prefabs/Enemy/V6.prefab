@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 333175280960000031}
   - component: {fileID: 333175280960000030}
   - component: {fileID: 2727107157471868943}
-  - component: {fileID: 3917729462005503915}
   - component: {fileID: 1404399761964423999}
   m_Layer: 7
   m_Name: V6
@@ -81,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0.8018868, g: 0.17021184, b: 0.17021184, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -101,7 +100,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -140,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96813fae612d0cc4bb77739c2480bb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateTick: 2
+  updateTick: 1
 --- !u!114 &2727107157471868943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,22 +163,6 @@ MonoBehaviour:
   katolSlowPercent: 0
   insecticideDefPercent: 0
   saltGunDefPercent: 0
---- !u!114 &3917729462005503915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 333175280960000035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 139a78d3bf45e5248ad1a40da3945c34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyStat: {fileID: 0}
-  playerDef: 0
-  currentDamage: 0
-  currentAtkSpeed: 0
 --- !u!114 &1404399761964423999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d140b5a0ac247974eb4d9153be94689f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &354373422194411955
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,9 +221,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 139a78d3bf45e5248ad1a40da3945c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyStat: {fileID: 0}
+  enemyStat: {fileID: 2727107157471868943}
   playerDef: 0
-  currentDamage: 2
+  currentDamage: 0
   currentAtkSpeed: 0
 --- !u!58 &2147696448204477223
 CircleCollider2D:

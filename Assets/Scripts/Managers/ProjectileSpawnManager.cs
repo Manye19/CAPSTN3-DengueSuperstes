@@ -7,18 +7,21 @@ using UnityEngine.Serialization;
 
 public class ProjectileSpawnManager : MonoBehaviour
 {
-    [Header(DS_Constants.DO_NOT_ASSIGN)]
+    [Header(DS_Constants.DO_NOT_ASSIGN)] 
+    private int weaponLevel;
     protected ObjectPooler objectPooler;
-    protected SO_PoolProjectile soPoolProjectile;
+    public float spawnRate;
     private Transform spawnT;
 
     [Header(DS_Constants.ASSIGNABLE)]
-    [SerializeField] private float spawnRate;
+    [SerializeField] protected SO_PoolProjectile soPoolProjectile;
+    [SerializeField] protected SO_WeaponLevel weaponLevelSO;
     [SerializeField] private Transform[] projectileTransforms;
 
     protected virtual void Start()
     {
         spawnT = projectileTransforms[5];
+        spawnRate = weaponLevelSO.spawnRateLevels[0];
         objectPooler = SingletonManager.Get<ObjectPooler>();
         objectPooler.CreatePool(soPoolProjectile);
         StartCoroutine(SpawnCoroutine());
@@ -70,14 +73,14 @@ public class ProjectileSpawnManager : MonoBehaviour
 
     private IEnumerator SpawnCoroutine()
     {
-        while (soPoolProjectile)
+        while (true)
         {
             yield return new WaitForSeconds(spawnRate);
-            SpawnProjectile(soPoolProjectile);
+            Spawn();
         }
     }
 
-    private void SpawnProjectile(SO_PoolProjectile soPoolProjectile)
+    private void Spawn()
     {
         GameObject go = objectPooler.SpawnFromPool(soPoolProjectile.pool.tag,
             new Vector3(spawnT.position.x, spawnT.position.y, 0f), spawnT.rotation);

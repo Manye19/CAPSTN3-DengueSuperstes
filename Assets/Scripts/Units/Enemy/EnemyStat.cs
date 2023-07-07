@@ -11,6 +11,20 @@ public class EnemyStat : Stat
     public float insecticideDefPercent;
     public float saltGunDefPercent;
 
+    protected override void OnEnable()
+    {
+        unitHealth.ResetHP(statSO.health, statSO.maxHealth);
+        atkSpeed = statSO.atkSpeed;
+        damage = statSO.damage;
+        moveSpeed = statSO.moveSpeed;
+        ResetMoveSpeed();
+    }
+
+    protected override void OnDisable()
+    {
+        unitHealth.ResetHP(statSO.health, statSO.maxHealth);
+    }
+
     public override void Start()
     {
         base.Start();
@@ -19,12 +33,9 @@ public class EnemyStat : Stat
         insecticideDefPercent = enemyStatSO.insecticideDefPercent;
         saltGunDefPercent = enemyStatSO.saltGunDefPercent;
     }
-
     protected override void Death()
     {
-        // Drop EXP pickup on death.
-        SingletonManager.Get<EXPManager>().onExpDrop.Invoke(transform.position);
-        SingletonManager.Get<GameManager>().onEnemyKill.Invoke();
         base.Death();
+        SingletonManager.Get<GameManager>().onEnemyKill.Invoke();
     }
 }

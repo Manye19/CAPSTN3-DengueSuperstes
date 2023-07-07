@@ -46,9 +46,7 @@ public class UIManager : MonoBehaviour
         healthBar = healthSlider.GetComponent<HealthBar>();
         healthBar.slider = healthSlider;
         playerStat = gameManager.player.GetComponent<PlayerStat>();
-
-        foreach (GameObject go in gameManager.objectiveGos)
-            go.transform.GetChild(0).GetComponent<IO_Pool>().onInteractEvent.AddListener(UpdateObjectivesUI);
+        gameManager.onUpdateUpgradesEvent.AddListener(() => UpdateHPUI(gameManager.player.GetComponent<PlayerStat>().unitHealth.maxHealth));
         playerStat.unitHealth.onDamageEvent.AddListener(UpdateHPUI);
         onUpdateUIXP.AddListener(UpdateXPUI);
         gameManager.onGamePauseEvent.AddListener(PauseUI);
@@ -65,10 +63,16 @@ public class UIManager : MonoBehaviour
         UpdateXPUI(playerStat.level, playerStat.currentXP, playerStat.requiredXP);
         UpdateEnemyCountUI(gameManager.enemyCounter);
         UpdateObjectivesUI(null);
+        
+        foreach (GameObject go in gameManager.objectiveGos)
+        {
+            go.transform.GetChild(0).GetComponent<IO_Pool>().onInteractEvent.AddListener(UpdateObjectivesUI);
+        }
     }
 
     private void OnDisable()
     {
+        gameManager.onUpdateUpgradesEvent.RemoveListener(() => UpdateHPUI(gameManager.player.GetComponent<PlayerStat>().unitHealth.maxHealth));
         playerStat.unitHealth.onDamageEvent.RemoveListener(UpdateHPUI);
         onUpdateUIXP.RemoveListener(UpdateXPUI);
         gameManager.onGamePauseEvent.RemoveListener(PauseUI);
@@ -106,7 +110,7 @@ public class UIManager : MonoBehaviour
     private void UpdateObjectivesUI(GameObject ioPoolGameObject)
     {
         //Debug.Log(gameManager.objectiveCounter);
-        objectiveCounterText.text = "Objective Counter: " + gameManager.objectiveCounter;
+        objectiveCounterText.text = $"Objective Counter (Water Count): {gameManager.objectiveCounter} / {DS_Constants.OBJECTIVECOUNT}";
         ioPoolGameObject?.GetComponent<IO_Pool>().onInteractEvent.RemoveListener(UpdateObjectivesUI);
     }
 

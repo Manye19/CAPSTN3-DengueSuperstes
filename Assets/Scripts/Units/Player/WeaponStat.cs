@@ -1,0 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Serialization;
+
+[System.Serializable]
+public class WeaponStat
+{
+    public string weaponName;
+    public SpawnManager weaponSM;
+    public SO_WeaponLevel weaponLevelSO;
+    public Projectile weaponProjectile;
+    
+    public int level;
+    public float speed;
+    public Vector3 size;
+    public float radius;
+    public Vector2 boxSize;
+    public float damage;
+    public float damageTick;
+    public float attackRate;
+    public float destructTimer;
+}

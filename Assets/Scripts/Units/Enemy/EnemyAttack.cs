@@ -6,15 +6,15 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    [Header(DS_Constants.DO_NOT_ASSIGN)]
+    [Header(DS_Constants.ASSIGNABLE)]
     [SerializeField] private EnemyStat enemyStat;
+    [Header(DS_Constants.DO_NOT_ASSIGN)]
     [SerializeField] private float playerDef;
     [SerializeField] private float currentDamage;
     [SerializeField] private float currentAtkSpeed;
     
     private void Start()
     {
-        enemyStat = GetComponent<EnemyStat>();
         playerDef = 0;
         currentDamage = enemyStat.statSO.damage;
         currentAtkSpeed = enemyStat.statSO.atkSpeed;
@@ -22,7 +22,7 @@ public class EnemyAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.TryGetComponent(out PlayerStat playerStat))
+        if (col.gameObject.TryGetComponent(out PlayerStat playerStat))
         {
             playerStat.StartDoT(currentDamage, playerDef, currentAtkSpeed);            
         }

@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
 {
     [Header(DS_Constants.DO_NOT_ASSIGN)] 
     [SerializeField] private bool isGamePaused;
-    private float startTime;
+    private float gameTime;
+    private float cacheStartTime;
     private bool timerActive = false;
     public int enemyCounter;
     public int objectiveCounter;
@@ -18,14 +19,14 @@ public class GameManager : MonoBehaviour
     
     [Header(DS_Constants.ASSIGNABLE)]
     public GameObject player;
-    [SerializeField] private GameObject playerKatol;
-    [SerializeField] private GameObject playerSantaWaterSpawner;
     [SerializeField] private GameObject objectivePrefab;
     [SerializeField] private List<Transform> objectiveTransformsList;
 
+    public OnTimeCheckEvent OnTimeCheckEvent = new();
     public OnGamePauseEvent onGamePauseEvent = new();
     public OnPlayerWinEvent onPlayerWinEvent = new();
     public OnLevelUpEvent onLevelUpEvent = new();
+    public OnUpdateUpgradesEvent onUpdateUpgradesEvent = new();
     public OnEnemySpawnEvent onEnemySpawnEvent = new();
     public OnChangeTargetEvent onChangeTargetEvent = new();
     public OnDeathEvent onEnemyKill = new();
@@ -33,44 +34,38 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         SingletonManager.Register(this);
-        
-        // Spawn Objectives
-        foreach (Transform transform in objectiveTransformsList)
-        {
-            GameObject go = Instantiate(objectivePrefab, transform);
-            go.transform.SetParent(SingletonManager.Get<ObjectPooler>().transform);
-            go.transform.GetChild(0).GetComponent<IO_Pool>().onInteractEvent.AddListener(OnPlayerWin);
-            objectiveGos.Add(go);
-            objectiveCounter++;
-        }
+        SpawnObjectives();
+        StartCoroutine(CheckTime());
     }
 
     private void OnEnable()
     {
-        onLevelUpEvent.AddListener(OnPlayerLevelUp);
-        player.GetComponent<PlayerStat>().unitHealth.onDeathEvent.AddListener(OnPlayerLose);
-        onEnemySpawnEvent.AddListener(AddOnEnemySpawn);
+        onLevelUpEvent.AddListener(PlayerLevelUp);
+        player.GetComponent<PlayerStat>().unitHealth.onDeathEvent.AddListener(PlayerLose);
+        onEnemySpawnEvent.AddListener(EnemySpawnIncrement);
         onEnemyKill.AddListener(DecrementOnEnemyKill);
     }
 
     private void Start()
     {
         Time.timeScale = 1;
-        startTime = Time.time;
+        cacheStartTime = Time.time;
+        
+        onUpdateUpgradesEvent.Invoke();
     }
 
     private void OnDisable()
     {
-        onLevelUpEvent.RemoveListener(OnPlayerLevelUp);
+        onLevelUpEvent.RemoveListener(PlayerLevelUp);
         //player.GetComponent<PlayerStat>().unitHealth.onDeathEvent.RemoveListener(OnPlayerLose);
-        onEnemySpawnEvent.RemoveListener(AddOnEnemySpawn);
+        onEnemySpawnEvent.RemoveListener(EnemySpawnIncrement);
         onEnemyKill.AddListener(DecrementOnEnemyKill);
         
         foreach (GameObject go in objectiveGos)
         {
             if (go != null)
             {
-                go.transform.GetChild(0).GetComponent<IO_Pool>().onInteractEvent.RemoveListener(OnPlayerWin);
+                go.transform.GetChild(0).GetComponent<IO_Pool>().onInteractEvent.RemoveListener(PlayerWin);
             }
         }
     }
@@ -81,35 +76,63 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
             {
-                OnPauseGameTime(!isGamePaused);
+                PauseGameTime(!isGamePaused);
                 onGamePauseEvent.Invoke(isGamePaused);
             }
         }
 
-        float t = Time.time - startTime;
-        string minutes = ((int)t / 60).ToString();
-        string seconds = (t % 60).ToString("f2");
+        gameTime = Time.time - cacheStartTime;
+        string minutes = ((int)gameTime / 60).ToString();
+        string seconds = (gameTime % 60).ToString("f2");
         SingletonManager.Get<UIManager>().timerText.text = minutes + ":" + seconds;
     }
 
-    public void OnPauseGameTime(bool p_bool)
+    #region Time
+    private IEnumerator CheckTime()
+    {
+        while (true)
+        {
+            OnTimeCheckEvent.Invoke((int)gameTime);
+            yield return new WaitForSeconds(1f);
+        }
+    }
+    
+    public void PauseGameTime(bool p_bool)
     {
         Time.timeScale = p_bool ? 0 : 1;
         isGamePaused = p_bool;
         // Time.timeScale = Time.timeScale >= 1 ? 0 : 1;
     }
-
-    private void OnPlayerLevelUp(bool p_bool)
+    #endregion
+    #region LevelUp
+    private void PlayerLevelUp(bool p_bool)
     {
-        OnPauseGameTime(p_bool);
+        PauseGameTime(p_bool);
     }
 
-    private void OnPlayerWin(GameObject go)
+    public void UpdateUpgrades()
+    {
+        onUpdateUpgradesEvent.Invoke();
+    }
+    #endregion
+    private void SpawnObjectives()
+    {
+        foreach (Transform transform in objectiveTransformsList)
+        {
+            GameObject go = Instantiate(objectivePrefab, transform);
+            go.transform.SetParent(SingletonManager.Get<ObjectPooler>().transform);
+            go.transform.GetChild(0).GetComponent<IO_Pool>().onInteractEvent.AddListener(PlayerWin);
+            objectiveGos.Add(go);
+        }
+    }
+    #region Win/Lose Conditions
+    private void PlayerWin(GameObject go)
     {
         //Debug.Log("Objective turned off.");
-        objectiveCounter--;
-        go.GetComponent<IO_Pool>().onInteractEvent.RemoveListener(OnPlayerWin);
-        if (objectiveCounter <= 0)
+        objectiveCounter++;
+        Debug.Log(objectiveCounter);
+        go.GetComponent<IO_Pool>().onInteractEvent.RemoveListener(PlayerWin);
+        if (objectiveCounter >= objectiveTransformsList.Count)
         {
             //Debug.Log("Player wins!");
             onPlayerWinEvent.Invoke();
@@ -118,30 +141,32 @@ public class GameManager : MonoBehaviour
         
     }
 
-    private void OnPlayerLose()
+    private void PlayerLose()
     {
         Time.timeScale = 0;
     }
-
-    public void AddOnEnemySpawn()
+    #endregion
+    #region Enemy Events
+    private void EnemySpawnIncrement()
     {
         enemyCounter++;
         SingletonManager.Get<UIManager>().UpdateEnemyCountUI(enemyCounter);
     }
 
-    public void DecrementOnEnemyKill()
+    private void DecrementOnEnemyKill()
     {
         enemyCounter--;
         SingletonManager.Get<UIManager>().UpdateEnemyCountUI(enemyCounter);
     }
-
+    #endregion
+    #region Reset() and Quit()
     public void GameReset()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-    
     public void ApplicationQuit()
     {
         Application.Quit();
     }
+    #endregion
 }

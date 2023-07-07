@@ -39,13 +39,19 @@ public class Health
             amount -= cache;
         }
         health -= amount;
-        if (currentHealth <= 0)
+        if (health < 0)
         {
             Death();
         }
         onDamageEvent.Invoke(health);
     }
 
+    public void ResetHP(int hp, int maxHP)
+    {
+        currentMaxHealth = maxHP;
+        currentHealth = hp;
+    }
+    
     private void Death()
     {
         // Do something; an event maybe

@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a08130f501f1c4a42a4ba30eb75ad1aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDestruct: 1
   projectileSpeed: 30
-  projectileDamage: 0
-  selfDestructTimer: 1
+  poolSO: {fileID: 11400000, guid: 1ce5a022c8190364aa2b25b483d39314, type: 2}
 --- !u!212 &523112644151320650
 SpriteRenderer:
   m_ObjectHideFlags: 0

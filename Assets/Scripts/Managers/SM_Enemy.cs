@@ -9,13 +9,11 @@ using Random = UnityEngine.Random;
 public class SM_Enemy : SpawnManager
 {
     [Header(DS_Constants.DO_NOT_ASSIGN)]
-    private GameObject player;
     private Vector3 spawnPos;
-    private Rigidbody2D playerRb;
     private bool isHoldingDownKey;
     private float buttonDownCounter;
     private BoxCollider2D boxCollider2D;
-    
+
     // Spawning Around Player Variables
     private int numberOfObjects = 20;
     private float spawnRadius = 20f;
@@ -25,7 +23,13 @@ public class SM_Enemy : SpawnManager
     [Header(DS_Constants.ASSIGNABLE)]
     public float spawnTimerMin;
     public float spawnTimerMax;
-    
+
+    public SO_Time waveTimeSO;
+    public List<SO_Pool> enemyPools;
+    public List<SO_EnemyListToSpawn> enemyListToSpawns;
+    public SO_Pool clusterPool;
+    public SO_Pool blockerPool;
+
     public float buttonHoldDownTime;
     public BoxCollider2D[] spawnColliders;
     public BoxCollider2D[] leftColliders;
@@ -37,21 +41,30 @@ public class SM_Enemy : SpawnManager
     public BoxCollider2D[] bottomLeftColliders;
     public BoxCollider2D[] bottomRightColliders;
 
+    private void OnDisable()
+    {
+        SingletonManager.Get<GameManager>().OnTimeCheckEvent.RemoveListener(SpawnWavesOnTime);
+    }
+
     protected override void Start()
     {
+        SingletonManager.Get<GameManager>().OnTimeCheckEvent.AddListener(SpawnWavesOnTime);
         ResetVariables();
-        player = SingletonManager.Get<GameManager>().player;
-        playerRb = player.GetComponent<Rigidbody2D>();
         objectPooler = SingletonManager.Get<ObjectPooler>();
-        objectPooler.CreatePool(poolSO);
-        StartCoroutine(SpawnCoroutine());
+        foreach (SO_Pool sp in enemyPools)
+        {
+            objectPooler.CreatePool(sp);
+        }
+        //objectPooler.CreatePool(clusterPool);
+        //objectPooler.CreatePool(blockerPool);
+        //StartCoroutine(SpawnEnemyCoroutine(enemyPools[0]));
     }
 
     private void Update()
     {
         // Spawning_Wave_Type3
         // Spawn more circular
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
             float angleStep = (endAngle - startAngle) / numberOfObjects;
             for (int i = 0; i < numberOfObjects; i++)
@@ -66,36 +79,49 @@ public class SM_Enemy : SpawnManager
                 // EnemyCounter++
                 SingletonManager.Get<GameManager>().onEnemySpawnEvent.Invoke();
             }
-        }
+        }*/
 
-        if (Input.anyKey)
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
-            switch (playerRb.velocity.normalized)
+            if (Input.GetAxis("Horizontal") > 0)
             {
-                case { x: > 0, y: > 0 }:
-                    RandBoxCountdown(upperRightColliders);
-                    break;
-                case { x: < 0, y: > 0 }:
-                    RandBoxCountdown(upperRightColliders);
-                    break;
-                case { x: < 0, y: < 0 }:
-                    RandBoxCountdown(bottomRightColliders);
-                    break;
-                case { x: > 0, y: < 0 }:
-                    RandBoxCountdown(bottomRightColliders);
-                    break;
-                case { x: > 0, y: 0 }:
-                    RandBoxCountdown(rightColliders);
-                    break;
-                case { x: 0, y: > 0 }:
-                    RandBoxCountdown(upColliders);
-                    break;
-                case { x: < 0, y: 0 }:
-                    RandBoxCountdown(rightColliders);
-                    break;
-                case { x: 0, y: < 0 }:
-                    RandBoxCountdown(bottomColliders);
-                    break;
+                //Debug.Log("right");
+                RandBoxCountdown(upperRightColliders);
+            }
+            else if (Input.GetAxis("Horizontal") < 0)
+            {
+                //Debug.Log("left");
+                RandBoxCountdown(upperRightColliders);
+            }
+            else if (Input.GetAxis("Vertical") > 0)
+            {
+                //Debug.Log("up");
+                RandBoxCountdown(upColliders);
+            }
+            else if (Input.GetAxis("Vertical") < 0)
+            {
+                //Debug.Log("bottom");
+                RandBoxCountdown(bottomColliders);
+            }
+            if (Input.GetAxis("Horizontal") > 0 && Input.GetAxis("Vertical") > 0)
+            {
+                //Debug.Log("upper-right");
+                RandBoxCountdown(upperRightColliders);
+            }
+            else if (Input.GetAxis("Horizontal") < 0 && Input.GetAxis("Vertical") > 0)
+            {
+                //Debug.Log("upper-left");
+                RandBoxCountdown(upperRightColliders);
+            }
+            else if (Input.GetAxis("Horizontal") > 0 && Input.GetAxis("Vertical") < 0)
+            {
+                //Debug.Log("bottom-right");
+                RandBoxCountdown(bottomRightColliders);
+            }
+            else if (Input.GetAxis("Horizontal") < 0 && Input.GetAxis("Vertical") < 0)
+            {
+                //Debug.Log("bottom-left");
+                RandBoxCountdown(bottomRightColliders);
             }
         }
         else if (Input.GetKeyUp(KeyCode.W)
@@ -107,35 +133,64 @@ public class SM_Enemy : SpawnManager
         }
     }
     
-    protected override IEnumerator SpawnCoroutine()
+    private IEnumerator SpawnEnemyCoroutine(List<SO_Pool> enemiesToSpawn)
     {
         while (true)
         {
             float randNum = Random.Range(spawnTimerMin, spawnTimerMax);
             yield return new WaitForSeconds(randNum);
-            Spawn();
-            
-            // EnemyCounter++
-            SingletonManager.Get<GameManager>().onEnemySpawnEvent.Invoke();
+            SpawnEnemy(enemiesToSpawn);
+        }
+    }
+
+    private void SpawnEnemy(List<SO_Pool> enemiesToSpawn)
+    {
+        int randNum = Random.Range(0, enemiesToSpawn.Count);
+        string randTag = enemiesToSpawn[randNum].pool.tag;
+        if (!isHoldingDownKey)
+        {
+            for (int i = 0; i < randNum; i++)
+            {
+                spawnPos = GetRandSpawnCollidersPos();
+                objectPooler.SpawnFromPool(randTag, spawnPos, Quaternion.identity);
+                // EnemyCounter++
+                SingletonManager.Get<GameManager>().onEnemySpawnEvent.Invoke();
+            }
+        }
+        else
+        {
+            for (int i = 0; i < randNum; i++)
+            {
+                spawnPos = GetRandBoxDirPos(boxCollider2D);
+                objectPooler.SpawnFromPool(randTag, spawnPos, Quaternion.identity);
+                // EnemyCounter++
+                SingletonManager.Get<GameManager>().onEnemySpawnEvent.Invoke();
+            }
         }
     }
 
     #region Functions
-    protected override void Spawn()
+    private void SpawnWavesOnTime(float gameTime)
     {
-        if (!isHoldingDownKey)
+        //Debug.Log(gameTime);
+        for (var i = 0; i < waveTimeSO.timeStampList.Count; i++)
         {
-            spawnPos = GetRandSpawnCollidersPos();
+            var tm = waveTimeSO.timeStampList[i];
+            if (gameTime.Equals(tm))
+            {
+                StartSpawn(enemyListToSpawns[i].enemiesToSpawn);
+            }
         }
-        else
-        {
-            spawnPos = GetRandBoxDirPos(boxCollider2D);
-        }
+    }
 
-        GameObject obj = objectPooler.SpawnFromPool(objectPooler.baseEnemySO.pool.tag, spawnPos, Quaternion.identity);
-        
-        // Update movement speed sample script
-        // obj.GetComponent<EnemyMovement>().UpdateMovementSpeed(obj.GetComponent<EnemyStat>().movementSpeed);
+    private void StartSpawn(List<SO_Pool> enemiesToSpawn)
+    {
+        StopSpawn();
+        StartCoroutine(SpawnEnemyCoroutine(enemiesToSpawn));
+    }
+    private void StopSpawn()
+    {
+        StopAllCoroutines();
     }
 
     private Vector3 GetRandSpawnCollidersPos()
@@ -175,15 +230,21 @@ public class SM_Enemy : SpawnManager
         else
         {
             isHoldingDownKey = true;
-            boxCollider2D = GetRandBoxCollider(boxCollider2Ds);            
+            boxCollider2D = GetRandBoxCollider(boxCollider2Ds);
         }
     }
 
     private void ResetVariables()
     {
+        Debug.Log("Variables are reset.");
         boxCollider2D = null;
         isHoldingDownKey = false;
         buttonDownCounter = buttonHoldDownTime;
+    }
+
+    protected override void UpdateWeapon()
+    {
+        
     }
     #endregion
 }

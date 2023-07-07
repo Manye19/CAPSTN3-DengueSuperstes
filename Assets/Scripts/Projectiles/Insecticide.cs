@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class Insecticide : Projectile
 {
-    [Header(DS_Constants.ASSIGNABLE)]
-    [SerializeField] private bool isDestruct;
-    [SerializeField] private float tickTime;
-
+    private List<EnemyStat> enemyStatList = new();
     protected override void OnEnable()
     {
         if (isDestruct)
         {
             base.OnEnable();
+        }
+        StartCoroutine(DamageAll());
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        if (enemyStatList.Count > 0)
+        {
+            foreach (EnemyStat es in enemyStatList)
+            {
+                es.StopDoT();
+            }
+            enemyStatList.Clear();
         }
     }
 
@@ -21,7 +32,8 @@ public class Insecticide : Projectile
         if (other.TryGetComponent(out EnemyStat enemyStat))
         {
             // Make it so that they are independent coroutines
-            enemyStat.StartDoT(projectileDamage, enemyStat.enemyStatSO.insecticideDefPercent, tickTime);            
+            //enemyStat.StartDoT(projectileDamage, enemyStat.enemyStatSO.insecticideDefPercent, damageTimeTick);
+            enemyStatList.Add(enemyStat);
         }
     }
 
@@ -29,7 +41,31 @@ public class Insecticide : Projectile
     {
         if (other.TryGetComponent(out EnemyStat enemyStat))
         {
-            enemyStat.StopDoT();
+            //enemyStat.StopDoT();
+            if (enemyStatList.Contains(enemyStat))
+            {
+                enemyStatList.Remove(enemyStat);
+            }
+        }
+    }
+
+    private IEnumerator DamageAll()
+    {
+        while (true)
+        {
+            for (var index = 0; index < enemyStatList.Count; index++)
+            {
+                var es = enemyStatList[index];
+                if (es.isActiveAndEnabled)
+                {
+                    es.TakeDamage(projectileDamage, es.insecticideDefPercent);
+                    if (!es.isActiveAndEnabled)
+                    {
+                        enemyStatList.Remove(es);
+                    }
+                }
+            }
+            yield return new WaitForSeconds(damageTimeTick);
         }
     }
 }

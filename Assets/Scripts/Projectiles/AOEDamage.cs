@@ -11,9 +11,6 @@ public class AOEDamage : Projectile
     public float katolSlowPercent;
     public float insecticideDefPercent;
     public float saltGunDefPercent;
-    [Header(DS_Constants.ASSIGNABLE)] 
-    [SerializeField] private bool isDestruct;
-    [SerializeField] private float tickTime;
 
     protected override void Start()
     {
@@ -35,7 +32,7 @@ public class AOEDamage : Projectile
         if (other.TryGetComponent(out EnemyStat enemyStat))
         {
             // Make it so that they are independent coroutines
-            enemyStat.StartDoT(projectileDamage, 0, tickTime);
+            enemyStat.StartDoT(projectileDamage, 0, damageTimeTick);
             enemyStat.DecrementMoveSpeed(katolSlowPercent);
         }
     }

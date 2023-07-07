@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class SM_Magnet : SpawnManager
 {
+    private int transformCounter = 0;
+    
     protected override void Spawn()
     {
-        Transform randT = spawnTransforms[Random.Range(0, spawnTransforms.Length)];
-        objectPooler.SpawnFromPool(objectPooler.playerMosMagnetSO.pool.tag, 
-            new Vector3(randT.position.x, randT.position.y), Quaternion.identity);
+        Transform t = spawnTransforms[transformCounter];
+        transformCounter++;
+        GameObject go = objectPooler.SpawnFromPool(poolSO.pool.tag, new Vector3(t.position.x, t.position.y),
+            Quaternion.identity);
+        if (transformCounter >= spawnTransforms.Length)
+        {
+            transformCounter = 0;
+        }
     }
 }

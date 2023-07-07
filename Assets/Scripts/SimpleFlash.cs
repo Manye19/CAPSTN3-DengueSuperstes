@@ -6,27 +6,34 @@ using UnityEngine;
 
 public class SimpleFlash : MonoBehaviour
 {
+    public Color originalColor;
+    
     private SpriteRenderer spriteRenderer;
-    private Color originalColor;
     private Coroutine flashCoroutine;
     private Material originalMat;
 
-    private void Start()
+    private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+    
+    private void OnEnable()
+    {
         originalMat = spriteRenderer.material;
         // Color for now; Since we don't have our sprites yet.
-        originalColor = spriteRenderer.color;
+        spriteRenderer.color = originalColor;
     }
 
     public void Flash()
     {
         if (flashCoroutine != null)
         {
-            StopCoroutine(flashCoroutine);
+            StopAllCoroutines();
         }
-        
-        flashCoroutine = StartCoroutine(FlashCoroutine());
+        if (gameObject.activeInHierarchy)
+        {
+            flashCoroutine = StartCoroutine(FlashCoroutine());
+        }
     }
 
     private IEnumerator FlashCoroutine()

@@ -8,4 +8,6 @@ public class DS_Constants
     public const string ASSIGNABLE = "===== Editor: Assignable =====";
     public const string DEFAULTS = "===== THESE ARE DEFAULT VALUES =====";
     public const string RESISTANCES = "===== Resistances =====";
+    public const string WEAKNESSES = "===== Weaknesses =====";
+    public const int OBJECTIVECOUNT = 1200;
 }

@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class Katol : Projectile
 {
-
-    [Header(DS_Constants.ASSIGNABLE)]
-    [SerializeField] private bool isDestruct;
-    [SerializeField] private float tickTime;
+    public List<EnemyStat> enemyStatList = new();
+    
     protected override void OnEnable()
     {
         if (isDestruct)
         {
             base.OnEnable();
         }
+        UpdateProjectileStats();
+        StartCoroutine(DamageAll());
+    }
+
+    protected override void OnDisable()
+    {
+        UpdateProjectileStats();
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)
@@ -21,8 +26,10 @@ public class Katol : Projectile
         if (other.TryGetComponent(out EnemyStat enemyStat))
         {
             // Make it so that they are independent coroutines
-            enemyStat.StartDoT(projectileDamage, 0, tickTime);
-            enemyStat.DecrementMoveSpeed(enemyStat.enemyStatSO.katolSlowPercent);
+            /*enemyStat.StartDoT(projectileDamage, 0, damageTimeTick);
+            enemyStat.DecrementMoveSpeed(enemyStat.enemyStatSO.katolSlowPercent);*/
+            enemyStatList.Add(enemyStat);
+            // Evolve - 30% chance - 90% move decrease affects all?
         }
     }
 
@@ -30,8 +37,34 @@ public class Katol : Projectile
     {
         if (other.TryGetComponent(out EnemyStat enemyStat))
         {
-            enemyStat.StopDoT();
-            enemyStat.ResetMoveSpeed();
+            /*enemyStat.StopDoT();
+            enemyStat.ResetMoveSpeed();*/
+            if (enemyStatList.Contains(enemyStat))
+            {
+                enemyStat.ResetMoveSpeed();
+                enemyStatList.Remove(enemyStat);
+            }
+        }
+    }
+
+    private IEnumerator DamageAll()
+    {
+        while (true)
+        {
+            for (var index = 0; index < enemyStatList.Count; index++)
+            {
+                var es = enemyStatList[index];
+                if (es.isActiveAndEnabled)
+                {
+                    es.TakeDamage(projectileDamage, 0);
+                    es.DecrementMoveSpeed(es.enemyStatSO.katolSlowPercent);
+                    if (!es.isActiveAndEnabled)
+                    {
+                        enemyStatList.Remove(es);
+                    }
+                }
+            }
+            yield return new WaitForSeconds(damageTimeTick);
         }
     }
 }

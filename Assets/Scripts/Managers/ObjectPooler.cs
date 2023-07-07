@@ -9,10 +9,9 @@ public class ObjectPooler : MonoBehaviour
     private Dictionary<string, Queue<GameObject>> poolDictionary = new();
     
     [Header("===== Editor: Assignable =====")]
-    [Header("Pool Scriptable Objects")]
     public SO_PoolProjectile playerWhipSO;
     public SO_PoolProjectile playerSantaWaterSO;
-    public SO_PoolProjectile playerDaggerSO;
+    public SO_PoolProjectile playerSaltSO;
     public SO_PoolProjectile playerInsecticideSO;
     public SO_PoolProjectile playerNetSO;
     public SO_PoolProjectile playerMosMagnetSO;
@@ -22,7 +21,6 @@ public class ObjectPooler : MonoBehaviour
 
     private void Awake()
     {
-        //_instance = this;
         SingletonManager.Register(this);
     }
 

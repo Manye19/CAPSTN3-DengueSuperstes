@@ -10,8 +10,14 @@ public class PlayerStat : Stat
         base.Start();
         level = 1;
         requiredXP = CalculateRequiredXP();
+        SingletonManager.Get<GameManager>().onUpdateUpgradesEvent.AddListener(UpdatePlayerStat);
     }
-    
+
+    protected override void OnDisable()
+    {
+        unitHealth.onDeathEvent.RemoveListener(Death);
+    }
+
     public override void GainExperienceFlatRate(float xpGained)
     {
         base.GainExperienceFlatRate(xpGained);
@@ -31,5 +37,16 @@ public class PlayerStat : Stat
         base.LevelUp();
         GameManager gameManager = SingletonManager.Get<GameManager>();
         gameManager.onLevelUpEvent.Invoke(true);
+    }
+
+    private void UpdatePlayerStat()
+    {
+        foreach (PowerupStat ps in SingletonManager.Get<PowerupsManager>().powerups)
+        {
+            if (ps.powerupName.Equals("MaxHP"))
+            {
+                unitHealth.maxHealth += ps.increase;
+            }
+        }
     }
 }

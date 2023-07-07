@@ -7,8 +7,8 @@ using UnityEngine.Serialization;
 public class EnemyMovement : MonoBehaviour
 {
     [Header(DS_Constants.DO_NOT_ASSIGN)]
-    private float currentSpeed;
-    private EnemyStat enemyStat;
+    protected float currentSpeed;
+    protected EnemyStat enemyStat;
     private GameObject player;
     private Vector2 targetPos;
     private Coroutine moveToPlayerCo;
@@ -16,27 +16,25 @@ public class EnemyMovement : MonoBehaviour
     [Header(DS_Constants.ASSIGNABLE)] 
     [SerializeField] private float updateTick;
 
-    private void Start()
+    protected virtual void OnEnable()
     {
         player = SingletonManager.Get<GameManager>().player;
-        targetPos = player.transform.position;
-        enemyStat = GetComponent<EnemyStat>();
-        currentSpeed = enemyStat.statSO.moveSpeed;
         moveToPlayerCo = StartCoroutine(UpdatePlayerLocation());
     }
 
-    private void OnDisable()
+    protected virtual void Start()
     {
-        SingletonManager.Get<GameManager>().onChangeTargetEvent.RemoveListener(ChangeTarget);
+        targetPos = player.transform.position;
+        enemyStat = GetComponent<EnemyStat>();
+        currentSpeed = enemyStat.statSO.moveSpeed;
     }
-
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         // Get and set UPDATED speed (int) from EnemyStat class or Spawner class
         transform.position = Vector2.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime); // temporary for now
     }
 
-    private IEnumerator UpdatePlayerLocation()
+    protected virtual IEnumerator UpdatePlayerLocation()
     {
         while (true)
         {
@@ -45,25 +43,30 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void ListenToChangeTarget()
+    public virtual void AddListenerToChangeTarget()
     {
         SingletonManager.Get<GameManager>().onChangeTargetEvent.AddListener(ChangeTarget);
     }
 
-    private void ChangeTarget(Transform target)
+    public virtual void RemoveListenerToChangeTarget()
+    {
+        SingletonManager.Get<GameManager>().onChangeTargetEvent.RemoveListener(ChangeTarget);
+    }
+
+    protected virtual void ChangeTarget(Transform target)
     {
         if (target != null)
         {
             StopCoroutine(moveToPlayerCo);
             targetPos = target.position;
         }        
-        else
+        else if (isActiveAndEnabled)
         {
             moveToPlayerCo = StartCoroutine(UpdatePlayerLocation());
         }
     }
 
-    public void UpdateMovementSpeed(float moveSpeed)
+    public virtual void UpdateMovementSpeed(float moveSpeed)
     {
         // Updates speed depending on Enemy?
         currentSpeed = moveSpeed;

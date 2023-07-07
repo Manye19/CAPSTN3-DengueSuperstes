@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 public class Stat : MonoBehaviour
 {
-    public readonly Health unitHealth = new Health(100, 100);
+    public Health unitHealth = new (100, 100);
 
     [Header(DS_Constants.DO_NOT_ASSIGN)]
     private float additionMultiplier = 300;
@@ -15,7 +15,7 @@ public class Stat : MonoBehaviour
     private float divisionMultiplier = 7;
     private Coroutine dotCoroutine;
     private SimpleFlash simpleFlash;
-    
+
     public int level;
     public float currentXP;
     public float requiredXP;
@@ -32,7 +32,7 @@ public class Stat : MonoBehaviour
         simpleFlash = GetComponent<SimpleFlash>();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         unitHealth.health = statSO.health;
         unitHealth.maxHealth = statSO.maxHealth;
@@ -41,14 +41,13 @@ public class Stat : MonoBehaviour
         moveSpeed = statSO.moveSpeed;
     }
     
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
-        unitHealth.onDeathEvent.RemoveListener(Death);
+        
     }
     
     public virtual void TakeDamage(float amount, float multiplier)
     {
-        //Debug.Log("Damage!");
         simpleFlash.Flash();
         unitHealth.Damage(amount, multiplier);
     }
@@ -67,6 +66,8 @@ public class Stat : MonoBehaviour
     {
         if (gameObject.activeInHierarchy)
         {
+            // Damage Over Time Animation?
+            
             dotCoroutine = StartCoroutine(TakeDamageOverTime(damage, multiplier, time));
             //Debug.Log(dotCoroutine + " start!");
         }
@@ -74,10 +75,9 @@ public class Stat : MonoBehaviour
 
     public void StopDoT()
     {
-        if (dotCoroutine != null)
-        {
-            StopCoroutine(dotCoroutine);
-        }
+        // Stop Damage Over Time Animation
+        
+        StopAllCoroutines();
     }
 
     public void DecrementMoveSpeed(float amount)
@@ -90,11 +90,13 @@ public class Stat : MonoBehaviour
     public void ResetMoveSpeed()
     {
         moveSpeed = statSO.moveSpeed;
+        GetComponent<EnemyMovement>().UpdateMovementSpeed(moveSpeed);
     }
     
     protected virtual void Death()
     {
         gameObject.SetActive(false);
+        unitHealth.health = statSO.health;
     }
 
     public void Heal(float amount)

@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class Zapper : Projectile
 {
-    [Header(DS_Constants.ASSIGNABLE)] 
-    [SerializeField] private bool isDestruct;
-    [SerializeField] private float tickTime;
-
+    private List<EnemyStat> enemyStatList = new();
+    
     protected override void OnEnable()
     {
         if (isDestruct)
         {
             base.OnEnable();
+        }
+        StartCoroutine(DamageAll());
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        if (enemyStatList.Count > 0)
+        {
+            foreach (EnemyStat es in enemyStatList)
+            {
+                es.StopDoT();
+            }
+            enemyStatList.Clear();
         }
     }
 
@@ -20,7 +32,8 @@ public class Zapper : Projectile
     {
         if (col.TryGetComponent(out EnemyStat enemyStat))
         {
-            enemyStat.StartDoT(projectileDamage, 0, tickTime);
+            //enemyStat.StartDoT(projectileDamage, 0, damageTimeTick);
+            enemyStatList.Add(enemyStat);
         }
     }
 
@@ -28,7 +41,32 @@ public class Zapper : Projectile
     {
         if (other.TryGetComponent(out EnemyStat enemyStat))
         {
-            enemyStat.StopDoT();
+            //enemyStat.StopDoT();
+            if (enemyStatList.Contains(enemyStat))
+            {
+                enemyStatList.Remove(enemyStat);
+            }
+        }
+    }
+    
+    private IEnumerator DamageAll()
+    {
+        while (true)
+        {
+            for (var index = 0; index < enemyStatList.Count; index++)
+            {
+                var es = enemyStatList[index];
+                if (es.isActiveAndEnabled)
+                {
+                    // Don't forget to count for their resistances
+                    es.TakeDamage(projectileDamage, 0);
+                    if (!es.isActiveAndEnabled)
+                    {
+                        enemyStatList.Remove(es);
+                    }
+                }
+            }
+            yield return new WaitForSeconds(damageTimeTick);
         }
     }
 }

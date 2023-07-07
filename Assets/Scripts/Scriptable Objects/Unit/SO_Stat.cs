@@ -10,5 +10,4 @@ public class SO_Stat : ScriptableObject
     public float atkSpeed;
     public float damage;
     public float moveSpeed;
-    
 }

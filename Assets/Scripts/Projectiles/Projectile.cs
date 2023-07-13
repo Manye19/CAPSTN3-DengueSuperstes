@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
 {
     [Header(DS_Constants.ASSIGNABLE)]
     [SerializeField] protected bool isDestruct;
+    [SerializeField] protected bool isMoving;
     public float projectileSpeed;
     protected Vector2 projectileSize;
     protected float projectileDamage;
@@ -30,6 +31,14 @@ public class Projectile : MonoBehaviour
     protected virtual void Start()
     {
         SingletonManager.Get<GameManager>().onUpdateUpgradesEvent.AddListener(UpdateProjectileStats);
+    }
+
+    protected virtual void Update()
+    {
+        if (isMoving)
+        {
+            transform.Translate(0, projectileSpeed * Time.deltaTime, 0);
+        }
     }
 
     protected virtual IEnumerator SelfDestructTimer()
@@ -72,24 +81,25 @@ public class Projectile : MonoBehaviour
         }
         foreach (PowerupStat ps in SingletonManager.Get<PowerupsManager>().powerups)
         {
-            if (ps.powerupName.Equals("Radius"))
+            switch (ps.powerupName)
             {
-                if (TryGetComponent(out CircleCollider2D cc2D))
+                case "Radius":
                 {
-                    cc2D.radius += ps.increase;
+                    if (TryGetComponent(out CircleCollider2D cc2D))
+                    {
+                        cc2D.radius += ps.increase;
+                    }
+                    break;
                 }
-            }
-            if (ps.powerupName.Equals("Damage"))
-            {
-                projectileDamage += ps.increase;
-            }
-            if (ps.powerupName.Equals("Speed"))
-            {
-                projectileSpeed += ps.increase;
-            }
-            if (ps.powerupName.Equals("Time"))
-            {
-                destructTimer += ps.increase;
+                case "Damage":
+                    projectileDamage += ps.increase;
+                    break;
+                case "Speed":
+                    projectileSpeed += ps.increase;
+                    break;
+                case "Time":
+                    destructTimer += ps.increase;
+                    break;
             }
         }
     }

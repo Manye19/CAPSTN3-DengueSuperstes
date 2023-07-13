@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Swatter
   m_EditorClassIdentifier: 
   weaponLevelSO: {fileID: 11400000, guid: 88c1b6dca3f4c644fab53aeb0a961f20, type: 2}
+  powerupLevelSO: {fileID: 0}
   isNew: 0100000000
   sprite: {fileID: 0}
-  rewardName: Swatter
+  rewardName: Electric Swatter
   rewardDescriptions:
   - 
   - ProjectileCount++

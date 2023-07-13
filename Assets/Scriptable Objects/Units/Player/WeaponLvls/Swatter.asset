@@ -18,7 +18,9 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  - 0
   projectileSizeLevels:
+  - {x: 0, y: 0}
   - {x: 0, y: 0}
   - {x: 0, y: 0}
   - {x: 0, y: 0}
@@ -30,7 +32,9 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  - 0
   boxSizeLevels:
+  - {x: 0, y: 0}
   - {x: 0, y: 0}
   - {x: 0, y: 0}
   - {x: 0, y: 0}
@@ -42,7 +46,9 @@ MonoBehaviour:
   - 100
   - 100
   - 100
+  - 100
   damageTickLevels:
+  - 0
   - 0
   - 0
   - 0
@@ -54,7 +60,9 @@ MonoBehaviour:
   - 2
   - 2
   - 2
+  - 2
   destructTimerLevels:
+  - 0.25
   - 0.25
   - 0.25
   - 0.25

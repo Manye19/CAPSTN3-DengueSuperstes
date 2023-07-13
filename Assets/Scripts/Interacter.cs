@@ -10,8 +10,12 @@ public class Interacter : MonoBehaviour
     {
         if (col.TryGetComponent(out IO_Pool iObjPool))
         {
-            //canInteract = true;
-            GetComponentInParent<PlayerStat>().GainExperienceFlatRate(iObjPool.xpAmount);
+            // canInteract = true;
+            
+            GetComponentInParent<PlayerStat>()
+                .GainExperienceFlatRate(iObjPool.xpAmount + SingletonManager.Get<GameManager>().xpMultiplier);
+            SingletonManager.Get<GameManager>().xpMultiplier++;
+            
             iObjPool.onInteractEvent.Invoke(iObjPool.gameObject);
         }
     }

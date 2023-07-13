@@ -8,10 +8,11 @@ using Random = UnityEngine.Random;
 public class SpawnManager : MonoBehaviour
 {
     [Header(DS_Constants.DO_NOT_ASSIGN)] 
-    protected bool isEvolved = false;
+    public bool isEvolved = false;
     protected int level = 0;
     [SerializeField] protected ObjectPooler objectPooler;
     [SerializeField] protected float spawnRate;
+    protected int spawnDuplicator = 1;
     protected Transform spawnT;
 
     [Header(DS_Constants.ASSIGNABLE)]
@@ -49,7 +50,7 @@ public class SpawnManager : MonoBehaviour
             if (ws.weaponLevelSO.name.Equals(poolSO.name))
             {
                 spawnRate = ws.attackRate;
-                if (ws.level >= 4)
+                if (ws.level > 4)
                 {
                     Evolve();
                 }
@@ -58,15 +59,21 @@ public class SpawnManager : MonoBehaviour
         }
         foreach (PowerupStat ps in SingletonManager.Get<PowerupsManager>().powerups)
         {
-            if (ps.powerupName.Equals("AtkRate"))
+            switch (ps.powerupName)
             {
-                spawnRate -= ps.increase;
+                case "AtkRate":
+                    spawnRate -= ps.increase;
+                    break;
+                case "Duplicator":
+                    spawnDuplicator += (int)ps.increase;
+                    break;
             }
         }
     }
 
     protected virtual void Evolve()
     {
-        
+        isEvolved = true;
+        Debug.Log(poolSO.name + " evolved!");
     }
 }

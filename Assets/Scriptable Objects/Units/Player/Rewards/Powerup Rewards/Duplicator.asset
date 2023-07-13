@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Duplicator
   m_EditorClassIdentifier: 
   weaponLevelSO: {fileID: 0}
-  powerupLevelSO: {fileID: 11400000, guid: d3938910faa36c64e89eacc6e0e0cf31, type: 2}
+  powerupLevelSO: {fileID: 11400000, guid: c598210a8547a1c4b82ea0241920ce2e, type: 2}
   isNew: 010000
   sprite: {fileID: 0}
   rewardName: Projectile Duplicator

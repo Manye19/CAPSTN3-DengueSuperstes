@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 public class PowerupStat
 {
     public string powerupName;
-    public SO_PowerupLevels powerUpSO;
+    [FormerlySerializedAs("powerUpSO")] public SO_PowerupLevels powerupLevelSO;
     
     public int level;
     public float increase;

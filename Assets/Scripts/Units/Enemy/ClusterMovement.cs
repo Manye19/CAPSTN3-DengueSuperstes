@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ClusterMovement : EnemyMovement
 {
+    [SerializeField] private SO_EnemyStat enemyStatSO;
     protected override void OnEnable()
     {
         
@@ -11,12 +12,18 @@ public class ClusterMovement : EnemyMovement
 
     protected override void Start()
     {
-        currentSpeed = enemyStat.statSO.moveSpeed;
+        
+        enemyStat = GetComponent<EnemyStat>();
+        currentSpeed = enemyStatSO.moveSpeed;
     }
 
     protected override void FixedUpdate()
     {
-        base.FixedUpdate();
+        transform.position = Vector2.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime); // temporary for now
+        if (transform.position.x >= targetPos.x && transform.position.y >= targetPos.y)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     protected override IEnumerator UpdatePlayerLocation()
@@ -34,11 +41,17 @@ public class ClusterMovement : EnemyMovement
         
     }
 
-    protected override void ChangeTarget(Transform target)
+    public override void ChangeTarget(Transform target)
     {
         
     }
 
+    public void SetTarget(Vector3 target)
+    {
+        Debug.Log(target + " is set.");
+        targetPos = target;
+    }
+    
     public override void UpdateMovementSpeed(float moveSpeed)
     {
         base.UpdateMovementSpeed(moveSpeed);

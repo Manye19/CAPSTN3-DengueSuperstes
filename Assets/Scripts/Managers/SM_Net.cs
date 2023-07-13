@@ -61,8 +61,8 @@ public class SM_Net : SpawnManager
         {
             GameObject go = objectPooler.SpawnFromPool(poolSO.pool.tag,
                 new Vector3(spawnT.position.x, spawnT.position.y, 0f), spawnT.rotation);
-            float speed = go.GetComponent<Projectile>().projectileSpeed;
-            go.GetComponent<Rigidbody2D>().velocity = spawnT.up * speed;
+            //float speed = go.GetComponent<Projectile>().projectileSpeed;
+            //go.GetComponent<Rigidbody2D>().velocity = spawnT.up * speed;
         }
         else
         {
@@ -79,14 +79,14 @@ public class SM_Net : SpawnManager
     {
         GameObject go = objectPooler.SpawnFromPool(poolSO.pool.tag,
             new Vector3(spawnT.position.x, spawnT.position.y, 0f), spawnT.rotation);
-        float speed = go.GetComponent<Projectile>().projectileSpeed;
-        go.GetComponent<Rigidbody2D>().velocity = spawnT.up * speed;
+        //float speed = go.GetComponent<Projectile>().projectileSpeed;
+        //go.GetComponent<Rigidbody2D>().velocity = spawnT.up * speed;
 
         yield return new WaitForSeconds(0.5f);
         
         go = objectPooler.SpawnFromPool(poolSO.pool.tag,
             new Vector3(spawnT.position.x, spawnT.position.y, 0f), spawnT.rotation);
-        speed = go.GetComponent<Projectile>().projectileSpeed;
-        go.GetComponent<Rigidbody2D>().velocity = spawnT.up * speed;
+        //speed = go.GetComponent<Projectile>().projectileSpeed;
+        //go.GetComponent<Rigidbody2D>().velocity = spawnT.up * speed;
     }
 }

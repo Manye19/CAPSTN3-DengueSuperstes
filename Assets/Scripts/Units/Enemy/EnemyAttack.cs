@@ -7,20 +7,20 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour
 {
     [Header(DS_Constants.ASSIGNABLE)]
-    [SerializeField] private EnemyStat enemyStat;
+    [SerializeField] protected EnemyStat enemyStat;
     [Header(DS_Constants.DO_NOT_ASSIGN)]
-    [SerializeField] private float playerDef;
-    [SerializeField] private float currentDamage;
-    [SerializeField] private float currentAtkSpeed;
+    [SerializeField] protected float playerDef;
+    [SerializeField] protected float currentDamage;
+    [SerializeField] protected float currentAtkSpeed;
     
-    private void Start()
+    protected virtual void Start()
     {
         playerDef = 0;
         currentDamage = enemyStat.statSO.damage;
         currentAtkSpeed = enemyStat.statSO.atkSpeed;
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    protected virtual void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.TryGetComponent(out PlayerStat playerStat))
         {
@@ -28,7 +28,7 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    protected virtual void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out PlayerStat playerStat))
         {

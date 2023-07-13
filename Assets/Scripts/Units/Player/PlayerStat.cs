@@ -32,7 +32,7 @@ public class PlayerStat : Stat
         uiManager.onUpdateUIXP.Invoke(level, currentXP, requiredXP);
     }
 
-    protected override void LevelUp()
+    public override void LevelUp()
     {
         base.LevelUp();
         GameManager gameManager = SingletonManager.Get<GameManager>();
@@ -48,5 +48,6 @@ public class PlayerStat : Stat
                 unitHealth.maxHealth += ps.increase;
             }
         }
+        SingletonManager.Get<UIManager>().UpdateHPUI(unitHealth.health);
     }
 }

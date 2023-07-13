@@ -38,28 +38,39 @@ public class SM_Swatter : SpawnManager
                 objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[0].position, Quaternion.identity);
                 yield return new WaitForSeconds(1);
                 objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[1].position, Quaternion.identity);
-                yield return new WaitForSeconds(1);
-                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[2].position, Quaternion.identity);
+                yield return new WaitForSeconds(0.75f);
+                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[0].position, Quaternion.identity);
                 break;
             case 3:
                 objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[0].position, Quaternion.identity);
                 yield return new WaitForSeconds(1);
                 objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[1].position, Quaternion.identity);
-                yield return new WaitForSeconds(1);
-                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[2].position, Quaternion.identity);
-                yield return new WaitForSeconds(1);
-                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[3].position, Quaternion.identity);
+                yield return new WaitForSeconds(0.75f);
+                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[0].position, Quaternion.identity);
+                yield return new WaitForSeconds(0.5f);
+                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[1].position, Quaternion.identity);
                 break;
             case 4:
                 objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[0].position, Quaternion.identity);
                 yield return new WaitForSeconds(1);
                 objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[1].position, Quaternion.identity);
+                yield return new WaitForSeconds(0.75f);
+                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[0].position, Quaternion.identity);
+                yield return new WaitForSeconds(0.5f);
+                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[1].position, Quaternion.identity);
+                yield return new WaitForSeconds(0.25f);
+                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[0].position, Quaternion.identity);
+                break;
+            case 5:
+                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[0].position, Quaternion.identity);
                 yield return new WaitForSeconds(1);
-                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[2].position, Quaternion.identity);
-                yield return new WaitForSeconds(1);
-                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[3].position, Quaternion.identity);
-                yield return new WaitForSeconds(1);
-                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[4].position, Quaternion.identity);
+                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[1].position, Quaternion.identity);
+                yield return new WaitForSeconds(0.75f);
+                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[0].position, Quaternion.identity);
+                yield return new WaitForSeconds(0.5f);
+                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[1].position, Quaternion.identity);
+                yield return new WaitForSeconds(0.25f);
+                objectPooler.SpawnFromPool(poolSO.pool.tag, spawnTransforms[0].position, Quaternion.identity);
                 break;
         }
     }

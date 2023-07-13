@@ -15,4 +15,5 @@ MonoBehaviour:
   pool:
     tag: Salt
     prefab: {fileID: 8602174607484946086, guid: df9a267c4a43ddd469501ad99279bf96, type: 3}
-    size: 8
+    size: 10
+    enableCount: 0

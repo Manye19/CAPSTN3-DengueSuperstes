@@ -10,7 +10,7 @@ public class EnemyMovement : MonoBehaviour
     protected float currentSpeed;
     protected EnemyStat enemyStat;
     private GameObject player;
-    private Vector2 targetPos;
+    protected Vector2 targetPos;
     private Coroutine moveToPlayerCo;
 
     [Header(DS_Constants.ASSIGNABLE)] 
@@ -53,7 +53,7 @@ public class EnemyMovement : MonoBehaviour
         SingletonManager.Get<GameManager>().onChangeTargetEvent.RemoveListener(ChangeTarget);
     }
 
-    protected virtual void ChangeTarget(Transform target)
+    public virtual void ChangeTarget(Transform target)
     {
         if (target != null)
         {

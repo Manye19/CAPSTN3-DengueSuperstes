@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Net
   m_EditorClassIdentifier: 
   weaponLevelSO: {fileID: 11400000, guid: 6641f3caacc54e84e88f21c19403546a, type: 2}
+  powerupLevelSO: {fileID: 0}
   isNew: 0100000000
   sprite: {fileID: 0}
-  rewardName: Stationary Zapper
+  rewardName: Electric Net
   rewardDescriptions:
   - 
   - ProjectileSpeed++

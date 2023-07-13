@@ -134,7 +134,7 @@ public class Stat : MonoBehaviour
         // lerpTimer = 0f;
     }
 
-    protected virtual void LevelUp()
+    public virtual void LevelUp()
     {
         level++;
         // frontXPBar.fillAmount = 0f;

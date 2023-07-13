@@ -31,25 +31,25 @@ public class PowerupsManager : MonoBehaviour
     {
         foreach (PowerupStat ps in powerups)
         {
-            //Debug.Log(ps.powerUpSO.levels[ps.level]);
-            if (ps.powerUpSO)
-            {
-                ps.increase = ps.powerUpSO.levels[ps.level];
-            }
+            ps.increase = ps.powerupLevelSO.levels[ps.level];
+            //Debug.Log(ps.increase);
         }
     }
 
-    public void LevelUp(SO_PowerupLevels powerupSOReference)
+    public void LevelUp(SO_PowerupLevels powerupLevelSOReference)
     {
         foreach (PowerupStat ps in powerups)
         {
-            if (ps.powerUpSO.Equals(powerupSOReference))
+            if (ps.powerupLevelSO.Equals(powerupLevelSOReference))
             {
                 if (ps.level < 3)
                 {
                     ps.level++;
+                    Debug.Log(powerupLevelSOReference.name + " leveled up!");
+                    break;
                 }
             }
         }
+        UpdatePowerupDatas();
     }
 }

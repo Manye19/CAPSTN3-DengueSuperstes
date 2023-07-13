@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDestruct: 1
+  isMoving: 1
   projectileSpeed: 30
   poolSO: {fileID: 11400000, guid: 1ce5a022c8190364aa2b25b483d39314, type: 2}
 --- !u!212 &523112644151320650

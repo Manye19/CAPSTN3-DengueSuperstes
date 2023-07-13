@@ -18,7 +18,8 @@ public class UIManager : MonoBehaviour
     private HealthBar healthBar;
     public Slider healthSlider;
     public TextMeshProUGUI healthText;
-    
+
+    public GameObject characterSelectPanel;
     public GameObject pausePanel;
     public GameObject levelUpPanel;
     public GameObject gameWinPanel;
@@ -46,7 +47,7 @@ public class UIManager : MonoBehaviour
         healthBar = healthSlider.GetComponent<HealthBar>();
         healthBar.slider = healthSlider;
         playerStat = gameManager.player.GetComponent<PlayerStat>();
-        gameManager.onUpdateUpgradesEvent.AddListener(() => UpdateHPUI(gameManager.player.GetComponent<PlayerStat>().unitHealth.maxHealth));
+        gameManager.onUpdateUpgradesEvent.AddListener(() => UpdateHPUI(gameManager.player.GetComponent<PlayerStat>().unitHealth.health));
         playerStat.unitHealth.onDamageEvent.AddListener(UpdateHPUI);
         onUpdateUIXP.AddListener(UpdateXPUI);
         gameManager.onGamePauseEvent.AddListener(PauseUI);
@@ -72,7 +73,7 @@ public class UIManager : MonoBehaviour
 
     private void OnDisable()
     {
-        gameManager.onUpdateUpgradesEvent.RemoveListener(() => UpdateHPUI(gameManager.player.GetComponent<PlayerStat>().unitHealth.maxHealth));
+        gameManager.onUpdateUpgradesEvent.RemoveListener(() => UpdateHPUI(gameManager.player.GetComponent<PlayerStat>().unitHealth.health));
         playerStat.unitHealth.onDamageEvent.RemoveListener(UpdateHPUI);
         onUpdateUIXP.RemoveListener(UpdateXPUI);
         gameManager.onGamePauseEvent.RemoveListener(PauseUI);
@@ -114,8 +115,9 @@ public class UIManager : MonoBehaviour
         ioPoolGameObject?.GetComponent<IO_Pool>().onInteractEvent.RemoveListener(UpdateObjectivesUI);
     }
 
-    private void UpdateHPUI(float currentHealth)
+    public void UpdateHPUI(float currentHealth)
     {
+        //Debug.Log(currentHealth);
         healthBar.SetHealth(currentHealth);
         healthText.text = "HP: " + currentHealth + " / " + playerStat.statSO.maxHealth;
     }

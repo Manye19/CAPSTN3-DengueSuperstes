@@ -25,10 +25,10 @@ public class SM_Enemy : SpawnManager
     public float spawnTimerMax;
 
     public SO_Time waveTimeSO;
+    public SO_Time clusterTimeSO;
     public List<SO_Pool> enemyPools;
     public List<SO_EnemyListToSpawn> enemyListToSpawns;
     public SO_Pool clusterPool;
-    public SO_Pool blockerPool;
 
     public float buttonHoldDownTime;
     public BoxCollider2D[] spawnColliders;
@@ -41,6 +41,9 @@ public class SM_Enemy : SpawnManager
     public BoxCollider2D[] bottomLeftColliders;
     public BoxCollider2D[] bottomRightColliders;
 
+    public BoxCollider2D[] clusterSpawns;
+    public BoxCollider2D[] clusterTargets;
+    
     private void OnDisable()
     {
         SingletonManager.Get<GameManager>().OnTimeCheckEvent.RemoveListener(SpawnWavesOnTime);
@@ -55,8 +58,7 @@ public class SM_Enemy : SpawnManager
         {
             objectPooler.CreatePool(sp);
         }
-        //objectPooler.CreatePool(clusterPool);
-        //objectPooler.CreatePool(blockerPool);
+        objectPooler.CreatePool(clusterPool);
         //StartCoroutine(SpawnEnemyCoroutine(enemyPools[0]));
     }
 
@@ -181,6 +183,15 @@ public class SM_Enemy : SpawnManager
                 StartSpawn(enemyListToSpawns[i].enemiesToSpawn);
             }
         }
+
+        for (var i = 0; i < clusterTimeSO.timeStampList.Count; i++)
+        {
+            var tm = clusterTimeSO.timeStampList[i];
+            if (gameTime.Equals(tm))
+            {
+                SpawnCluster();
+            }
+        }
     }
 
     private void StartSpawn(List<SO_Pool> enemiesToSpawn)
@@ -191,6 +202,14 @@ public class SM_Enemy : SpawnManager
     private void StopSpawn()
     {
         StopAllCoroutines();
+    }
+
+    private void SpawnCluster()
+    {
+        int randNum = Random.Range(0, clusterSpawns.Length);
+        //Debug.Log(clusterSpawns[randNum].position);
+        GameObject go = objectPooler.SpawnFromPool(clusterPool.pool.tag, clusterSpawns[randNum].bounds.max, Quaternion.identity);
+        go.GetComponent<ClusterMovement>().SetTarget(clusterTargets[randNum].bounds.max);
     }
 
     private Vector3 GetRandSpawnCollidersPos()

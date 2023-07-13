@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Salt
   m_EditorClassIdentifier: 
   weaponLevelSO: {fileID: 11400000, guid: c3096d9addc326c44bf7e486e6dba5ec, type: 2}
+  powerupLevelSO: {fileID: 0}
   isNew: 0100000000
   sprite: {fileID: 0}
-  rewardName: Salt
+  rewardName: Salt Gun
   rewardDescriptions:
   - 
   - ProjectileCount++

@@ -53,6 +53,7 @@ public class PlayerStat : Stat
 
     public void SetPlayerStat(SO_PlayerStat playerStatSO)
     {
+        Debug.Log("Player Stat set!");
         statSO = playerStatSO;
     }
 }

@@ -16,8 +16,6 @@ public class WeaponStat
     public int level;
     public float speed;
     public Vector3 size;
-    public float radius;
-    public Vector2 boxSize;
     public float damage;
     public float damageTick;
     public float attackRate;

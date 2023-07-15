@@ -66,14 +66,6 @@ public class Projectile : MonoBehaviour
             if (ws.weaponLevelSO.name.Equals(poolSO.name))
             {
                 transform.localScale.Set(ws.size.x, ws.size.y, ws.size.z);
-                if (TryGetComponent(out CircleCollider2D cc2D))
-                {
-                    cc2D.radius = ws.radius;
-                }
-                else if (TryGetComponent(out BoxCollider2D bc2D))
-                {
-                    bc2D.size = ws.boxSize;
-                }
                 projectileSpeed = ws.speed;
                 projectileDamage = ws.damage;
                 damageTimeTick = ws.damageTick;

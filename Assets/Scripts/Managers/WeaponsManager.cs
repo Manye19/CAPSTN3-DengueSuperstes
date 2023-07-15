@@ -34,10 +34,6 @@ public class WeaponsManager : MonoBehaviour
             }
             ws.speed = ws.weaponLevelSO.projectileSpeedLevels[ws.level];
             ws.size = ws.weaponLevelSO.projectileSizeLevels[ws.level];
-            if (ws.weaponProjectile.GetComponent<CircleCollider2D>())
-                ws.radius = ws.weaponLevelSO.radiusLevels[ws.level];
-            else if (ws.weaponProjectile.GetComponent<BoxCollider2D>())
-                ws.boxSize = ws.weaponLevelSO.boxSizeLevels[ws.level];
             ws.damage = ws.weaponLevelSO.damageLevels[ws.level];
             ws.damageTick = ws.weaponLevelSO.damageTickLevels[ws.level];
             ws.attackRate = ws.weaponLevelSO.spawnRateLevels[ws.level];

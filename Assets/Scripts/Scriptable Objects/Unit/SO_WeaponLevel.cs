@@ -8,8 +8,6 @@ public class SO_WeaponLevel : ScriptableObject
 {
     public List<float> projectileSpeedLevels;
     public List<Vector2> projectileSizeLevels;
-    public List<float> radiusLevels;
-    public List<Vector2> boxSizeLevels;
     public List<float> damageLevels;
     public List<float> damageTickLevels;
     public List<float> spawnRateLevels;

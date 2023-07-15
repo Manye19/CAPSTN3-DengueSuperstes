@@ -56,4 +56,9 @@ public class PlayerStat : Stat
         Debug.Log("Player Stat set!");
         statSO = playerStatSO;
     }
+
+    public void SetPlayerSprite(Sprite sprite)
+    {
+        transform.GetComponentInChildren<SpriteRenderer>().sprite = sprite;
+    }
 }

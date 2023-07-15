@@ -34,11 +34,11 @@ public class EnemyMovement : MonoBehaviour
         // Get and set UPDATED speed (int) from EnemyStat class or Spawner class
         transform.position = Vector2.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime);
 
-        if (transform.position.x > targetPos.x)
+        if (transform.position.x > targetPos.x && isFacingRight)
         {
             Flip();
         }
-        else if (transform.position.x < targetPos.x)
+        else if (transform.position.x < targetPos.x && !isFacingRight)
         {
             Flip();
         }

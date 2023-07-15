@@ -147,11 +147,14 @@ public class SM_Enemy : SpawnManager
 
     private void SpawnEnemy(List<SO_Pool> enemiesToSpawn)
     {
-        int randNum = Random.Range(0, enemiesToSpawn.Count);
-        string randTag = enemiesToSpawn[randNum].pool.tag;
         if (!isHoldingDownKey)
         {
-            for (int i = 0; i < randNum; i++)
+            int randNum = Random.Range(0, enemiesToSpawn.Count - 1);
+            Debug.Log(randNum);
+            string randTag = enemiesToSpawn[randNum].pool.tag;
+            Debug.Log(randTag);
+            
+            for (int i = 0; i < 1; i++)
             {
                 spawnPos = GetRandSpawnCollidersPos();
                 objectPooler.SpawnFromPool(randTag, spawnPos, Quaternion.identity);
@@ -161,7 +164,12 @@ public class SM_Enemy : SpawnManager
         }
         else
         {
-            for (int i = 0; i < randNum; i++)
+            int randNum = Random.Range(0, enemiesToSpawn.Count - 1);
+            Debug.Log(randNum);
+            string randTag = enemiesToSpawn[randNum].pool.tag;
+            Debug.Log(randTag);
+            
+            for (int i = 0; i < 1; i++)
             {
                 spawnPos = GetRandBoxDirPos(boxCollider2D);
                 objectPooler.SpawnFromPool(randTag, spawnPos, Quaternion.identity);

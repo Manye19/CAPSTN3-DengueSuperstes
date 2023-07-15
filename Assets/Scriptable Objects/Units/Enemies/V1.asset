@@ -16,7 +16,7 @@ MonoBehaviour:
   maxHealth: 100
   atkSpeed: 0.25
   damage: 4
-  moveSpeed: 4
+  moveSpeed: 3.5
   katolSlowPercent: 0.4
   insecticideDefPercent: 0.25
   saltGunDefPercent: 1

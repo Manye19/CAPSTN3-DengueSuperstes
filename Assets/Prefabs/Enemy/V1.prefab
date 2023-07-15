@@ -52,7 +52,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.58
+  m_Radius: 0.8
 --- !u!50 &333175280960000031
 Rigidbody2D:
   serializedVersion: 4
@@ -86,6 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96813fae612d0cc4bb77739c2480bb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFacingRight: 0
   updateTick: 1
 --- !u!114 &2727107157471868943
 MonoBehaviour:
@@ -120,6 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4108024622558355642}
   - component: {fileID: 4866689140716312466}
+  - component: {fileID: 4666387897284971083}
   m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
@@ -194,6 +196,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4666387897284971083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975762759587019730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d140b5a0ac247974eb4d9153be94689f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6789061355120788729
 GameObject:
   m_ObjectHideFlags: 0

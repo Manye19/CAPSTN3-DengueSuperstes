@@ -24,8 +24,10 @@ public class UIManager : MonoBehaviour
     public GameObject levelUpPanel;
     public GameObject gameWinPanel;
     public GameObject gameOverPanel;
-    
+
     public TextMeshProUGUI timerText;
+    private XPBar xpBar; 
+    public Slider xpSlider;
     public TextMeshProUGUI LevelText;
     public TextMeshProUGUI XPText;
     public TextMeshProUGUI objectiveCounterText;
@@ -49,6 +51,9 @@ public class UIManager : MonoBehaviour
         playerStat = gameManager.player.GetComponent<PlayerStat>();
         gameManager.onUpdateUpgradesEvent.AddListener(() => UpdateHPUI(gameManager.player.GetComponent<PlayerStat>().unitHealth.health));
         playerStat.unitHealth.onDamageEvent.AddListener(UpdateHPUI);
+        
+        xpBar = xpSlider.GetComponent<XPBar>();
+        xpBar.slider = xpSlider;
         onUpdateUIXP.AddListener(UpdateXPUI);
         gameManager.onGamePauseEvent.AddListener(PauseUI);
         gameManager.onLevelUpEvent.AddListener(OpenLevelUpUI);
@@ -105,7 +110,7 @@ public class UIManager : MonoBehaviour
     private void PlayerLoseUI()
     {
         gameOverPanel.SetActive(true);
-        isMenuOpen = false;
+        isMenuOpen = true;
     }
     
     private void UpdateObjectivesUI(GameObject ioPoolGameObject)
@@ -124,6 +129,7 @@ public class UIManager : MonoBehaviour
     
     private void UpdateXPUI(int level, float currentXP, float requiredXP)
     {
+        xpBar.SetMaxXP(currentXP, requiredXP);
         LevelText.text = "Lvl: " + level;
         XPText.text = "XP: " + currentXP + " / " + requiredXP;
     }

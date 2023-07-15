@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
        
         // Player Movement is now through force; experimenting...
         Vector2 movement = new Vector2(this.movement.x, this.movement.y).normalized;
-        rb.AddForce(movement * currentSpeed);
+        rb.MovePosition(rb.position + movement * (currentSpeed * Time.deltaTime));
 
         //Debug.Log(rb.velocity.normalized);
         

@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponLevelSO: {fileID: 11400000, guid: c3096d9addc326c44bf7e486e6dba5ec, type: 2}
   powerupLevelSO: {fileID: 0}
   isNew: 0100000000
+  isEvolve: 0000000001
   sprite: {fileID: 0}
   rewardName: Salt Gun
   rewardDescriptions:

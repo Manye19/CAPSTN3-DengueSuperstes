@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Insecticide
   m_EditorClassIdentifier: 
   weaponLevelSO: {fileID: 11400000, guid: 88f291a728a880c468145269d48f0204, type: 2}
+  powerupLevelSO: {fileID: 0}
   isNew: 0100000000
+  isEvolve: 0000000001
   sprite: {fileID: 0}
   rewardName: Insecticide
   rewardDescriptions:

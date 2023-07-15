@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponLevelSO: {fileID: 11400000, guid: 6641f3caacc54e84e88f21c19403546a, type: 2}
   powerupLevelSO: {fileID: 0}
   isNew: 0100000000
+  isEvolve: 0000000001
   sprite: {fileID: 0}
   rewardName: Electric Net
   rewardDescriptions:

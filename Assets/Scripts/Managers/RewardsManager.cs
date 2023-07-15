@@ -59,6 +59,8 @@ public class RewardsManager : MonoBehaviour
                 maxLevelPowerUpCounter++;
             }
 
+            
+            
             // Weapons
             if (ws.weaponSM.gameObject.activeInHierarchy)
             {

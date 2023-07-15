@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Katol
   m_EditorClassIdentifier: 
   weaponLevelSO: {fileID: 11400000, guid: d9f64ab97252780488336a4826b9e047, type: 2}
+  powerupLevelSO: {fileID: 0}
   isNew: 0100000000
+  isEvolve: 0000000001
   sprite: {fileID: 0}
   rewardName: Katol
   rewardDescriptions:

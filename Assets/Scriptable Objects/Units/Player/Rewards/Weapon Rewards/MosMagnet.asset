@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: MosMagnet
   m_EditorClassIdentifier: 
   weaponLevelSO: {fileID: 11400000, guid: e008a88fe344bda46a68e94c29ae7909, type: 2}
+  powerupLevelSO: {fileID: 0}
   isNew: 0100000000
+  isEvolve: 0000000001
   sprite: {fileID: 0}
   rewardName: Mosquito Magnet
   rewardDescriptions:

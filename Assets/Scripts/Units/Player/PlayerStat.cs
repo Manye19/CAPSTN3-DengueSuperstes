@@ -50,4 +50,9 @@ public class PlayerStat : Stat
         }
         SingletonManager.Get<UIManager>().UpdateHPUI(unitHealth.health);
     }
+
+    public void SetPlayerStat(SO_PlayerStat playerStatSO)
+    {
+        statSO = playerStatSO;
+    }
 }

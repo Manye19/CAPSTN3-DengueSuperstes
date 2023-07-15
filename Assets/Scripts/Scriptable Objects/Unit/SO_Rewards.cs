@@ -8,6 +8,7 @@ public class SO_Rewards : ScriptableObject
     public SO_WeaponLevel weaponLevelSO;
     public SO_PowerupLevels powerupLevelSO;
     public List<bool> isNew;
+    public List<bool> isEvolve;
     public Sprite sprite;
     public string rewardName;
     [TextArea] public List<string> rewardDescriptions;

@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //Time.timeScale = 0;
+        Time.timeScale = 0;
         cacheStartTime = Time.time;
         
         onUpdateUpgradesEvent.Invoke();

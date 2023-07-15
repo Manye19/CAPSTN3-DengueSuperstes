@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2732a419a93d6c4dbd0bb18321f3386, type: 3}
-  m_Name: PlayerStatSO
+  m_Name: C2StatSO
   m_EditorClassIdentifier: 
-  health: 100
-  maxHealth: 100
+  health: 120
+  maxHealth: 120
   atkSpeed: 2
   damage: 100
-  moveSpeed: 5
+  moveSpeed: 4.5

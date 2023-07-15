@@ -62,7 +62,22 @@ public class UiController : MonoBehaviour
     public void OnSFXSliderReleased()
     {
         // insert a good sfx for this part
+        audioMgr.PlaySFX("Button Click 3");
+    }
+
+    public void OnBackButtonClicked()
+    {
         audioMgr.PlaySFX("Button Click");
+    }
+
+    public void OnEnterButtonClicked()
+    {
+        audioMgr.PlaySFX("Button Click 2");
+    }
+
+    public void OnEnterPlayButtonClicked()
+    {
+        audioMgr.PlaySFX("Button Click 3");
     }
 
     

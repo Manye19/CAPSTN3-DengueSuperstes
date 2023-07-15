@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 523112644151320650}
   - component: {fileID: 4138230698863664041}
   - component: {fileID: 734400696757291956}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Swatter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDestruct: 1
   isMoving: 0
-  projectileSpeed: 0
   poolSO: {fileID: 11400000, guid: bda241c20b313604aba5de93adc69d67, type: 2}
 --- !u!212 &523112644151320650
 SpriteRenderer:

@@ -10,7 +10,7 @@ public class Projectile : MonoBehaviour
     [Header(DS_Constants.ASSIGNABLE)]
     [SerializeField] protected bool isDestruct;
     [SerializeField] protected bool isMoving;
-    public float projectileSpeed;
+    protected float projectileSpeed;
     protected Vector2 projectileSize;
     protected float projectileDamage;
     protected float damageTimeTick;
@@ -30,7 +30,8 @@ public class Projectile : MonoBehaviour
 
     protected virtual void Start()
     {
-        SingletonManager.Get<GameManager>().onUpdateUpgradesEvent.AddListener(UpdateProjectileStats);
+        // The disabled projectile won't get the updated stats.
+        //SingletonManager.Get<GameManager>().onUpdateUpgradesEvent.AddListener(UpdateProjectileStats);
     }
 
     protected virtual void Update()
@@ -85,10 +86,11 @@ public class Projectile : MonoBehaviour
             {
                 case "Radius":
                 {
-                    if (TryGetComponent(out CircleCollider2D cc2D))
-                    {
-                        cc2D.radius += ps.increase;
-                    }
+                    Vector3 thisScale = transform.localScale;
+                    thisScale.Set(
+                        thisScale.x + ps.increase, 
+                        thisScale.y + ps.increase, 
+                        thisScale.z + ps.increase);
                     break;
                 }
                 case "Damage":

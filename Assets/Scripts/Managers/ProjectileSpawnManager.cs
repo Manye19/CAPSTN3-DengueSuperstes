@@ -84,7 +84,5 @@ public class ProjectileSpawnManager : MonoBehaviour
     {
         GameObject go = objectPooler.SpawnFromPool(soPoolProjectile.pool.tag,
             new Vector3(spawnT.position.x, spawnT.position.y, 0f), spawnT.rotation);
-        float speed = go.GetComponent<Projectile>().projectileSpeed;
-        go.GetComponent<Rigidbody2D>().velocity = spawnT.up * go.GetComponent<Projectile>().projectileSpeed;
     }
 }

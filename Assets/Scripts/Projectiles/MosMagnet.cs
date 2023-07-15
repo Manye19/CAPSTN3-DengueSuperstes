@@ -54,7 +54,7 @@ public class MosMagnet : Projectile
     protected override IEnumerator SelfDestructTimer()
     {
         yield return new WaitForSeconds(destructTimer);
-        gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
     }
     
     private IEnumerator DamageAll()
@@ -75,6 +75,30 @@ public class MosMagnet : Projectile
                 }
             }
             yield return new WaitForSeconds(damageTimeTick);
+        }
+    }
+
+    protected override void UpdateProjectileStats()
+    {
+        foreach (WeaponStat ws in SingletonManager.Get<WeaponsManager>().weapons)
+        {
+            if (ws.weaponLevelSO.name.Equals(poolSO.name))
+            {
+                damageTimeTick = ws.damageTick;
+                destructTimer = ws.destructTimer;
+            }
+        }
+        foreach (PowerupStat ps in SingletonManager.Get<PowerupsManager>().powerups)
+        {
+            switch (ps.powerupName)
+            {
+                case "Damage":
+                    projectileDamage += ps.increase;
+                    break;
+                case "Time":
+                    destructTimer += ps.increase;
+                    break;
+            }
         }
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7033733849535499912}
   - component: {fileID: 7547566024800826566}
   - component: {fileID: 71164641539906387}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Salt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDestruct: 1
   isMoving: 1
-  projectileSpeed: 30
   poolSO: {fileID: 11400000, guid: 239588cb47ffb594da30fb331225c2b2, type: 2}
 --- !u!212 &7033733849535499912
 SpriteRenderer:

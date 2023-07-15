@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class SimpleFlash : MonoBehaviour
 {
-    public Color originalColor;
-    
     private SpriteRenderer spriteRenderer;
     private Coroutine flashCoroutine;
     private Material originalMat;
@@ -20,8 +18,6 @@ public class SimpleFlash : MonoBehaviour
     private void OnEnable()
     {
         originalMat = spriteRenderer.material;
-        // Color for now; Since we don't have our sprites yet.
-        spriteRenderer.color = originalColor;
     }
 
     public void Flash()
@@ -39,11 +35,9 @@ public class SimpleFlash : MonoBehaviour
     private IEnumerator FlashCoroutine()
     {
         // Uses color for now; Since we don't have our sprites yet.
-        // spriteRenderer.material = SingletonManager.Get<UIManager>().flashMaterial;
-        spriteRenderer.color = SingletonManager.Get<UIManager>().flashColor;
+        spriteRenderer.material = SingletonManager.Get<UIManager>().flashMaterial;
         yield return new WaitForSeconds(SingletonManager.Get<UIManager>().flashDuration);
-        // spriteRenderer.material = originalMat;
-        spriteRenderer.color = originalColor;
+        spriteRenderer.material = originalMat;
         flashCoroutine = null;
     }
 }

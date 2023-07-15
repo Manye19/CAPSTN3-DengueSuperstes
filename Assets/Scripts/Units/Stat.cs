@@ -29,7 +29,7 @@ public class Stat : MonoBehaviour
     public virtual void Start()
     {
         unitHealth.onDeathEvent.AddListener(Death);
-        simpleFlash = GetComponent<SimpleFlash>();
+        simpleFlash = GetComponentInChildren<SimpleFlash>();
     }
 
     protected virtual void OnEnable()

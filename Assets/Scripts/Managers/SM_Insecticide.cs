@@ -58,7 +58,5 @@ public class SM_Insecticide : SpawnManager
     {
         GameObject go = objectPooler.SpawnFromPool(poolSO.pool.tag,
             new Vector3(spawnT.position.x, spawnT.position.y, 0f), spawnT.rotation);
-        float speed = go.GetComponent<Projectile>().projectileSpeed;
-        go.GetComponent<Rigidbody2D>().velocity = spawnT.up * speed;
     }
 }

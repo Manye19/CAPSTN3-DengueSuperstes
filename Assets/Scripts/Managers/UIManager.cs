@@ -34,8 +34,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI enemyCounterText;
     
     public Material flashMaterial;
-    public Color flashColor;
     public float flashDuration;
+    //public Color flashColor;
     
     public OnUpdateUIXP onUpdateUIXP = new();
     

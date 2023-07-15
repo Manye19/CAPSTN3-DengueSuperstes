@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7996361823777485267}
   - component: {fileID: 7996361823777485276}
   - component: {fileID: 7996361823777485278}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: SantaWater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,10 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e49be623bc6c14ca29314ff4c7f755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selfDestructTimer: 5
   isDestruct: 1
-  tickDamage: 50
-  tickTime: 0.5
+  isMoving: 0
+  poolSO: {fileID: 0}
+  katolSlowPercent: 0
+  insecticideDefPercent: 0
+  saltGunDefPercent: 0
 --- !u!212 &7996361823777485276
 SpriteRenderer:
   m_ObjectHideFlags: 0

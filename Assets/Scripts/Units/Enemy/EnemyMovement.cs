@@ -12,6 +12,7 @@ public class EnemyMovement : MonoBehaviour
     private GameObject player;
     protected Vector2 targetPos;
     private Coroutine moveToPlayerCo;
+    [SerializeField] private bool isFacingRight = false;
 
     [Header(DS_Constants.ASSIGNABLE)] 
     [SerializeField] private float updateTick;
@@ -31,7 +32,16 @@ public class EnemyMovement : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         // Get and set UPDATED speed (int) from EnemyStat class or Spawner class
-        transform.position = Vector2.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime); // temporary for now
+        transform.position = Vector2.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime);
+
+        if (transform.position.x > targetPos.x)
+        {
+            Flip();
+        }
+        else if (transform.position.x < targetPos.x)
+        {
+            Flip();
+        }
     }
 
     protected virtual IEnumerator UpdatePlayerLocation()
@@ -70,5 +80,14 @@ public class EnemyMovement : MonoBehaviour
     {
         // Updates speed depending on Enemy?
         currentSpeed = moveSpeed;
+    }
+    
+    private void Flip()
+    {
+        Vector3 currentScale = gameObject.transform.localScale;
+        currentScale.x *= -1;
+        gameObject.transform.localScale = currentScale;
+
+        isFacingRight = !isFacingRight;
     }
 }

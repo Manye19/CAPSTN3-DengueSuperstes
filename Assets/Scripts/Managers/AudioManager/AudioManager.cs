@@ -40,6 +40,61 @@ public class AudioManager : MonoBehaviour
 
     }
 
+    
+
+    public void StopBGM(string bgmName)
+    {
+        Sound s = Array.Find(bgmSounds, bgm => bgm.audioName == bgmName);
+
+        if (s == null)
+        {
+            Debug.Log("Sound Not Found!");
+            return;
+        }
+
+        else
+        {
+            musicSource.clip = s.clip;
+            musicSource.Stop();
+        }
+
+    }
+
+    public void PauseBGM(string bgmName)
+    {
+        Sound s = Array.Find(bgmSounds, bgm => bgm.audioName == bgmName);
+
+        if (s == null)
+        {
+            Debug.Log("Sound Not Found!");
+            return;
+        }
+
+        else
+        {
+            musicSource.clip = s.clip;
+            musicSource.Pause();
+        }
+    }
+
+    public void UnPauseBGM(string bgmName)
+    {
+        Sound s = Array.Find(bgmSounds, bgm => bgm.audioName == bgmName);
+
+        if (s == null)
+        {
+            Debug.Log("Sound Not Found!");
+            return;
+        }
+
+        else
+        {
+            musicSource.clip = s.clip;
+            musicSource.UnPause();
+        }
+    }
+
+
     public void PlaySFX(string sfxName)
     {
         Sound s = Array.Find(sfxSounds, sfx => sfx.audioName == sfxName);
@@ -55,6 +110,22 @@ public class AudioManager : MonoBehaviour
             sfxSource.PlayOneShot(s.clip);
         }
 
+    }
+
+    public void StopSFX(string sfxName)
+    {
+        Sound s = Array.Find(sfxSounds, sfx => sfx.audioName == sfxName);
+
+        if (s == null)
+        {
+            Debug.Log("Sound Not Found!");
+            return;
+        }
+
+        else
+        {
+            sfxSource.Stop();
+        }
     }
 
     public void ToggleMusic()
